@@ -2,7 +2,7 @@
 
 **Author:** Salvador Palma · Copenhagen University
 **Project Outside Course Scope (15 ECTS)** · Supervisor: Bulat Ibragimov
-**Last updated:** 2026-08-25
+**Last updated:** 2026-08-26
 
 Running log of the hand-built work in `Project/`. Appended as the project advances.
 
@@ -138,38 +138,98 @@ count — a feature-dimensionality effect, not a statement about geology.
 The result holds under **two models** and **with and without co-located neighbours**,
 which closes the obvious objection that the neighbours were just duplicates.
 
-### Neighbour-only diagnostic *(exploratory — not yet reproduced in the notebooks)*
+**Working conclusion for RQ1 (so far):** neighbour encodings add nothing beyond a fold
+standard deviation, under two models, with and without co-located neighbours. Whether
+that is because spatial context is genuinely uninformative here, or because it is
+redundant with a sample's own co-measured chemistry, is not yet distinguished — see
+Next Steps.
 
-> These numbers come from a throwaway script run during a supervision session, **not**
-> from `2. Random Forest.ipynb`. They are recorded here as a lead worth following, not
-> as a project result. Re-implement as a notebook cell before citing in the report.
+### K-sweep — how many neighbours?
 
-How much of an element is predictable from the neighbourhood *alone* (HGB, k=5):
+Mean R² over the 10 elements, HGB, co-located neighbours excluded. Baseline (no
+neighbours) is 0.8392; typical fold std is 0.0113.
 
-| feature set | co-located allowed | co-located excluded |
-|---|---|---|
-| own chemistry (68 cols) | **0.839** | 0.839 |
-| all-element neighbour means | 0.250 | 0.298 |
-| target-only neighbour mean | 0.285 | 0.239 |
-| raw UTM coordinates (x, y) | 0.313 | 0.313 |
+| k | A (+1 col) | B (+k cols) | C (+68 cols) | D (+68k cols) |
+|---|---|---|---|---|
+| 1 | 0.8404 | 0.8404 | 0.8408 | 0.8408 |
+| 3 | 0.8415 | 0.8415 | 0.8435 | 0.8395 |
+| 5 | 0.8421 | 0.8421 | 0.8452 | 0.8386 |
+| 10 | 0.8423 | 0.8421 | 0.8469 | 0.8375 |
+| 20 | 0.8424 | 0.8415 | **0.8490** | 0.8352 |
 
-Three findings:
+Two clean trends, in opposite directions:
 
-1. **Spatial signal exists but is weak** — ~0.25–0.30 standalone against 0.84.
-   Not zero, so a GNN is not doomed; not large, which explains the flat A–D results.
-2. **Raw coordinates beat both neighbour encodings.** Two numbers outperform the full
-   chemistry of five neighbours. Most of what "neighbourhood" contributes is coarse
-   geographic position.
-3. **Excluding co-located samples helps the broad encoding and hurts the narrow one.**
-   A target-only column is nearly the answer when a twin is present; a 68-column
-   vector was being degraded by near-zero-variance duplicate neighbourhoods.
+* **C improves monotonically with k** (0.8408 → 0.8490). Averaging every element over more
+  neighbours smooths out sampling noise without adding columns — C stays at 68 features
+  whatever k is. Best overall, +0.0098 over baseline at k=20, which is just under one fold
+  standard deviation.
+* **D degrades monotonically with k** (0.8408 → 0.8352). It is the same information, but
+  spread over 68k columns — 1,360 at k=20. The decline tracks the column count, confirming
+  the A–D pattern is feature dimensionality rather than geology.
 
-**Working hypothesis for RQ1** (resting on the exploratory numbers above, so it needs
-confirming): spatial context in Greenland whole-rock geochemistry may be largely
-redundant with a sample's own co-measured chemistry, with the remainder mostly
-reducible to position. What *is* established from the notebook runs is the A–D table
-above — neighbour encodings add nothing beyond a fold standard deviation, under two
-models, with and without co-located neighbours.
+A and B plateau by k≈5: both are target-only encodings, so extra neighbours add little.
+
+Even the best cell is inside one fold standard deviation of baseline, so the headline
+conclusion is unchanged: **neighbour features are not adding usable signal at any k.**
+What the sweep does establish is that the shape of the A–D result is an aggregation-versus-
+dimensionality effect, and that if a neighbourhood is used at all it should be pooled
+(variant C), not enumerated (variant D).
+
+---
+
+## Geophysical features (`1. Data Fetching.ipynb`)
+
+Geochemical neighbours only exist where somebody has already sampled. Geophysical grids are
+measured everywhere, so they are what replaces the neighbourhood on unexplored ground — the
+RQ2 substitute. Attached to `Data.csv` before the splits, since they are static per coordinate
+and carry no train/test dependence.
+
+**Inclusion rule: full Greenland coverage**, checked over the whole landmass rather than over
+the samples at hand, so the same columns attach to any future sample set (stream sediment,
+heavy minerals) unchanged.
+
+| column | source | grid | licence |
+|---|---|---|---|
+| `geo_magnetic_anomaly nT` | GREENMAG `doi:10.22008/FK2/LQN5YJ` | 400 m, native UTM 24N | CC-BY 4.0 |
+| `geo_heat_flow mW/m2` | Heat Flow `doi:10.22008/FK2/F9P03L` | ~0.4° (~25 km) | CC0 |
+| `geo_depth_to_moho km` | Depth to Moho `doi:10.22008/FK2/TG7OQU` | ~0.5 km spacing | CC-BY 4.0 |
+
+All three are 100% valid at the 6,957 samples. Magnetic anomaly spans −472…840 nT, heat flow
+32.9…117.7 mW/m², Moho depth 27.7…46.6 km.
+
+**What they mean.** Magnetic anomaly tracks how magnetite-rich the rock is (mafic high, felsic
+low). Heat flow tracks tectonic setting plus decay of U/Th/K. Moho depth is crustal thickness —
+thin under rifted margins, thick under old craton.
+
+### Rejected, and why
+
+| candidate | reason |
+|---|---|
+| NAG-TEC gravity (Bouguer / isostatic / tilt) | North Atlantic compilation; point density collapses west of 50°W. **Median 157 km** from a sample to the nearest grid point |
+| crustal thickness, sediment thickness, depth to basement | same family, 43% NaN; 131 km and 287 km median distance |
+| DTU gravity (ArcGIS service) | *does* cover Greenland in EPSG:32624, but publishes only rendered RGB imagery — no ImageServer, no pixel values. **Asking GEUS for the underlying grid** |
+| Airborne radiometrics (K/U/Th), AEROMAG 1992–2013 | partial coverage |
+| Darbyshire S-wave speed, subglacial provinces (both CC0) | need `rasterio` / `geopandas`; deferred until geophysics is shown to help |
+
+Zero NaN in a file is not evidence of coverage — the gravity products have no missing values
+because they have no *points* over western Greenland.
+
+Also noted: the `geusmap/ows` WFS/WMS endpoint recorded in the older workspace notes now
+returns **404** for both services.
+
+### Correlation with geochemistry
+
+Pearson and Spearman, pairwise-complete, on the log10 concentrations, with easting and
+northing included as controls. Only pairs with ≥100 samples are kept.
+
+The trustworthy signals are the ones with large n: **U ppm** correlates +0.28 with magnetics
+and −0.34 with Moho depth (n=3227 both), which is coherent — uranium concentrates in evolved
+felsic crust, which is thick and weakly magnetic. The largest coefficients in the table sit on
+`C wt%` at n=101 and should not be relied on; that column also correlates −0.58 with northing.
+
+**Only 42% of elements (27/64) have a geophysical field correlating more strongly than plain
+easting or northing.** Median |Spearman| for northing alone is 0.106. Moho depth in particular
+is r=0.75 with northing, so it may be closer to a latitude proxy than to independent physics.
 
 ---
 
@@ -189,15 +249,36 @@ and four explicit encodings.
 
 ## Next steps
 
-**Immediate — RQ1 to its endpoint:**
-- **Re-implement the neighbour-only diagnostic** as a notebook cell (own / neighbour-only
-  / target-only / coordinates), so the exploratory numbers above become project results.
-- Add **own + coordinates** as a baseline row (isolates position from neighbourhood).
+**Next session — feature-source ablation.** Run the same 10 elements and 5 folds under
+HGB, varying only what goes into `X`, so each source can be scored on its own and in
+combination:
+
+| feature set | question it answers |
+|---|---|
+| own chemistry (current baseline) | the reference, 0.8392 |
+| geophysics only | how much do the three grids carry alone? |
+| coordinates only | how much is plain position worth? |
+| neighbours only | how much is the neighbourhood worth without own chemistry? |
+| own + geophysics | do the grids add anything on top of chemistry? |
+| own + coordinates | does position add anything on top of chemistry? |
+| geophysics vs coordinates | **the key test** — is geophysics real physics or a position proxy? |
+
+The last row matters most. Moho depth is r=0.75 with northing, and only 42% of elements
+correlate with a geophysical field more strongly than with a coordinate. If geophysics
+scores no better than raw x/y, the honest reading is that these grids encode *where you
+are*, not *what is underfoot* — which changes how RQ2 gets framed.
+
+Report per element as well as pooled: the correlation table suggests U is where geophysics
+should help most, and a pooled mean would hide that.
+
+**After that — RQ1 to its endpoint:**
 - Build the **GNN**: nodes = samples, edges = the existing k-NN graph, target masked.
   Reuse the same folds and `AggregateFolds` so results drop into the current table.
-- Make edges **distance-aware** — since coordinates outrank neighbour chemistry, a
-  model ignoring edge distance discards the stronger signal.
-- Sweep `k ∈ {1,3,5,10,20}` (no new neighbour search needed — 20 are already stored).
+- Make edges **distance-aware**. The k-sweep showed pooling over more neighbours (variant C)
+  beats enumerating them (variant D), which is exactly the argument for learned aggregation
+  over hand-specified columns — and a GNN that ignores edge distance is just variant C.
+- Consider **stream sediment** (~2× the samples, more spatially diffuse) as a replication
+  check once RQ1 is closed on whole rock.
 
 **Scoping — RQ2 geophysics.** Neighbours will be absent in unexplored areas, so
 complete-coverage physical fields replace them. Verified accessible on GEUS Dataverse

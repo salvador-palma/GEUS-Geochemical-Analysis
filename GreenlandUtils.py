@@ -4,7 +4,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from matplotlib.colors import LogNorm
+from matplotlib.colors import LogNorm, TwoSlopeNorm
 from tqdm import tqdm
 from dataclasses import dataclass
 
@@ -37,7 +37,7 @@ def lonlatToUTM24N(lon, lat) -> tuple[np.ndarray, np.ndarray]:
     return x, y
 
 
-def PlotSamplesOnMap(df: pd.DataFrame, element: str = None, title: str = None, lonCol: str = "Longitude", latCol: str = "Latitude", colorCol: str = "colors", zoomToData: bool = True, pointSize: float = 6, basemap: Path = None, ax=None, dotColor: str = "#2a78d6", cmap: str = "viridis", **kwargs):
+def PlotSamplesOnMap(df: pd.DataFrame, element: str = None, title: str = None, lonCol: str = "Longitude", latCol: str = "Latitude", colorCol: str = "colors", zoomToData: bool = True, pointSize: float = 6, basemap: Path = None, ax=None, dotColor: str = "#2a78d6", cmap: str = "viridis", signed: bool = False, **kwargs):
     
     basemap = Path(basemap) if basemap is not None else BASEMAP_PATH
 
@@ -49,7 +49,12 @@ def PlotSamplesOnMap(df: pd.DataFrame, element: str = None, title: str = None, l
     values = None
     if element is not None:
         values = pd.to_numeric(df[element], errors="coerce")
-        valid &= values.notna() & (values > 0)
+        valid &= values.notna()
+
+        #Concentrations are positive and log-scaled, so <=0 means below detection.
+        #Anomaly fields (magnetics, gravity) are signed and keep their negatives.
+        if not signed:
+            valid &= values > 0
 
     #Per-point colors, only when not colouring by element value
     colors = None
@@ -82,7 +87,14 @@ def PlotSamplesOnMap(df: pd.DataFrame, element: str = None, title: str = None, l
     if values is None:
         ax.scatter(x, y, s=pointSize, c=colors.to_numpy() if colors is not None else dotColor, alpha=0.7, linewidths=0, zorder=2)
     else:
-        sc = ax.scatter(x, y, s=pointSize, c=values.to_numpy(), cmap=cmap, norm=LogNorm(), alpha=0.9, linewidths=0.2, edgecolors=SURFACE, zorder=2)
+        if signed:
+            #Centre the colour scale on zero so positive and negative read symmetrically
+            limit = float(np.nanmax(np.abs(values.to_numpy()))) or 1.0
+            norm = TwoSlopeNorm(vmin=-limit, vcenter=0.0, vmax=limit)
+        else:
+            norm = LogNorm()
+
+        sc = ax.scatter(x, y, s=pointSize, c=values.to_numpy(), cmap=cmap, norm=norm, alpha=0.9, linewidths=0.2, edgecolors=SURFACE, zorder=2)
         cb = plt.colorbar(sc, ax=ax, fraction=0.035, pad=0.02)
         cb.set_label(element, color=SECONDARY, fontsize=9)
         cb.ax.tick_params(labelsize=8, colors=MUTED)
@@ -117,14 +129,16 @@ def PlotSamplesOnMap(df: pd.DataFrame, element: str = None, title: str = None, l
         spine.set_color(SPINE)
     return ax
 
-def MostCommonElements(df: pd.DataFrame, elementCols: list[str], top_n: int=10) -> list[tuple[str, int]]:
+def MostCommonElements(df: pd.DataFrame, elementCols: list[str], top_n: int=10, remove:list[str] = []) -> list[tuple[str, int]]:
     
     elements = []
     for element in tqdm(elementCols, desc="Analyzing Elements"):
         usable = df[element].notna().sum()
         elements.append((element, usable))
         
+    elements = [e for e in elements if e[0] not in remove]
     elements.sort(key=lambda x: x[1], reverse=True)
+    
     
     return elements[:top_n]
 

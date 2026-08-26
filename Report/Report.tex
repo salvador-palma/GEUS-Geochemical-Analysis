@@ -1,0 +1,62 @@
+\documentclass[
+    a4paper,
+    11pt,
+    oneside,
+    parskip=half,
+    numbers=noendperiod
+]{scrreprt}
+
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{siunitx}
+\usepackage{csquotes}
+
+\usepackage[
+    backend=biber,
+    style=numeric,
+    sorting=none
+]{biblatex}
+\addbibresource{references.bib}
+
+\usepackage{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    {\Large University of Copenhagen / Department of Computer Science\par}
+    \vspace{2cm}
+
+    {\Huge\bfseries Analyzing Greenland's Geochemistry through Machine Learning\par}
+    \vspace{1.5cm}
+
+    {\Large Research Project Report\par}
+    \vfill
+
+    {\large
+    Salvador Wahnon Palma\\
+    Bulat Ibagrimov\\
+    \today
+    \par}
+\end{titlepage}
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+\chapter{Introduction}
+\chapter{Background}
+\chapter{Methodology}
+\chapter{Results}
+\chapter{Discussion}
+\chapter{Conclusion}
+
+\printbibliography
+
+\appendix
+\chapter{Additional Material}
+
+\end{document}
