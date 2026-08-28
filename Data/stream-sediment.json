@@ -1,0 +1,25 @@
+{
+    "sampleCol": "Sampleno",
+    "metaCols": [
+        "Details",
+        "Sampleno",
+        "Sampling year",
+        "Grain size micron",
+        "Longitude",
+        "Latitude",
+        "Elevation",
+        "Coordinate method",
+        "Collector",
+        "Treatmentyears",
+        "Laboratorynames"
+    ],
+    "physicalCols": [
+        "geo_magnetic_anomaly nT",
+        "geo_heat_flow mW/m2",
+        "geo_depth_to_moho km"
+    ],
+    "locationCols": [
+        "Latitude",
+        "Longitude"
+    ]
+}

@@ -178,11 +178,12 @@ def verifyStratification(split: dict[str, pd.DataFrame], element: str):
     printable.rest()
     printable.pretty()
     
-def DFStats(df : pd.DataFrame, metaCols : list[str], n: int = 10) -> None:
+def DFStats(df : pd.DataFrame, metaCols : list[str], n: int = 10, sampleCol: str = "Sample number") -> None:
     stats = Printable()
     stats.title("Quantities")
     stats.add("Rows", len(df))
-    stats.add("Samples", len(df["Sample number"].unique()))
+    #The sample id column is named differently per dataset, so it comes from the schema
+    stats.add("Samples", len(df[sampleCol].unique()) if sampleCol in df.columns else len(df))
     stats.rest()
     
     stats.title("Structure")
@@ -190,9 +191,23 @@ def DFStats(df : pd.DataFrame, metaCols : list[str], n: int = 10) -> None:
     stats.add("Column Names", list(df.columns))
     stats.add("Meta Columns", len([col for col in df.columns if col in metaCols]))
     stats.add("Element Columns", len([col for col in df.columns if col not in metaCols]))
-    stats.add("Columns lacking coordinates", len([1 for i in range(len(df)) if pd.isna(df["Longitude"][i]) or pd.isna(df["Latitude"][i])]))
+    stats.add("Columns lacking coordinates", int((df["Longitude"].isna() | df["Latitude"].isna()).sum()))
     stats.rest()
-    
+
+    stats.title("Co-location")
+
+    #One physical spot sampled more than once. Clustered sampling makes a neighbour a near
+    #copy of the sample itself, so this is what decides how much a neighbourhood can say
+    located = df.dropna(subset=["Longitude", "Latitude"])
+    perLocation = located.groupby(["Longitude", "Latitude"]).size()
+    shared = int((located.groupby(["Longitude", "Latitude"])["Longitude"].transform("size") > 1).sum())
+
+    stats.add("Unique locations", f"{len(perLocation)} of {len(located)} rows")
+    stats.add("Rows sharing a location", f"{shared} ({shared / len(located):.1%})" if len(located) else "0")
+    stats.add("Max rows at one location", perLocation.max() if len(perLocation) else 0)
+    stats.add("Mean rows per location", f"{perLocation.mean():.2f}" if len(perLocation) else "0")
+    stats.rest()
+
     stats.title("Elements")
     
     elements = []

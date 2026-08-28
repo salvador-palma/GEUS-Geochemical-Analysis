@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.7.13)  26 AUG 2026 09:32
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.7.13)  26 AUG 2026 20:10
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**"c:/Users/salva/Documents/UCPH/POS - Project Outside Scope/Project/Report.tex"
-(c:/Users/salva/Documents/UCPH/POS - Project Outside Scope/Project/Report.tex
+**"c:/Users/salva/Documents/UCPH/POS - Project Outside Scope/Project/Report/Report.tex"
+(c:/Users/salva/Documents/UCPH/POS - Project Outside Scope/Project/Report/Report.tex
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
 (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/koma-script\scrreprt.cls
@@ -862,12 +862,12 @@ Package logreq Info: Writing requests to 'Report.run.xml'.
  ) 
 Here is how much of TeX's memory you used:
  28622 strings out of 467871
- 591156 string characters out of 5418376
+ 591233 string characters out of 5418376
  1542759 words of memory out of 5000000
  57227 multiletter control sequences out of 15000+600000
  632092 words of font info for 66 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 108i,7n,107p,11277b,1133s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 108i,7n,107p,11284b,1133s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/salva/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/salva/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/salva/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/salva/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmssbx10.pfb>
 Output written on Report.pdf (11 pages, 65877 bytes).
 PDF statistics:

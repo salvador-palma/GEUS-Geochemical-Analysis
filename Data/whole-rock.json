@@ -1,0 +1,26 @@
+{
+    "sampleCol": "Sample number",
+    "metaCols": [
+        "Sample number",
+        "Sampling year",
+        "Rock description",
+        "Link to report",
+        "Collector",
+        "Batch",
+        "Longitude",
+        "Latitude",
+        "Laboratory",
+        "Treatment year",
+        "Sample preparation abbr",
+        "Analytical method abbr"
+    ],
+    "physicalCols": [
+        "geo_magnetic_anomaly nT",
+        "geo_heat_flow mW/m2",
+        "geo_depth_to_moho km"
+    ],
+    "locationCols": [
+        "Latitude",
+        "Longitude"
+    ]
+}

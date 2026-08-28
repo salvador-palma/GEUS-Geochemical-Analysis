@@ -2,7 +2,7 @@
 
 **Author:** Salvador Palma · Copenhagen University
 **Project Outside Course Scope (15 ECTS)** · Supervisor: Bulat Ibragimov
-**Last updated:** 2026-08-26
+**Last updated:** 2026-08-28
 
 Running log of the hand-built work in `Project/`. Appended as the project advances.
 
@@ -21,37 +21,64 @@ elements, and test whether spatial context (nearest neighbours) adds anything.
 
 ---
 
-## Dataset
+## Datasets
 
-**GEUS whole-rock geochemistry** (`Data/whole-rock.csv`), public.
+Two GEUS geochemistry datasets, both public, both run through the same pipeline.
 
-| | |
-|---|---|
-| Raw rows | 26,068 |
-| Unique sample numbers | 6,957 |
-| Element columns (raw) | 76 |
-| Element columns (after coverage filter) | 68 |
-| Unique coordinate pairs | 4,498 |
-| Samples sharing a coordinate | 3,458 (50%) |
-| Max samples at one coordinate | 67 |
+| | whole rock | stream sediment |
+|---|---|---|
+| source | `Data/whole-rock.csv` | `Data/stream-sediment.csv` |
+| raw rows | 26,068 | 20,158 |
+| raw element columns | 76 | **523** |
+| merged samples | 6,957 | **17,463** |
+| element columns after merge | 76 | 93 |
+| after coverage filter (<10) | 68 | 87 |
+| unique coordinate pairs | 4,498 | 16,542 |
+| samples sharing a coordinate | 3,458 (**50%**) | 1,759 (**10%**) |
+| max samples at one coordinate | 67 | 11 |
+| longitude span | −53.9 … −42.3 | **−72.8 … −13.3** |
 
-The 26,068 → 6,957 collapse is because one physical sample appears as several rows,
-one per analytical method. **Co-location is real and kept**: 67 samples at one outcrop
-is genuine sampling density, not duplication, so they stay as separate rows.
+The two differ in a way that turned out to matter: whole rock is clustered,
+exploration-driven sampling in a narrow longitude band; stream sediment covers the whole
+island with a fifth of the co-location. **Co-location is real and kept in both** — 67
+samples at one outcrop is genuine sampling density, not duplication.
+
+Stream sediment's 523 raw element columns are 93 elements measured by up to four
+lab/method combinations each (`ACTLABS FUS ICP Ni ppm`, `ACTLABS INAA Ni ppm`, …). Whole
+rock already has one column per element.
+
+**Provenance note.** Bulat's `geochem_stream.csv` (69,720 rows, 15,398 samples) and
+`clean_stream.csv` (14,831 samples) are the same data in long format and merged form.
+All 15,398 of his samples are in the portal export used here, none are missing from it,
+and shared-sample values agree (r=0.92 on Ni). The portal export is used because it has
+2,065 more samples and a known origin.
+
+### Column schema
+
+Each source csv now carries a `<name>.json` beside it naming `sampleCol`, `metaCols`,
+`physicalCols` and `locationCols`. Element columns are whatever is left over, so a new
+dataset needs no code change — only the schema file and three constants.
 
 ---
 
 ## Data treatment (`1. Data Fetching.ipynb`)
 
-1. **Mask BDL** — values ≤ 0 are below detection limit → NaN.
-2. **Merge by sample number** — median across the method-duplicate rows.
-3. **Log10 transform** — concentrations span wt% to ppb.
-4. **Coverage filter** — drop element columns measured in < 10 samples.
-   Removes 8: `B ppm, Ru ppb, Rh ppb, Te ppm, I ppm, Re ppb, Os ppb, Ir ppb`
-   (`I ppm` and `Os ppb` are *entirely* empty across all 6,957 samples).
+1. **Mask BDL** — values ≤ 0 are below detection limit → NaN. Done first so a negative
+   reading can never drag a later median down.
+2. **Merge analytical columns** — collapse per-lab, per-method columns of the same element
+   into one, median across whichever methods measured that sample. Stream sediment goes
+   523 → 93; whole rock is untouched, since the function returns early when every element
+   already has exactly one column. Methods differ in detection limit and bias, so the
+   median here is a deliberate choice of the neutral option rather than a given.
+3. **Merge by sample number** — median across the duplicate rows of one physical sample.
+4. **Log10 transform** — concentrations span wt% to ppb. After both merges, so it is a
+   log of medians rather than a median of logs.
+5. **Coverage filter** — drop element columns measured in < 10 samples. Whole rock loses 8
+   (`I ppm` and `Os ppb` are *entirely* empty); stream loses 6. This stays last on purpose:
+   filtering earlier would discard measurements the merges would have rescued.
    Needed because HistGradientBoosting cannot bin a constant column; Random Forest
    silently tolerated them by never splitting on them.
-5. **Splits** — 80/10/10 holdout (`Holdout.split`) + 5-fold random CV (`5-Fold.kfold`).
+6. **Splits** — 80/10/10 holdout (`Holdout.split`) + 5-fold random CV (`5-Fold.kfold`).
 
 Outputs: one `Data.csv`, one split file, one k-fold file. Nothing else.
 
@@ -138,11 +165,12 @@ count — a feature-dimensionality effect, not a statement about geology.
 The result holds under **two models** and **with and without co-located neighbours**,
 which closes the obvious objection that the neighbours were just duplicates.
 
-**Working conclusion for RQ1 (so far):** neighbour encodings add nothing beyond a fold
-standard deviation, under two models, with and without co-located neighbours. Whether
-that is because spatial context is genuinely uninformative here, or because it is
-redundant with a sample's own co-measured chemistry, is not yet distinguished — see
-Next Steps.
+**Working conclusion for RQ1, whole rock:** neighbour encodings add nothing beyond a fold
+standard deviation, under two models, with and without co-located neighbours.
+
+> **Since qualified by the stream sediment run below.** This holds for whole rock, whose
+> sampling is clustered (50% co-located, narrow longitude band). It does *not* generalise:
+> on stream sediment the same encodings give a gain of 2.5 standard deviations.
 
 ### K-sweep — how many neighbours?
 
@@ -169,11 +197,75 @@ Two clean trends, in opposite directions:
 
 A and B plateau by k≈5: both are target-only encodings, so extra neighbours add little.
 
-Even the best cell is inside one fold standard deviation of baseline, so the headline
-conclusion is unchanged: **neighbour features are not adding usable signal at any k.**
-What the sweep does establish is that the shape of the A–D result is an aggregation-versus-
-dimensionality effect, and that if a neighbourhood is used at all it should be pooled
-(variant C), not enumerated (variant D).
+Even the best cell is inside one fold standard deviation of baseline, so on **whole rock**
+neighbour features are not adding usable signal at any k. What the sweep establishes and
+which does carry over to stream sediment: the A–D shape is an aggregation-versus-
+dimensionality effect, and a neighbourhood should be pooled (variant C), not enumerated
+(variant D).
+
+### Stream sediment — the same pipeline on differently-sampled data
+
+Whole rock's spatial ceiling could have been a property of Greenland geochemistry, or a
+property of clustered exploration sampling. Stream sediment separates the two: 17,463
+samples across the whole island, 10% co-located instead of 50%.
+
+Targets are the 10 best-covered elements, which for stream are `Zn, U, Cu, Rb, Ba, Cr, Sr,
+Fe %, V, Co` — a different set from whole rock's oxide-heavy list, so the two datasets
+compare in aggregate rather than element-for-element. Fold std ≈ 0.012 on both.
+
+**Neighbour features, k=5, co-located excluded:**
+
+| variant | whole rock | Δ | stream | Δ |
+|---|---|---|---|---|
+| baseline | 0.8388 | — | 0.7988 | — |
+| A | 0.8421 | +0.0033 | 0.8257 | **+0.0270** |
+| B | 0.8421 | +0.0033 | 0.8212 | +0.0224 |
+| C | 0.8452 | +0.0064 | **0.8285** | **+0.0297** |
+| D | 0.8386 | −0.0002 | 0.8187 | +0.0199 |
+
+On whole rock every gain sat inside one fold standard deviation. On stream, variant C's
++0.0297 is **2.5 standard deviations**, and even D — the worst encoding — clears one. This
+is the first defensible neighbour gain in the project.
+
+**K-sweep, variant C:**
+
+| k | whole rock Δ | stream Δ |
+|---|---|---|
+| 1 | +0.0020 | +0.0221 |
+| 5 | +0.0064 | +0.0297 |
+| 20 | +0.0102 | **+0.0347** |
+
+Monotone on both, and still climbing at k=20 on both — the plateau has not been found.
+
+**Feature sets:**
+
+| set | whole rock | stream |
+|---|---|---|
+| Chemistry | 0.8388 | 0.7988 |
+| Physics | 0.3000 | 0.4712 |
+| Location | 0.3145 | **0.5428** |
+| Neighbours | 0.3150 | **0.5582** |
+| Chemistry + Physics | 0.8442 | 0.8225 |
+| Chemistry + Location | 0.8449 | 0.8271 |
+| Physics + Location | 0.3288 | 0.5495 |
+
+Three readings:
+
+1. **The R² ≈ 0.30 spatial ceiling was a sampling artefact, not geology.** Every spatial
+   source roughly doubled: neighbours 0.315 → 0.558, location 0.315 → 0.543. The earlier
+   whole-rock conclusion should be qualified to "spatial context is weak *in clustered
+   sampling*", not weak in Greenland geochemistry generally.
+2. **Chemistry is weaker on stream** (0.7988 vs 0.8388). Stream sediment averages an
+   upstream catchment rather than sampling one rock, so co-measured elements predict each
+   other less tightly. Both effects push the same way: neighbours help more, and the
+   baseline they help is lower. Worth stating both rather than only the first.
+3. **Geophysics remains a position proxy, more clearly than before.** Location beats
+   Physics by 0.072 on stream against 0.014 on whole rock, and Physics + Location (0.5495)
+   barely exceeds Location alone. The three grids encode *where* a sample is rather than
+   independently *what* is underfoot. Chemistry + Physics and Chemistry + Location both add
+   ~+0.024–0.028, the same magnitude as neighbours — three routes to the same information.
+
+---
 
 ---
 
@@ -271,14 +363,41 @@ are*, not *what is underfoot* — which changes how RQ2 gets framed.
 Report per element as well as pooled: the correlation table suggests U is where geophysics
 should help most, and a pooled mean would hide that.
 
-**After that — RQ1 to its endpoint:**
-- Build the **GNN**: nodes = samples, edges = the existing k-NN graph, target masked.
-  Reuse the same folds and `AggregateFolds` so results drop into the current table.
-- Make edges **distance-aware**. The k-sweep showed pooling over more neighbours (variant C)
-  beats enumerating them (variant D), which is exactly the argument for learned aggregation
-  over hand-specified columns — and a GNN that ignores edge distance is just variant C.
-- Consider **stream sediment** (~2× the samples, more spatially diffuse) as a replication
-  check once RQ1 is closed on whole rock.
+**Next — the GNN, on stream sediment.**
+
+The dataset choice is now settled by evidence rather than convenience. Whole rock offered
+~0.31 of standalone spatial signal and gains inside the noise floor; stream sediment offers
+**0.558** and a demonstrated +0.035 from hand-built pooling that is still climbing at k=20.
+That is real headroom for a learned aggregation to compete for, and it is where a GNN has
+something to win.
+
+- Nodes = samples, edges = the existing k-NN graph, target masked. Same folds, same
+  `AggregateFolds`, so results drop into the current tables.
+- Edges **must carry distance**. The k-sweep showed pooling beats enumerating, which is the
+  argument for learned aggregation over hand-specified columns — but a GNN that ignores edge
+  distance is just variant C with extra machinery.
+- **Extend the k-sweep** past 20 first. Variant C has not plateaued on either dataset, so
+  the hand-built ceiling the GNN has to beat is not yet known.
+- Re-run the whole-rock GNN afterwards for the contrast: same architecture, two sampling
+  geometries.
+
+**Then — widen the target set.** Every result so far uses the 10 best-covered elements, which
+is an arbitrary cutoff rather than a principled one: on stream sediment ranks 11–20 have
+12,469–13,354 samples against rank 10's 13,979, a 4% difference, and 71 of 87 elements have
+at least 1,000 measurements. Replace `top_n=10` with a coverage threshold
+(`MIN_TARGET_COVERAGE = 1000` gives 48 elements on whole rock, 71 on stream).
+
+This does **not** bias the neighbour-versus-baseline comparison, since both arms see the same
+elements. It does bias any claim about *which feature source* helps: the correlation analysis
+found geophysics tracks U most reliably, and U is not in whole rock's top 10 — so
+"Physics 0.3000 vs Location 0.3145" was averaged over ten elements that largely exclude the
+ones geophysics should help. Stream's top 10 does include U, which may be part of why Physics
+rose to 0.4712 there.
+
+Rerun the **feature-set ablation** on the wider set before the geophysics conclusion goes in
+the report, and report the per-element distribution rather than only a pooled mean — "physics
+helps U, Th, Zr, Nb and does nothing for the major oxides" is a stronger and more honest
+finding than one averaged number. Keep the k-sweep at top-10; it is the expensive one.
 
 **Scoping — RQ2 geophysics.** Neighbours will be absent in unexplored areas, so
 complete-coverage physical fields replace them. Verified accessible on GEUS Dataverse
@@ -302,6 +421,11 @@ already in UTM 24N (no reprojection), and sampled values are physically sensible
 
 ## Open questions
 
+- **Everything so far is random CV**, where train and test are interleaved in space and
+  position is therefore unusually informative. Location scoring 0.543 on stream should be
+  expected to collapse under spatial CV. Whether Physics holds up better than Location there
+  is the test that would settle whether the grids carry real physics — under spatial CV the
+  "position proxy" reading could invert.
 - Does the flat A–D result survive **spatial** CV, or is it specific to random folds?
   (RQ2 territory — block-based splits, with block size in km as an interpretable
   parameter, are preferred over KMeans, whose clusters follow sampling density.)
