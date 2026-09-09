@@ -1,7 +1,15 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
+\contentsline {table}{\numberline {3.1}{\ignorespaces The two GEUS datasets}}{11}{table.3.1}%
+\contentsline {table}{\numberline {3.2}{\ignorespaces The four neighbour encodings}}{13}{table.3.2}%
 \addvspace {10\p@ }
+\contentsline {table}{\numberline {4.1}{\ignorespaces Model comparison}}{15}{table.4.1}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces Neighbour encodings on both datasets}}{16}{table.4.2}%
+\contentsline {table}{\numberline {4.3}{\ignorespaces Gain by baseline difficulty}}{19}{table.4.3}%
+\contentsline {table}{\numberline {4.4}{\ignorespaces Elements with the largest neighbour gain}}{19}{table.4.4}%
+\contentsline {table}{\numberline {4.5}{\ignorespaces Feature-source ablation}}{21}{table.4.5}%
+\contentsline {table}{\numberline {4.6}{\ignorespaces Two model families}}{23}{table.4.6}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \def \@chapapp {\appendixname }

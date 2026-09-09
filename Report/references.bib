@@ -1,10 +1,163 @@
 % Bibliography for Report.tex
 % Add entries here; cite with \cite{key} or \parencite{key}.
 
+% ---------------------------------------------------------------- data sources
+
 @article{greenland_portal,
     author  = {Sch{\o}nwandt, Henrik K.},
     title   = {The Greenland Mineral Resources Portal},
     journal = {GEUS Bulletin},
     year    = {2020},
     doi     = {10.34194/geusb.v44.4948}
+}
+
+@misc{geus_greenmag,
+    author       = {{Geological Survey of Denmark and Greenland}},
+    title        = {{GREENMAG}: Magnetic anomaly grid of Greenland},
+    howpublished = {GEUS Dataverse},
+    year         = {2022},
+    doi          = {10.22008/FK2/LQN5YJ}
+}
+
+@misc{geus_heatflow,
+    author       = {{Geological Survey of Denmark and Greenland}},
+    title        = {Geothermal heat flow grid of Greenland},
+    howpublished = {GEUS Dataverse},
+    year         = {2022},
+    doi          = {10.22008/FK2/F9P03L}
+}
+
+@misc{geus_moho,
+    author       = {{Geological Survey of Denmark and Greenland}},
+    title        = {Depth to Moho beneath Greenland},
+    howpublished = {GEUS Dataverse},
+    year         = {2022},
+    doi          = {10.22008/FK2/TG7OQU}
+}
+
+% ------------------------------------------------------- geostatistics / geochem
+
+@article{tobler1970,
+    author  = {Tobler, Waldo R.},
+    title   = {A Computer Movie Simulating Urban Growth in the {D}etroit Region},
+    journal = {Economic Geography},
+    volume  = {46},
+    pages   = {234--240},
+    year    = {1970},
+    doi     = {10.2307/143141}
+}
+
+@article{aitchison1982,
+    author  = {Aitchison, John},
+    title   = {The Statistical Analysis of Compositional Data},
+    journal = {Journal of the Royal Statistical Society: Series B},
+    volume  = {44},
+    number  = {2},
+    pages   = {139--177},
+    year    = {1982},
+    doi     = {10.1111/j.2517-6161.1982.tb01195.x}
+}
+
+@article{roberts2017,
+    author  = {Roberts, David R. and Bahn, Volker and Ciuti, Simone and Boyce, Mark S.
+               and Elith, Jane and Guillera-Arroita, Gurutzeta and Hauenstein, Severin
+               and Lahoz-Monfort, Jos{\'e} J. and Schr{\"o}der, Boris and Thuiller, Wilfried
+               and Warton, David I. and Wintle, Brendan A. and Hartig, Florian
+               and Dormann, Carsten F.},
+    title   = {Cross-validation Strategies for Data with Temporal, Spatial, Hierarchical,
+               or Phylogenetic Structure},
+    journal = {Ecography},
+    volume  = {40},
+    number  = {8},
+    pages   = {913--929},
+    year    = {2017},
+    doi     = {10.1111/ecog.02881}
+}
+
+% --------------------------------------------------------------- tabular models
+
+@article{breiman2001,
+    author  = {Breiman, Leo},
+    title   = {Random Forests},
+    journal = {Machine Learning},
+    volume  = {45},
+    number  = {1},
+    pages   = {5--32},
+    year    = {2001},
+    doi     = {10.1023/A:1010933404324}
+}
+
+@inproceedings{chen2016xgboost,
+    author    = {Chen, Tianqi and Guestrin, Carlos},
+    title     = {{XGBoost}: A Scalable Tree Boosting System},
+    booktitle = {Proceedings of the 22nd {ACM} {SIGKDD} International Conference on
+                 Knowledge Discovery and Data Mining},
+    pages     = {785--794},
+    year      = {2016},
+    doi       = {10.1145/2939672.2939785}
+}
+
+@inproceedings{ke2017lightgbm,
+    author    = {Ke, Guolin and Meng, Qi and Finley, Thomas and Wang, Taifeng and Chen, Wei
+                 and Ma, Weidong and Ye, Qiwei and Liu, Tie-Yan},
+    title     = {{LightGBM}: A Highly Efficient Gradient Boosting Decision Tree},
+    booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+    year      = {2017}
+}
+
+@inproceedings{grinsztajn2022,
+    author    = {Grinsztajn, L{\'e}o and Oyallon, Edouard and Varoquaux, Ga{\"e}l},
+    title     = {Why Do Tree-Based Models Still Outperform Deep Learning on Typical
+                 Tabular Data?},
+    booktitle = {Advances in Neural Information Processing Systems (NeurIPS),
+                 Datasets and Benchmarks Track},
+    year      = {2022}
+}
+
+@article{pedregosa2011,
+    author  = {Pedregosa, Fabian and Varoquaux, Ga{\"e}l and Gramfort, Alexandre
+               and Michel, Vincent and Thirion, Bertrand and Grisel, Olivier
+               and Blondel, Mathieu and Prettenhofer, Peter and Weiss, Ron
+               and Dubourg, Vincent and Vanderplas, Jake and Passos, Alexandre
+               and Cournapeau, David and Brucher, Matthieu and Perrot, Matthieu
+               and Duchesnay, {\'E}douard},
+    title   = {Scikit-learn: Machine Learning in {P}ython},
+    journal = {Journal of Machine Learning Research},
+    volume  = {12},
+    pages   = {2825--2830},
+    year    = {2011}
+}
+
+% ----------------------------------------------------------------- graph models
+
+@inproceedings{hamilton2017,
+    author    = {Hamilton, William L. and Ying, Rex and Leskovec, Jure},
+    title     = {Inductive Representation Learning on Large Graphs},
+    booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+    year      = {2017}
+}
+
+@inproceedings{velickovic2018,
+    author    = {Veli{\v{c}}kovi{\'c}, Petar and Cucurull, Guillem and Casanova, Arantxa
+                 and Romero, Adriana and Li{\`o}, Pietro and Bengio, Yoshua},
+    title     = {Graph Attention Networks},
+    booktitle = {International Conference on Learning Representations (ICLR)},
+    year      = {2018}
+}
+
+@inproceedings{fey2019,
+    author    = {Fey, Matthias and Lenssen, Jan Eric},
+    title     = {Fast Graph Representation Learning with {P}y{T}orch {G}eometric},
+    booktitle = {ICLR Workshop on Representation Learning on Graphs and Manifolds},
+    year      = {2019}
+}
+
+% ------------------------------------------------------------------------ tools
+
+@misc{anthropic_claude,
+    author       = {{Anthropic}},
+    title        = {Claude and {C}laude {C}ode},
+    howpublished = {\url{https://claude.com/claude-code}},
+    year         = {2026},
+    note         = {Accessed 2026}
 }

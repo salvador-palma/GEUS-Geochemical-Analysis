@@ -2,12 +2,14 @@
 
 **Author:** Salvador Palma · Copenhagen University
 **Project Outside Course Scope (15 ECTS)** · Supervisor: Bulat Ibragimov
-**Last updated:** 2026-09-06
+**Last updated:** 2026-09-09
 
 Running log of the hand-built work in `Project/`. Appended as the project advances.
 
 > **Starting a new session? Read this first.**
 >
+> * **RQ1 experiments are complete. The write-up has started** — see *Report write-up* below.
+>   Do not add RQ1 experiments without a reason; the remaining work is writing.
 > * Everything in `Project/` is hand-built and is the work being assessed. The workspace
 >   *root* holds two vibe-coded predecessors (Bulat's `gui.py` GUI and a `greenland_ml/`
 >   package) — reference only, not part of this project, and their `report/report.pdf`
@@ -19,6 +21,9 @@ Running log of the hand-built work in `Project/`. Appended as the project advanc
 >   first, so a rerun is near-instant unless the file is missing.
 > * **Every number below is random 5-fold CV.** Spatial CV is RQ2 and is not built yet.
 >   Do not present these as spatial-generalisation results.
+> * **Two target sets exist.** Files with no suffix use the 10 best-covered elements; files
+>   suffixed `_Cov1000` use every element with ≥1000 measurements (48 whole rock, 71 stream).
+>   **The `_Cov1000` set is the reportable one** — see *The correction* below for why.
 
 ---
 
@@ -27,7 +32,7 @@ Running log of the hand-built work in `Project/`. Appended as the project advanc
 | RQ | Question | Status |
 |---|---|---|
 | 0 | Parse GEUS exploration reports with public AI models | **dropped** — supervisor deprioritised |
-| **1** | **Predict a held-out element from a sample's other elements (random CV)** | **~90% done** |
+| **1** | **Predict a held-out element from a sample's other elements (random CV)** | **experiments done, writing** |
 | **2** | **Predict a geographically held-out region (spatial CV)** | **not started** |
 
 **RQ0 is out.** Bulat, by email: *"Parsing is more of a long-term project for this work.
@@ -47,6 +52,34 @@ geophysical measurements."* The geophysical features below are that work, alread
 
 ---
 
+## Report write-up
+
+**Started 2026-09-09.** RQ1's experimental work is finished; what remains is writing it up.
+`Report/Report.tex` is a `scrreprt` skeleton (biblatex/biber, booktabs, siunitx, cleveref,
+`\listoffigures`/`\listoftables` already declared) with empty chapters.
+
+| chapter | content | state |
+|---|---|---|
+| Introduction | the problem, RQ1/RQ2, contribution | to write |
+| Background | Greenland geochemistry, GEUS data, tree ensembles, GNNs | **needs citations** |
+| Methodology | pipeline, four encodings, models, graph construction | determined by code |
+| Results | the tables below, four figures | determined by results |
+| Discussion | redundancy thesis, the pathfinder exception, limitations | to write |
+| Conclusion | answer to RQ1, hand-off to RQ2 | to write |
+
+**Four figures carry the argument**, none of which exist as files yet — all live only as
+notebook output:
+
+1. A–D k-sweep, both datasets (aggregation vs dimensionality)
+2. Gain stratified by baseline difficulty, both datasets (**the central figure**)
+3. GNN vs hand-built across k (learned aggregation does not win)
+4. Feature-source comparison, both datasets (how much spatial signal exists)
+
+**`references.bib` has one entry.** Background is the only chapter that cannot be written
+from what is already on disk.
+
+---
+
 ## Datasets
 
 Two GEUS geochemistry datasets, both public, both run through the same pipeline.
@@ -59,15 +92,17 @@ Two GEUS geochemistry datasets, both public, both run through the same pipeline.
 | merged samples | 6,957 | **17,463** |
 | element columns after merge | 76 | 93 |
 | after coverage filter (<10) | 68 | 87 |
+| targets at coverage ≥1000 | 48 | 71 |
 | unique coordinate pairs | 4,498 | 16,542 |
 | samples sharing a coordinate | 3,458 (**50%**) | 1,759 (**10%**) |
 | max samples at one coordinate | 67 | 11 |
-| longitude span | −53.9 … −42.3 | **−72.8 … −13.3** |
+| longitude span | −53.9 … −42.3 (11.7°) | **−72.8 … −13.3 (59.5°)** |
+| latitude span | 59.9 … 70.2 | 59.8 … 83.6 |
 
-The two differ in a way that turned out to matter: whole rock is clustered,
-exploration-driven sampling in a narrow longitude band; stream sediment covers the whole
-island with a fifth of the co-location. **Co-location is real and kept in both** — 67
-samples at one outcrop is genuine sampling density, not duplication.
+The two differ in a way that turned out to matter, though not in the way first assumed:
+whole rock is clustered, exploration-driven sampling in a narrow longitude band; stream
+sediment covers the whole island with a fifth of the co-location. **Co-location is real and
+kept in both** — 67 samples at one outcrop is genuine sampling density, not duplication.
 
 Stream sediment's 523 raw element columns are 93 elements measured by up to four
 lab/method combinations each (`ACTLABS FUS ICP Ni ppm`, `ACTLABS INAA Ni ppm`, …). Whole
@@ -81,9 +116,10 @@ and shared-sample values agree (r=0.92 on Ni). The portal export is used because
 
 ### Column schema
 
-Each source csv now carries a `<name>.json` beside it naming `sampleCol`, `metaCols`,
+Each source csv carries a `<name>.json` beside it naming `sampleCol`, `metaCols`,
 `physicalCols` and `locationCols`. Element columns are whatever is left over, so a new
-dataset needs no code change — only the schema file and three constants.
+dataset needs no code change — only the schema file and three constants. `Longitude` and
+`Latitude` sit in `metaCols`, so coordinates never leak into the chemistry feature set.
 
 ---
 
@@ -124,12 +160,15 @@ Built **at training time**, per fold, never cached to disk.
 
 ### The four KNN encodings
 
-| variant | content | added columns (k=5, m=68) |
+| variant | content | added columns (k=20, m=87) |
 |---|---|---|
 | A | mean of the **target** element over k neighbours | 1 |
-| B | the k individual **target** values | 5 |
-| C | mean of **every** element over k neighbours | 68 |
-| D | **every** element of **every** neighbour | 340 |
+| B | the k individual **target** values | 20 |
+| C | mean of **every** element over k neighbours | 87 |
+| D | **every** element of **every** neighbour | 1,740 |
+
+C is the settled encoding — its column count is independent of k, which is the whole
+reason it wins (see the k-sweep).
 
 ### Performance rewrite
 
@@ -152,7 +191,7 @@ mapping falling out of sync with its split.
 `MakeModel(modelType)` selects between three, so any experiment can be re-run under
 each without editing the pipeline.
 
-### Baseline comparison (10 elements × 5 folds, own-chemistry features)
+### Baseline comparison (whole rock, 10 elements × 5 folds, own-chemistry features)
 
 | model | mean R² | total time |
 |---|---|---|
@@ -165,226 +204,278 @@ indistinguishable from Random Forest — its reputation comes from heavily tuned
 competition use; untuned defaults (`max_depth=6, learning_rate=0.3`) overfit this
 small, dense, correlated dataset.
 
-`MODEL_TYPE = "hgb"` is the working default. RF is kept as a comparison row so the
-RQ1 conclusion can be shown to be model-independent.
+`MODEL_TYPE = "hgb"` is the working default.
+
+**Model independence** was checked on whole rock, where all four encodings ran under both
+RF and HGB and agreed — every gain inside one fold std, D worst under both:
+
+| variant | RF Δ | HGB Δ |
+|---|---|---|
+| A | +0.0016 | +0.0033 |
+| B | −0.0004 | +0.0033 |
+| C | −0.0003 | +0.0064 |
+| D | −0.0101 | −0.0002 |
+
+Stream sediment results use HGB only. Re-running the A–D table under RF there was
+considered and rejected: variant D at k=20 is 1,740 columns and `RandomForestRegressor`
+searches all features per split, making it far more expensive than HGB's binning for a
+confirmation the whole-rock table already provides. **This is a stated limitation.**
 
 ---
 
-## Results so far
+## Results — RQ1
 
-### RQ1 — does spatial context help?
+### The correction
 
-Mean R² over 10 elements, 5-fold random CV (fold std ≈ 0.012 throughout):
+The first version of this project reported a sharp contrast: neighbour features added
+nothing on whole rock (+0.006, inside noise) but 2.5σ on stream sediment, read as evidence
+that **sampling geometry** decides whether spatial context helps.
 
-| variant | RF | RF (excl. co-located) | HGB (excl. co-located) |
-|---|---|---|---|
-| baseline (no neighbours) | 0.8206 | — | 0.8392 |
-| A (+1 col) | 0.8235 | 0.8222 | 0.8421 |
-| B (+5 cols) | 0.8190 | 0.8203 | 0.8421 |
-| C (+68 cols) | 0.8192 | 0.8203 | **0.8452** |
-| D (+340 cols) | 0.8036 | 0.8106 | 0.8386 |
+**That result did not survive widening the target set, and the widening is the honest
+comparison.** Both datasets had been scored on their 10 best-covered elements — an
+arbitrary cutoff that happened to differ systematically between them. Whole rock's top 10
+is oxide-heavy and easy; stream's is trace-heavy and hard, and it contained uranium.
 
-**Neighbour features add essentially nothing.** The best gain (HGB variant C, +0.006)
-is half a fold standard deviation. Variant D consistently *loses*, tracking its column
-count — a feature-dimensionality effect, not a statement about geology.
+Matched at coverage ≥1000, variant C, k=20, co-located neighbours excluded:
 
-The result holds under **two models** and **with and without co-located neighbours**,
-which closes the obvious objection that the neighbours were just duplicates.
+| | targets | baseline | KNN C | Δ | in σ |
+|---|---|---|---|---|---|
+| Whole rock | 48 | 0.7983 | 0.8132 | +0.0149 | **0.82σ** |
+| Stream sediment | 71 | 0.8676 | 0.8801 | +0.0125 | **0.91σ** |
 
-**Working conclusion for RQ1, whole rock:** neighbour encodings add nothing beyond a fold
-standard deviation, under two models, with and without co-located neighbours.
+The two datasets are now **statistically indistinguishable, and both sit below one fold
+standard deviation.**
 
-> **Since qualified by the stream sediment run below.** This holds for whole rock, whose
-> sampling is clustered (50% co-located, narrow longitude band). It does *not* generalise:
-> on stream sediment the same encodings give a gain of 2.5 standard deviations.
+Note which side moved. Whole rock is unchanged (0.81σ → 0.82σ). **Stream collapsed**, from
+2.93σ to 0.91σ, and the cause is one element:
 
-### K-sweep — how many neighbours?
+* U's gain is +0.2205, an order of magnitude above any other element.
+* In a 10-element mean it contributes +0.0220 of +0.0342 — **65% of the old headline was
+  uranium alone.**
+* In the 71-element mean it contributes +0.0031 of +0.0125 (25%). Excluding U, stream's
+  gain is +0.0096.
 
-Mean R² over the 10 elements, HGB, co-located neighbours excluded. Baseline (no
-neighbours) is 0.8392; typical fold std is 0.0113.
+This is exactly the failure mode the widening was meant to catch, and it caught it.
 
-| k | A (+1 col) | B (+k cols) | C (+68 cols) | D (+68k cols) |
-|---|---|---|---|---|
-| 1 | 0.8404 | 0.8404 | 0.8408 | 0.8408 |
-| 3 | 0.8415 | 0.8415 | 0.8435 | 0.8395 |
-| 5 | 0.8421 | 0.8421 | 0.8452 | 0.8386 |
-| 10 | 0.8423 | 0.8421 | 0.8469 | 0.8375 |
-| 20 | 0.8424 | 0.8415 | **0.8490** | 0.8352 |
+### The A–D table (Cov1000, k=20, co-located excluded)
 
-Two clean trends, in opposite directions:
-
-* **C improves monotonically with k** (0.8408 → 0.8490). Averaging every element over more
-  neighbours smooths out sampling noise without adding columns — C stays at 68 features
-  whatever k is. Best overall, +0.0098 over baseline at k=20, which is just under one fold
-  standard deviation.
-* **D degrades monotonically with k** (0.8408 → 0.8352). It is the same information, but
-  spread over 68k columns — 1,360 at k=20. The decline tracks the column count, confirming
-  the A–D pattern is feature dimensionality rather than geology.
-
-A and B plateau by k≈5: both are target-only encodings, so extra neighbours add little.
-
-Even the best cell is inside one fold standard deviation of baseline, so on **whole rock**
-neighbour features are not adding usable signal at any k. What the sweep establishes and
-which does carry over to stream sediment: the A–D shape is an aggregation-versus-
-dimensionality effect, and a neighbourhood should be pooled (variant C), not enumerated
-(variant D).
-
-### Stream sediment — the same pipeline on differently-sampled data
-
-Whole rock's spatial ceiling could have been a property of Greenland geochemistry, or a
-property of clustered exploration sampling. Stream sediment separates the two: 17,463
-samples across the whole island, 10% co-located instead of 50%.
-
-Targets are the 10 best-covered elements, which for stream are `Zn, U, Cu, Rb, Ba, Cr, Sr,
-Fe %, V, Co` — a different set from whole rock's oxide-heavy list, so the two datasets
-compare in aggregate rather than element-for-element. Fold std ≈ 0.012 on both.
-
-**Neighbour features, k=5, co-located excluded:**
+Fold std 0.0180 whole rock, 0.0137 stream.
 
 | variant | whole rock | Δ | stream | Δ |
 |---|---|---|---|---|
-| baseline | 0.8388 | — | 0.7988 | — |
-| A | 0.8421 | +0.0033 | 0.8257 | **+0.0270** |
-| B | 0.8421 | +0.0033 | 0.8212 | +0.0224 |
-| C | 0.8452 | +0.0064 | **0.8285** | **+0.0297** |
-| D | 0.8386 | −0.0002 | 0.8187 | +0.0199 |
+| baseline | 0.7983 | — | 0.8676 | — |
+| A (+1 col) | 0.8043 | +0.0059 | 0.8757 | +0.0081 |
+| B (+20 cols) | 0.8050 | +0.0066 | 0.8724 | +0.0048 |
+| **C (+87 cols)** | **0.8132** | **+0.0149** | **0.8801** | **+0.0125** |
+| D (+1,740 cols) | 0.7982 | −0.0001 | 0.8659 | −0.0017 |
 
-On whole rock every gain sat inside one fold standard deviation. On stream, variant C's
-+0.0297 is **2.5 standard deviations**, and even D — the worst encoding — clears one. This
-is the first defensible neighbour gain in the project.
+Same shape on both: C best, D at or below baseline, every gain under 1σ.
 
-**K-sweep, variant C:**
+### K-sweep — how many neighbours?
 
-| k | whole rock Δ | stream Δ |
-|---|---|---|
-| 1 | +0.0020 | +0.0221 |
-| 5 | +0.0064 | +0.0297 |
-| 20 | +0.0102 | **+0.0347** |
+Δ over baseline, top-10 targets, HGB, co-located excluded. Both datasets now run to k=100.
 
-Monotone on both, and still climbing at k=20 on both — the plateau has not been found.
+| k | WR A | WR C | WR D | SS A | SS C | SS D |
+|---|---|---|---|---|---|---|
+| 1 | +0.0016 | +0.0020 | +0.0020 | +0.0186 | +0.0221 | +0.0221 |
+| 3 | +0.0027 | +0.0048 | +0.0007 | +0.0248 | +0.0279 | +0.0216 |
+| 5 | +0.0033 | +0.0064 | −0.0002 | +0.0270 | +0.0297 | +0.0199 |
+| 10 | +0.0035 | +0.0082 | −0.0013 | +0.0276 | +0.0327 | +0.0174 |
+| 20 | +0.0037 | +0.0102 | −0.0035 | +0.0279 | **+0.0347** | +0.0158 |
+| 50 | +0.0041 | +0.0112 | −0.0054 | +0.0282 | **+0.0355** | +0.0112 |
+| 100 | +0.0043 | **+0.0116** | −0.0079 | +0.0230 | +0.0353 | +0.0087 |
 
-**Feature sets:**
+Two clean trends, in opposite directions, **now confirmed on both datasets**:
+
+* **C improves with k and plateaus at k≈20–50.** It stays at 87 columns whatever k is, so
+  more neighbours only smooth sampling noise. Stream: +0.0347 / +0.0355 / +0.0353 at
+  k=20/50/100 — converged. Whole rock is still creeping at k=100 but has flattened.
+* **D degrades monotonically with k**, tracking its column count (1,740 at k=20; 8,700 at
+  k=100). Same information, spread over more columns.
+
+**A neighbourhood should be pooled, not enumerated.** This is the most robust result in the
+project — two datasets, two models, seven values of k.
+
+`k = 20` is the settled value: the plateau onset, and free for variant C, whose column
+count does not depend on k (measured: 0.46 s to build at k=20 vs 0.48 s at k=10).
+
+### Where the gain lands — the central result
+
+Binning targets by their **own baseline score** separates elements chemistry already
+predicts from elements it cannot. Mean gain within each bin, Cov1000, k=20:
+
+**Whole rock (48 targets)**
+
+| baseline R² | n | mean baseline | + neighbours | + geophysics |
+|---|---|---|---|---|
+| < 0.70 | 8 | 0.5920 | **+0.0517** | +0.0238 |
+| 0.70 – 0.85 | 23 | 0.7927 | +0.0102 | +0.0058 |
+| 0.85 – 0.95 | 14 | 0.8909 | +0.0044 | +0.0026 |
+| > 0.95 | 3 | 0.9597 | +0.0008 | +0.0007 |
+
+**Stream sediment (71 targets)**
+
+| baseline R² | n | mean baseline | + neighbours | + geophysics |
+|---|---|---|---|---|
+| < 0.70 | 8 | 0.5846 | **+0.0484** | +0.0291 |
+| 0.70 – 0.85 | 13 | 0.7896 | +0.0211 | +0.0084 |
+| 0.85 – 0.95 | 30 | 0.9076 | +0.0075 | +0.0032 |
+| > 0.95 | 20 | 0.9714 | +0.0001 | +0.0004 |
+
+**Two datasets, different sampling geometries, different target sets, and the curve is the
+same.** Neighbours are worth ~+0.05 where own chemistry fails and nothing at all where it
+already scores above 0.95. The pooled mean is a weighted average of these, which is why it
+moved so much when the target set changed — and why the stratified table, not the pooled
+mean, is the result to report.
+
+### The pathfinder exception
+
+The elements that gain most are not a random assortment, and they reproduce across datasets:
+
+| whole rock | Δ | stream | Δ |
+|---|---|---|---|
+| As ppm | +0.096 | U ppm | +0.220 |
+| Au ppb | +0.092 | As ppm | +0.060 |
+| Sb ppm | +0.070 | Br ppm | +0.043 |
+| Cs ppm | +0.048 | Sb ppm | +0.041 |
+| S ppm | +0.040 | Pb ppm | +0.034 |
+| Pb ppm | +0.027 | Cs ppm | +0.031 |
+
+**As, Sb, Cs and Pb appear in both lists.** These are the classic hydrothermal *pathfinder*
+suite plus mobile alkalis — elements whose distribution is set by regional-scale processes
+(mineralisation, alteration, and for Br marine influence) rather than by bulk rock
+composition. Uranium is the extreme case, and appears in three independent analyses: the
+largest neighbour gain, the only reliable geophysical correlations (+0.28 magnetics, −0.34
+Moho depth, n=3227), and the one element the predecessor report found neighbours help under
+*spatial* CV (0.472 → 0.578).
+
+Five of stream's top six were invisible under the old top-10 cutoff.
+
+### Feature sources (Cov1000)
 
 | set | whole rock | stream |
 |---|---|---|
-| Chemistry | 0.8388 | 0.7988 |
-| Physics | 0.3000 | 0.4712 |
-| Location | 0.3145 | **0.5428** |
-| Neighbours | 0.3150 | **0.5582** |
-| Chemistry + Physics | 0.8442 | 0.8225 |
-| Chemistry + Location | 0.8449 | 0.8271 |
-| Physics + Location | 0.3288 | 0.5495 |
+| Chemistry | 0.7983 | 0.8676 |
+| Physics | 0.3228 | **0.5253** |
+| Location | 0.3484 | **0.5994** |
+| Neighbours | 0.3246 | **0.6086** |
+| Chemistry + Physics | 0.8059 | 0.8739 |
+| Chemistry + Location | 0.8063 | 0.8775 |
+| Physics + Location | 0.3546 | 0.6017 |
 
-Three readings:
+1. **Sampling geometry does decide how much spatial information exists.** Every standalone
+   spatial source roughly doubles from whole rock to stream (neighbours 0.325 → 0.609,
+   location 0.348 → 0.599). This contrast is large and survives the target-set widening
+   intact — it is the part of the original claim that holds.
+2. **But it does not decide how much that information *adds*.** Five times the spatial
+   signal buys the same sub-1σ gain on top of chemistry, because chemistry already carries
+   nearly all of it. **This is the thesis of RQ1.**
+3. **The three spatial sources are interchangeable** — physics, location and neighbours land
+   in one band on each dataset, and everything adds about the same on top of chemistry
+   (+0.006 to +0.012). Three encodings of "where am I", one ceiling.
+4. **Geophysics does not beat plain coordinates.** Location outscores Physics on both, and
+   Physics + Location barely exceeds Location alone (stream: 0.6017 vs 0.5994).
 
-1. **The R² ≈ 0.30 spatial ceiling was a sampling artefact, not geology.** Every spatial
-   source roughly doubled: neighbours 0.315 → 0.558, location 0.315 → 0.543. The earlier
-   whole-rock conclusion should be qualified to "spatial context is weak *in clustered
-   sampling*", not weak in Greenland geochemistry generally.
-2. **Chemistry is weaker on stream** (0.7988 vs 0.8388). Stream sediment averages an
-   upstream catchment rather than sampling one rock, so co-measured elements predict each
-   other less tightly. Both effects push the same way: neighbours help more, and the
-   baseline they help is lower. Worth stating both rather than only the first.
-3. **Geophysics remains a position proxy, more clearly than before.** Location beats
-   Physics by 0.072 on stream against 0.014 on whole rock, and Physics + Location (0.5495)
-   barely exceeds Location alone. The three grids encode *where* a sample is rather than
-   independently *what* is underfoot. Chemistry + Physics and Chemistry + Location both add
-   ~+0.024–0.028, the same magnitude as neighbours — three routes to the same information.
-
----
-
-## Feature-source ablation (`2. Random Forest.ipynb`)
-
-Same 10 elements, same 5 folds, same model — only the contents of `X` change. Stream
-sediment, random CV.
-
-| feature set | mean R² | vs chemistry |
-|---|---|---|
-| **Chemistry** (68 own elements) | **0.7988** | — |
-| Physics (3 geophysical grids) | 0.4712 | −0.3276 |
-| Location (UTM x, y) | 0.5428 | −0.2560 |
-| Neighbours (variant C, k=20) | 0.5582 | −0.2406 |
-| Chemistry + Physics | 0.8225 | +0.0237 |
-| Chemistry + Location | 0.8271 | +0.0283 |
-| Physics + Location | 0.5495 | −0.2493 |
-
-Three readings:
-
-1. **The three spatial sources are interchangeable.** Physics 0.471, Location 0.543,
-   Neighbours 0.558 — three quite different encodings of "where am I" landing in the same
-   band. That looks like a ceiling on how much spatial information exists, regardless of how
-   it is expressed, and it explains why the A–D table and the k-sweep are both flat.
-2. **Geophysics does not beat plain coordinates.** Location outscores Physics by 0.072, and
-   Physics + Location (0.5495) barely exceeds Location alone. On this evidence the grids
-   encode *where* a sample is rather than independently *what* is underfoot.
-3. **Everything adds about the same on top of chemistry** — +0.024 for physics, +0.028 for
-   coordinates, +0.030 for neighbours. Three routes to what appears to be the same
-   information.
-
-> **Reading 2 is conditional on random CV and is the single most likely conclusion to
+> **Reading 4 is conditional on random CV and is the single most likely conclusion to
 > change.** Coordinates are unusually strong when train and test are interleaved in space.
 > Under spatial CV they should collapse while the geophysical grids — real measurements
-> available at every point — should not. Task 5 in the list below is this test.
+> available at every point — should not. That test is RQ2.
 
 ---
 
 ## Graph neural network (`3. GNN.ipynb`)
 
-Built on stream sediment, because that is where the headroom is: 0.558 of standalone spatial
-signal against whole rock's 0.315.
+Built on stream sediment only, where the standalone spatial signal is 0.609 against whole
+rock's 0.325 — the dataset with headroom for a learned aggregation to compete over.
 
 **Design.** Nodes = samples. Edges = the same train-only k-NN mapping the KNN variants use,
 so the network sees exactly the neighbourhood the hand-built columns saw. Node features are
-the sample's own elements with the target removed, each element contributing two columns —
+the sample's own elements with the target removed, each contributing two columns —
 standardised value (zero when missing) and a present/absent flag, since a network cannot
 consume NaN and needs to tell "average" from "not measured". Standardisation uses training
 rows only. Full-batch transductive training, early stopping on a validation slice carved out
 of *training* nodes.
 
-**Two architectures, and the contrast was the experiment:**
+**Two architectures, and the contrast was the experiment:** `GATConv(edge_dim=1)`, whose
+attention weights are computed per edge **from the distance** — the one thing variants A–D
+structurally cannot encode — against `SAGEConv` as the distance-blind control.
 
-* `GATConv(edge_dim=1)` — attention weights computed per edge **from the distance**, so the
-  network learns how fast a neighbour stops mattering. This is the one thing variants A–D
-  structurally cannot encode.
-* `SAGEConv` — distance-blind control.
+### The GNN k-sweep (top-10 targets)
 
-### Results (stream sediment, k=10, 5 folds, 10 elements)
+| k | GAT | SAGE | KNN C | SAGE − GAT |
+|---|---|---|---|---|
+| 1 | 0.8043 | 0.7918 | 0.8209 | −0.0125 |
+| 3 | 0.8125 | 0.8090 | 0.8267 | −0.0035 |
+| 5 | 0.8188 | 0.8182 | 0.8285 | −0.0006 |
+| 10 | 0.8208 | 0.8216 | 0.8315 | +0.0008 |
+| 20 | 0.8205 | **0.8260** | 0.8335 | +0.0055 |
+| 50 | 0.8138 | 0.8255 | **0.8342** | +0.0117 |
+| 100 | 0.8091 | 0.8231 | 0.8340 | +0.0140 |
 
-| model | mean R² | vs baseline | vs KNN C |
-|---|---|---|---|
-| Baseline (chemistry only) | 0.7988 | — | −0.0297 |
-| **KNN C (hand-built)** | **0.8285** | +0.0297 | — |
-| GNN GAT | 0.8226 | +0.0238 | −0.0059 |
-| GNN SAGE | 0.8225 | +0.0237 | −0.0060 |
+Three findings:
 
-**The GNN beats the baseline but loses to the hand-built columns**, recovering about 80% of
-the available neighbour gain.
+1. **KNN C beats both architectures at every single k.** No crossover anywhere. Best GNN is
+   SAGE at k=20 (0.8260); best hand-built is C at k=50 (0.8342).
+2. **Distance-aware attention actively hurts at large neighbourhoods.** There is a crossover
+   at k≈5: below it GAT wins, above it SAGE wins by a margin widening to +0.0140 at k=100.
+   GNN run-to-run noise is ~0.002, so the k≥20 gaps are well outside it. An earlier
+   single-point comparison at k=10 suggested the two were identical; the sweep shows that
+   was the one k where they happen to cross.
+3. **GAT degrades past k=20** (0.8205 → 0.8091), tracking edge count exactly as variant D
+   tracks column count. The same aggregation-versus-dimensionality effect appears in the
+   learned model.
 
-**GAT and SAGE are identical** — 0.8226 vs 0.8225, against a fold std of ~0.010, with GAT
-winning on 5/10 elements. Distance-aware attention adds nothing. A single CPU test earlier
-had suggested otherwise (GAT 0.790 vs SAGE 0.768 on one element, one fold); across 5 folds
-and 10 elements that gap evaporates, and the single measurement should not have been leaned
-on.
+### Settled configuration (SAGE, k=20, Cov1000)
 
-**The uranium exception, again.** U ppm: baseline 0.594 → KNN C 0.800 → **GNN GAT 0.816**.
-A +0.22 jump from neighbours and the only element where the GNN clearly beats the hand-built
-version. This is the third independent appearance of the same finding — U also has the only
-reliable geophysical correlations (+0.28 magnetics, −0.34 Moho, n=3227), and the predecessor
-report found U to be the one element where neighbours help under *spatial* CV
-(0.472 → 0.578). Two pipelines, two CV schemes, same exception, same geological explanation:
-South Greenland uranium districts are coherent at a scale that survives spatial separation.
+| | mean R² | vs chemistry |
+|---|---|---|
+| tabular Chemistry | 0.8676 | — |
+| **tabular KNN C** | **0.8801** | **+0.0125** |
+| GNN Chemistry | 0.8676 | −0.0000 |
+| GNN Chemistry + Physics | 0.8679 | +0.0004 |
+| GNN Chemistry + Location | 0.8684 | +0.0008 |
 
-**Working conclusion.** Three independent lines now agree: four hand-built encodings plateau
-at +0.03, a learned aggregation reaches +0.024, and distance-awareness contributes nothing.
-The spatial information in this data appears to be exhausted by averaging nearby samples'
-chemistry. Caveats: the GNN is untuned (one hidden size, one learning rate), and this is
-random CV.
+The GNN's graph is always on, so **GNN `Chemistry` is the counterpart of tabular `KNN C`,
+not of tabular `Chemistry`** — 0.8801 is the number it has to beat.
 
-**Ran on Colab (T4)** — ~5 min per architecture against ~5.3 h on CPU. The Drive mirror at
-`MyDrive/UCPH/POOCS/` holds `GreenlandUtils.py`, the schema json, `Data.csv`, `5-Fold.kfold`
-and slimmed reference results (prediction arrays stripped, 9.5 MB → 1.4 KB each).
+**It lands exactly on the no-neighbour baseline.** One target distorts this: `Sum wt%` is a
+−0.253 outlier for the GNN (0.987 → 0.725) where nothing else is worse than −0.061.
+Excluding it, GNN = +0.0037 against KNN C's +0.0128 — so the GNN recovers about **29% of the
+available neighbour gain**, not zero. It beats KNN C on only 15 of 71 elements, and its wins
+are small and concentrated in REEs while its losses are on the hard elements that matter.
+
+On uranium it exactly ties the hand-built columns (0.814 vs 0.814, from a 0.594 baseline):
+it captures the one large spatial signal and misses the many small ones.
+
+Adding physics or location to the node features moves the pooled mean by +0.0004 and +0.0008
+— inside noise. **Geophysics adds nothing to a model that already has the graph.**
+
+**Ran on Colab (T4)**, ~9.1 s per fit at k=20; the full sweep was ~5 h, the settled
+configuration ~54 min per feature set. The Drive mirror at `MyDrive/UCPH/POOCS/` holds
+`GreenlandUtils.py`, the schema json, `Data.csv`, `5-Fold.kfold` and reference results.
 
 ---
+
+## Known caveats
+
+Deliberately accepted, to be stated in the report rather than fixed.
+
+**`Sum wt%` is an exact arithmetic identity.** It equals the sum of the major oxides plus
+L.o.i. — median absolute difference **0.0000 wt%**, 98.9% of 8,482 samples within 0.5 wt%.
+The relation runs both ways, so `SiO2` and the other major oxides are also inflated by
+subtraction, not only `Sum wt%` itself. Stream sediment only; whole rock has no such column.
+
+**~10 elements appear twice under different unit conventions** — `Fe %`/`Fe2O3 wt%` (r=0.93),
+`Mn %`/`MnO wt%` (r=0.97), plus Ca, Mg, K, Ti, P, Na. Redundancy rather than leakage, since
+the pairs come from different digestions and methods.
+
+Both raise absolute baselines and dilute measured gains. **Neither affects any conclusion
+here, because every claim is a difference between two arms that see identical features.**
+The one number to treat carefully is the `> 0.95` bin of the stratified table, which these
+columns partly populate; the `< 0.70` row carries the finding and is unaffected.
+
+**`Au ppb` is effectively unpredictable** (baseline 0.128, fold std 0.061) and `Ta`, `Pr`,
+`Cl` have fold std > 0.03. Five unstable targets out of 71.
 
 ---
 
@@ -396,8 +487,7 @@ RQ2 substitute. Attached to `Data.csv` before the splits, since they are static 
 and carry no train/test dependence.
 
 **Inclusion rule: full Greenland coverage**, checked over the whole landmass rather than over
-the samples at hand, so the same columns attach to any future sample set (stream sediment,
-heavy minerals) unchanged.
+the samples at hand, so the same columns attach to any future sample set unchanged.
 
 | column | source | grid | licence |
 |---|---|---|---|
@@ -405,8 +495,8 @@ heavy minerals) unchanged.
 | `geo_heat_flow mW/m2` | Heat Flow `doi:10.22008/FK2/F9P03L` | ~0.4° (~25 km) | CC0 |
 | `geo_depth_to_moho km` | Depth to Moho `doi:10.22008/FK2/TG7OQU` | ~0.5 km spacing | CC-BY 4.0 |
 
-All three are 100% valid at the 6,957 samples. Magnetic anomaly spans −472…840 nT, heat flow
-32.9…117.7 mW/m², Moho depth 27.7…46.6 km.
+All three are 100% valid at the 6,957 whole-rock samples. Magnetic anomaly spans −472…840 nT,
+heat flow 32.9…117.7 mW/m², Moho depth 27.7…46.6 km.
 
 **What they mean.** Magnetic anomaly tracks how magnetite-rich the rock is (mafic high, felsic
 low). Heat flow tracks tectonic setting plus decay of U/Th/K. Moho depth is crustal thickness —
@@ -454,96 +544,54 @@ neighbours at exactly 0 m, that number is not a clean estimate. The help text in
 code flags the risk without closing it.
 
 The current pipeline uses train-only lookup, consistent masking, `k` as a parameter,
-and four explicit encodings.
+four explicit encodings, and a coverage-threshold target set rather than an arbitrary top-n.
 
 ---
 
 ## Task list
 
-Ordered. Steps 1–2 finish RQ1 and are compute-bound rather than design-bound; steps 3–8 are
-RQ2 and are the real remaining work.
+### RQ1 — experiments complete
 
-### RQ1 — finish (about half a day, mostly waiting)
+Nothing outstanding. Both datasets have the Cov1000 ablation, k-sweeps to k=100, the
+feature-source ablation and the difficulty stratification; stream additionally has the full
+GNN sweep and settled configuration.
 
-**1. Widen the target set to a coverage threshold.**
-Every result so far uses the 10 best-covered elements, which is an arbitrary cutoff: on
-stream sediment ranks 11–20 have 12,469–13,354 samples against rank 10's 13,979, a 4%
-difference, and 71 of 87 elements have at least 1,000 measurements. Replace `top_n=10` with
-`MIN_TARGET_COVERAGE = 1000` (48 elements on whole rock, 71 on stream) in cell 5 of
-`2. Random Forest.ipynb`.
+Deliberately not done, each for a stated reason: RF on stream Cov1000 (whole rock already
+provides the two-model check; variant D under RF is prohibitive), a whole-rock GNN (no
+headroom), and dropping the caveat columns (conclusions are differences, so unaffected).
 
-Rerun **baseline + feature-set ablation only**. Keep the k-sweep at top-10 — it is the
-expensive one and nothing about it depends on the target set.
+### RQ1 — write-up (current work)
 
-This does *not* bias the neighbour-versus-baseline comparison, since both arms see the same
-elements. It **does** bias any claim about which feature source helps: geophysics tracks U
-most reliably, and U is absent from whole rock's top 10. Report the per-element distribution,
-not only a pooled mean — "physics helps U, Th, Zr, Nb and does nothing for the major oxides"
-is a stronger finding than one averaged number.
-
-**2. Add `physicalCols` to the GNN node features.**
-Two lines in `BuildNodeFeatures` in `3. GNN.ipynb`; one Colab run (~10 min). Currently the
-GNN is chemistry-only, which made GNN-vs-KNN-C a clean comparison but leaves one cell of the
-2×2 empty:
-
-| | chemistry only | + physics |
-|---|---|---|
-| tabular | 0.7988 | 0.8225 |
-| + neighbours | 0.8285 (KNN C) | — |
-| GNN | 0.8226 | **?** |
-
-Do this **after** step 1 so both use the same element list.
+1. **Figures to disk** — the four listed under *Report write-up*.
+2. **Background citations** — `references.bib` has one entry.
+3. **Draft chapters** — Methodology and Results are determined by what is on disk;
+   Discussion follows the redundancy thesis; Introduction and Background need framing.
 
 ### RQ2 — build
 
-**3. Implement spatial block folds.**
-Hash UTM coordinates into squares of side `blockKm`, assign whole blocks to folds. About ten
-lines; the logic already exists at `greenland_ml/data/spatial.py:99` in the root package.
-Write as `Spatial-{km}km.kfold` in the same format as `5-Fold.kfold` so `ReadKFold` picks it
-up unchanged and every downstream notebook works without modification.
+4. **Implement spatial block folds.** Hash UTM coordinates into squares of side `blockKm`,
+   assign whole blocks to folds. Write as `Spatial-{km}km.kfold` in the same format as
+   `5-Fold.kfold` so `ReadKFold` picks it up unchanged. Blocks beat KMeans: block size in
+   kilometres is interpretable, whereas KMeans clusters follow sampling density.
+   Reference implementation at `greenland_ml/data/spatial.py:99` in the root package.
+5. **Sanity-check fold geometry** — fold sizes, and minimum distance from each test sample to
+   its nearest training sample. Cheap, and catches a silent failure mode.
+6. **Rerun the core table under spatial CV** — baseline, KNN C, full feature-source ablation.
+   **The step that can change a conclusion**: if Physics overtakes Location, that is the
+   headline RQ2 result and exactly the geological angle Bulat asked for.
+7. **Block-size sweep**, `blockKm ∈ {10, 25, 50, 100, 200}`. The degradation curve is a better
+   deliverable than any single number — it shows the distance over which the model generalises.
+8. **GNN under spatial CV**, SAGE at k=20 only. Do not sweep architectures again.
+9. **Geological province hold-out** — the stricter test Bulat described. Subglacial provinces
+   are a GeoPackage (`doi:10.22008/FK2/BUQQ9C`, CC0), needs `geopandas`. First to cut if time
+   runs short, but say so explicitly rather than omitting it.
 
-Blocks are preferred over KMeans: block size in kilometres is an interpretable parameter,
-whereas KMeans clusters follow sampling density — carving small clusters out of dense regions
-and large ones out of sparse regions, confounding fold difficulty with geography.
-
-**4. Sanity-check the fold geometry before trusting any result.**
-Print fold sizes and the minimum distance from each test sample to its nearest training
-sample. If one fold holds 60% of the data the mean-across-folds is misleading and pooled R²
-is the right statistic. This step is cheap and catches a silent failure mode.
-
-**5. Rerun the core table under spatial CV.**
-Baseline, KNN C, and the full feature-set ablation. **This is the step that can change a
-conclusion, so do it early.**
-
-Under random CV, Physics (0.4712) scored *below* Location (0.5428), which reads as "the
-geophysical grids are a position proxy". That reading is conditional on the CV scheme:
-coordinates are unusually strong under random CV because train and test are interleaved in
-space. Under spatial CV a model that learned "northing 7.2M → high U" is useless when that
-whole band is held out, while magnetic anomaly remains a real measurement at every point.
-**If the ordering inverts, that is the headline RQ2 result** — and it is exactly the
-"geologically relevant angle" Bulat asked for. Do not drop geophysics on the random-CV
-evidence.
-
-**6. Block-size sweep, `blockKm ∈ {10, 25, 50, 100, 200}`.**
-Plot R² against block size. A degradation curve is a better deliverable than any single
-number: it shows the distance over which the model generalises, which is the quantity a
-geologist actually wants.
-
-**7. GNN under spatial CV**, best configuration only. Do not sweep architectures again — GAT
-and SAGE agree to four decimal places, and that is a property of the data rather than a
-tuning problem.
-
-**8. Geological province hold-out.**
-The stricter test Bulat actually described: *"select a geological area outside the one we used
-for training"* — a coherent terrane, not an arbitrary square. Subglacial geologic provinces
-are published as a GeoPackage (`doi:10.22008/FK2/BUQQ9C`, CC0) and would need `geopandas`.
-If time runs short this is the one to cut, but say so explicitly in the report rather than
-omitting it silently.
+**Stream sediment only.** Whole rock spans 11.7° of longitude in one region of West Greenland
+— there is no meaningful "outside" to hold out, and block CV would either make blocks too
+small to be independent or shatter the dataset. Whole rock retires at the RQ1/RQ2 boundary,
+as a stated decision rather than a silent omission.
 
 ### Framing RQ2: two scenarios, not one
-
-Worth designing for deliberately. "Predict a held-out region" splits into two questions the
-same table can answer, because the feature sets already exist:
 
 | feature set | scenario |
 |---|---|
@@ -551,34 +599,27 @@ same table can answer, because the feature sets already exist:
 | Chemistry + Physics | same, geologically enriched — **the primary RQ2** |
 | Neighbours | region has some prior sampling nearby |
 | Physics | **genuinely blank terrain, nobody has been there** |
-| Physics + Location | same, with position |
 
 Bulat's phrasing implies the first: the samples exist and the region is withheld. The
-Physics-only row is the honest lower bound on what can be said about ground with no samples
-at all, and is worth reporting precisely because it will be low.
-
-### Write-up
-
-**9. The random-vs-spatial figure.** Mean R² per model under both CV schemes, side by side.
-This is the single most communicative figure the project will have, and it is the one the
-predecessor report leads with (its Figure 3).
-
-**10. Keep this file current** as results land.
+Physics-only row is the honest lower bound on ground with no samples at all, and is worth
+reporting precisely because it will be low.
 
 ---
 
 ## Open questions
 
-* **Everything so far is random CV.** Train and test are interleaved in space, so position is
-  unusually informative. The Location = 0.543 result in particular should be expected to
-  collapse under spatial CV, and the "geophysics is a position proxy" reading could invert.
-  This is task 5.
-* Does the flat A–D result survive spatial CV, or is it specific to random folds? The
-  predecessor report suggests it does not survive in the same form: its neighbour gain goes
-  from +0.047 under random CV to +0.003 under 50 km blocks.
-* Is uranium exceptional, or the visible tip of a pattern across the trace elements? The
-  widened target set (task 1) answers this — U is currently the one element where spatial
-  context clearly pays, and it appears in three independent analyses.
+* **Everything so far is random CV.** Position is unusually informative when train and test
+  interleave in space. `Location = 0.599` on stream should be expected to collapse under
+  spatial CV, and the "geophysics is a position proxy" reading could invert. This is task 6.
+* **Does the redundancy thesis survive spatial CV?** Under random folds, chemistry already
+  carries nearly all the spatial information. Under block folds it may not, which would make
+  neighbours and geophysics matter far more than they do here. The predecessor report points
+  the other way — its neighbour gain falls from +0.047 (random) to +0.003 (50 km blocks) — so
+  both outcomes are live.
+* **Is the pathfinder pattern geological or statistical?** As, Sb, Cs, Pb gain on both
+  datasets, which argues geological. But they are also among the harder targets, and the
+  stratified table shows gain tracks difficulty. Disentangling "mobile element" from "low
+  baseline" would need a matched comparison at equal baseline.
 * Would per-commodity occurrence labels be viable? `mineral_occurrences_v3_external` carries
   commodity attributes, but 1,167 positives fragment across classes. Relevant only if the
   project later extends toward prospectivity — **not part of RQ2 as Bulat defined it.**
@@ -587,12 +628,18 @@ predecessor report leads with (its Figure 3).
 
 ## Environment notes
 
-* Python 3.14, Windows. `sklearn` 1.9, `torch` 2.12 (CPU), `torch_geometric` 2.8,
-  `xgboost` 3.4.1. No `geopandas`, `rasterio` or `tifffile` — task 8 needs the first.
-* Geophysical rasters live in `Project/Data/Geophysics/` (~250 MB, gitignore-worthy):
-  `GREENMAG_magnetic_anomaly.flt/.hdr`, `GeothermalHeatFlow.xyz`, `DepthToMoho.xyz`.
-  Download URLs are in the markdown of `1. Data Fetching.ipynb` cell 8.
+* **This PC** (transferred 2026-09-04): Python 3.13.3, Windows, 16 cores. `sklearn` 1.9,
+  `pandas` 3.0.5, `numpy` 2.5.3. No `torch`/`torch_geometric` — GNN work runs on Colab.
+  No `geopandas`/`rasterio` — task 9 needs the first.
+* Pipeline reproduces across the machine transfer: stream top-10 baseline 0.7990 here vs
+  0.7988 recorded, Physics 0.4719 vs 0.4712 — differences ~10× smaller than the fold std.
+* Geophysical rasters live in `Project/Data/Geophysics/` (~250 MB, gitignored, **not
+  transferred to this PC**): `GREENMAG_magnetic_anomaly.flt/.hdr`, `GeothermalHeatFlow.xyz`,
+  `DepthToMoho.xyz`. Download URLs are in the markdown of `1. Data Fetching.ipynb` cell 8.
+  Not needed downstream — `Data.csv` already carries the three `geo_` columns.
 * GPU work runs on Colab against `MyDrive/UCPH/POOCS/`. `3. GNN.ipynb` ships with
   `COLAB_SESSION = True`; set it to `False` to run locally.
+* Reference results uploaded to Drive should have `y_pred`/`y_test` stripped first — the
+  `_Cov1000` files are 38.8 MB each and 6 KB without them.
 * The `!pip install` cell at the top of notebooks 2 and 3 is a notebook magic, so a plain
   `ast.parse` of that cell fails. Expected, not a bug.
