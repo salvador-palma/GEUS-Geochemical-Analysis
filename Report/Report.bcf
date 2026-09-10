@@ -2376,28 +2376,21 @@
     <bcf:citekey order="1" intorder="1">greenland_portal</bcf:citekey>
     <bcf:citekey order="2" intorder="1">tobler1970</bcf:citekey>
     <bcf:citekey order="3" intorder="1">aitchison1982</bcf:citekey>
-    <bcf:citekey order="4" intorder="1">tobler1970</bcf:citekey>
-    <bcf:citekey order="5" intorder="1">roberts2017</bcf:citekey>
-    <bcf:citekey order="6" intorder="1">roberts2017</bcf:citekey>
-    <bcf:citekey order="7" intorder="1">grinsztajn2022</bcf:citekey>
-    <bcf:citekey order="8" intorder="1">pedregosa2011</bcf:citekey>
-    <bcf:citekey order="9" intorder="1">ke2017lightgbm</bcf:citekey>
-    <bcf:citekey order="10" intorder="1">breiman2001</bcf:citekey>
-    <bcf:citekey order="11" intorder="1">chen2016xgboost</bcf:citekey>
-    <bcf:citekey order="12" intorder="1">hamilton2017</bcf:citekey>
-    <bcf:citekey order="13" intorder="1">velickovic2018</bcf:citekey>
-    <bcf:citekey order="14" intorder="1">fey2019</bcf:citekey>
-    <bcf:citekey order="15" intorder="1">geus_greenmag</bcf:citekey>
-    <bcf:citekey order="16" intorder="1">geus_heatflow</bcf:citekey>
-    <bcf:citekey order="17" intorder="1">geus_moho</bcf:citekey>
-    <bcf:citekey order="18" intorder="1">breiman2001</bcf:citekey>
-    <bcf:citekey order="19" intorder="1">pedregosa2011</bcf:citekey>
-    <bcf:citekey order="20" intorder="1">chen2016xgboost</bcf:citekey>
-    <bcf:citekey order="21" intorder="1">hamilton2017</bcf:citekey>
-    <bcf:citekey order="22" intorder="1">velickovic2018</bcf:citekey>
-    <bcf:citekey order="23" intorder="1">grinsztajn2022</bcf:citekey>
-    <bcf:citekey order="24" intorder="1">roberts2017</bcf:citekey>
-    <bcf:citekey order="25" intorder="1">anthropic_claude</bcf:citekey>
+    <bcf:citekey order="4" intorder="1">roberts2017</bcf:citekey>
+    <bcf:citekey order="5" intorder="1">geus_greenmag</bcf:citekey>
+    <bcf:citekey order="6" intorder="1">geus_heatflow</bcf:citekey>
+    <bcf:citekey order="7" intorder="1">geus_moho</bcf:citekey>
+    <bcf:citekey order="8" intorder="1">grinsztajn2022</bcf:citekey>
+    <bcf:citekey order="9" intorder="1">pedregosa2011</bcf:citekey>
+    <bcf:citekey order="10" intorder="1">ke2017lightgbm</bcf:citekey>
+    <bcf:citekey order="11" intorder="1">breiman2001</bcf:citekey>
+    <bcf:citekey order="12" intorder="1">chen2016xgboost</bcf:citekey>
+    <bcf:citekey order="13" intorder="1">hamilton2017</bcf:citekey>
+    <bcf:citekey order="14" intorder="1">velickovic2018</bcf:citekey>
+    <bcf:citekey order="15" intorder="1">fey2019</bcf:citekey>
+    <bcf:citekey order="16" intorder="1">grinsztajn2022</bcf:citekey>
+    <bcf:citekey order="17" intorder="1">roberts2017</bcf:citekey>
+    <bcf:citekey order="18" intorder="1">anthropic_claude</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">

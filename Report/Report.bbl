@@ -188,8 +188,8 @@
       \strng{authornamehash}{c0e0955684122d4025d2671d18c95203}
       \strng{authorfullhash}{a4abb5c445cb2b1c726724b4683fd324}
       \strng{authorfullhashraw}{a4abb5c445cb2b1c726724b4683fd324}
-      \field{sortinit}{5}
-      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Ecography}
@@ -201,6 +201,84 @@
       \range{pages}{17}
       \verb{doi}
       \verb 10.1111/ecog.02881
+      \endverb
+    \endentry
+    \entry{geus_greenmag}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=e41d82e1456d0128bcea844e59d07728}{%
+           family={{Geological Survey of Denmark and Greenland}},
+           familyi={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{e41d82e1456d0128bcea844e59d07728}
+      \strng{fullhash}{e41d82e1456d0128bcea844e59d07728}
+      \strng{fullhashraw}{e41d82e1456d0128bcea844e59d07728}
+      \strng{bibnamehash}{e41d82e1456d0128bcea844e59d07728}
+      \strng{authorbibnamehash}{e41d82e1456d0128bcea844e59d07728}
+      \strng{authornamehash}{e41d82e1456d0128bcea844e59d07728}
+      \strng{authorfullhash}{e41d82e1456d0128bcea844e59d07728}
+      \strng{authorfullhashraw}{e41d82e1456d0128bcea844e59d07728}
+      \field{extraname}{1}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{GEUS Dataverse}
+      \field{title}{{GREENMAG}: Magnetic anomaly grid of Greenland}
+      \field{year}{2022}
+      \verb{doi}
+      \verb 10.22008/FK2/LQN5YJ
+      \endverb
+    \endentry
+    \entry{geus_heatflow}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=e41d82e1456d0128bcea844e59d07728}{%
+           family={{Geological Survey of Denmark and Greenland}},
+           familyi={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{e41d82e1456d0128bcea844e59d07728}
+      \strng{fullhash}{e41d82e1456d0128bcea844e59d07728}
+      \strng{fullhashraw}{e41d82e1456d0128bcea844e59d07728}
+      \strng{bibnamehash}{e41d82e1456d0128bcea844e59d07728}
+      \strng{authorbibnamehash}{e41d82e1456d0128bcea844e59d07728}
+      \strng{authornamehash}{e41d82e1456d0128bcea844e59d07728}
+      \strng{authorfullhash}{e41d82e1456d0128bcea844e59d07728}
+      \strng{authorfullhashraw}{e41d82e1456d0128bcea844e59d07728}
+      \field{extraname}{2}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{GEUS Dataverse}
+      \field{title}{Geothermal heat flow grid of Greenland}
+      \field{year}{2022}
+      \verb{doi}
+      \verb 10.22008/FK2/F9P03L
+      \endverb
+    \endentry
+    \entry{geus_moho}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=e41d82e1456d0128bcea844e59d07728}{%
+           family={{Geological Survey of Denmark and Greenland}},
+           familyi={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{e41d82e1456d0128bcea844e59d07728}
+      \strng{fullhash}{e41d82e1456d0128bcea844e59d07728}
+      \strng{fullhashraw}{e41d82e1456d0128bcea844e59d07728}
+      \strng{bibnamehash}{e41d82e1456d0128bcea844e59d07728}
+      \strng{authorbibnamehash}{e41d82e1456d0128bcea844e59d07728}
+      \strng{authornamehash}{e41d82e1456d0128bcea844e59d07728}
+      \strng{authorfullhash}{e41d82e1456d0128bcea844e59d07728}
+      \strng{authorfullhashraw}{e41d82e1456d0128bcea844e59d07728}
+      \field{extraname}{3}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{GEUS Dataverse}
+      \field{title}{Depth to Moho beneath Greenland}
+      \field{year}{2022}
+      \verb{doi}
+      \verb 10.22008/FK2/TG7OQU
       \endverb
     \endentry
     \entry{grinsztajn2022}{inproceedings}{}{}
@@ -229,8 +307,8 @@
       \strng{authornamehash}{ed4d997d878c48f754c0a0ed32f81c2c}
       \strng{authorfullhash}{ed4d997d878c48f754c0a0ed32f81c2c}
       \strng{authorfullhashraw}{ed4d997d878c48f754c0a0ed32f81c2c}
-      \field{sortinit}{7}
-      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{booktitle}{Advances in Neural Information Processing Systems (NeurIPS), Datasets and Benchmarks Track}
@@ -328,8 +406,8 @@
       \strng{authornamehash}{9ec95d747bac3417f92265a9a44f8bb4}
       \strng{authorfullhash}{490c08d091505100c571bcba89f8c65d}
       \strng{authorfullhashraw}{490c08d091505100c571bcba89f8c65d}
-      \field{sortinit}{8}
-      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Journal of Machine Learning Research}
@@ -390,8 +468,8 @@
       \strng{authornamehash}{cec83448a93ad6a5cdc6f494a8f2dbcb}
       \strng{authorfullhash}{138b620984178bfaf960c59da39eb14f}
       \strng{authorfullhashraw}{138b620984178bfaf960c59da39eb14f}
-      \field{sortinit}{9}
-      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{booktitle}{Advances in Neural Information Processing Systems (NeurIPS)}
@@ -575,84 +653,6 @@
       \field{title}{Fast Graph Representation Learning with {P}y{T}orch {G}eometric}
       \field{year}{2019}
     \endentry
-    \entry{geus_greenmag}{misc}{}{}
-      \name{author}{1}{}{%
-        {{hash=e41d82e1456d0128bcea844e59d07728}{%
-           family={{Geological Survey of Denmark and Greenland}},
-           familyi={G\bibinitperiod}}}%
-      }
-      \strng{namehash}{e41d82e1456d0128bcea844e59d07728}
-      \strng{fullhash}{e41d82e1456d0128bcea844e59d07728}
-      \strng{fullhashraw}{e41d82e1456d0128bcea844e59d07728}
-      \strng{bibnamehash}{e41d82e1456d0128bcea844e59d07728}
-      \strng{authorbibnamehash}{e41d82e1456d0128bcea844e59d07728}
-      \strng{authornamehash}{e41d82e1456d0128bcea844e59d07728}
-      \strng{authorfullhash}{e41d82e1456d0128bcea844e59d07728}
-      \strng{authorfullhashraw}{e41d82e1456d0128bcea844e59d07728}
-      \field{extraname}{1}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{howpublished}{GEUS Dataverse}
-      \field{title}{{GREENMAG}: Magnetic anomaly grid of Greenland}
-      \field{year}{2022}
-      \verb{doi}
-      \verb 10.22008/FK2/LQN5YJ
-      \endverb
-    \endentry
-    \entry{geus_heatflow}{misc}{}{}
-      \name{author}{1}{}{%
-        {{hash=e41d82e1456d0128bcea844e59d07728}{%
-           family={{Geological Survey of Denmark and Greenland}},
-           familyi={G\bibinitperiod}}}%
-      }
-      \strng{namehash}{e41d82e1456d0128bcea844e59d07728}
-      \strng{fullhash}{e41d82e1456d0128bcea844e59d07728}
-      \strng{fullhashraw}{e41d82e1456d0128bcea844e59d07728}
-      \strng{bibnamehash}{e41d82e1456d0128bcea844e59d07728}
-      \strng{authorbibnamehash}{e41d82e1456d0128bcea844e59d07728}
-      \strng{authornamehash}{e41d82e1456d0128bcea844e59d07728}
-      \strng{authorfullhash}{e41d82e1456d0128bcea844e59d07728}
-      \strng{authorfullhashraw}{e41d82e1456d0128bcea844e59d07728}
-      \field{extraname}{2}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{howpublished}{GEUS Dataverse}
-      \field{title}{Geothermal heat flow grid of Greenland}
-      \field{year}{2022}
-      \verb{doi}
-      \verb 10.22008/FK2/F9P03L
-      \endverb
-    \endentry
-    \entry{geus_moho}{misc}{}{}
-      \name{author}{1}{}{%
-        {{hash=e41d82e1456d0128bcea844e59d07728}{%
-           family={{Geological Survey of Denmark and Greenland}},
-           familyi={G\bibinitperiod}}}%
-      }
-      \strng{namehash}{e41d82e1456d0128bcea844e59d07728}
-      \strng{fullhash}{e41d82e1456d0128bcea844e59d07728}
-      \strng{fullhashraw}{e41d82e1456d0128bcea844e59d07728}
-      \strng{bibnamehash}{e41d82e1456d0128bcea844e59d07728}
-      \strng{authorbibnamehash}{e41d82e1456d0128bcea844e59d07728}
-      \strng{authornamehash}{e41d82e1456d0128bcea844e59d07728}
-      \strng{authorfullhash}{e41d82e1456d0128bcea844e59d07728}
-      \strng{authorfullhashraw}{e41d82e1456d0128bcea844e59d07728}
-      \field{extraname}{3}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{howpublished}{GEUS Dataverse}
-      \field{title}{Depth to Moho beneath Greenland}
-      \field{year}{2022}
-      \verb{doi}
-      \verb 10.22008/FK2/TG7OQU
-      \endverb
-    \endentry
     \entry{anthropic_claude}{misc}{}{}
       \name{author}{1}{}{%
         {{hash=f431db65cea024a5f19eab835afefee2}{%
@@ -667,8 +667,8 @@
       \strng{authornamehash}{f431db65cea024a5f19eab835afefee2}
       \strng{authorfullhash}{f431db65cea024a5f19eab835afefee2}
       \strng{authorfullhashraw}{f431db65cea024a5f19eab835afefee2}
-      \field{sortinit}{2}
-      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{howpublished}{\url{https://claude.com/claude-code}}

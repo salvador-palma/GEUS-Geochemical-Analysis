@@ -1,3 +1,5 @@
 #ignore /Data/Geophysics
 
 /Data/Geophysics/
+#Byte-cache from importing GreenlandUtils / make_figures
+__pycache__/

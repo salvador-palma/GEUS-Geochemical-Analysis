@@ -1,51 +1,42 @@
-\contentsline {chapter}{\numberline {1}Introduction}{7}{chapter.1}%
-\contentsline {section}{\numberline {1.1}Research questions}{7}{section.1.1}%
-\contentsline {section}{\numberline {1.2}Contributions}{8}{section.1.2}%
-\contentsline {chapter}{\numberline {2}Background}{9}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Geochemical data}{9}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Spatial structure and its evaluation}{9}{section.2.2}%
-\contentsline {section}{\numberline {2.3}Models for tabular and graph-structured data}{10}{section.2.3}%
-\contentsline {chapter}{\numberline {3}Methodology}{11}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Datasets}{11}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Preprocessing}{12}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Target selection}{12}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Neighbour features}{12}{section.3.4}%
-\contentsline {section}{\numberline {3.5}Geophysical features}{13}{section.3.5}%
-\contentsline {section}{\numberline {3.6}Models}{14}{section.3.6}%
-\contentsline {section}{\numberline {3.7}Graph neural network}{14}{section.3.7}%
-\contentsline {section}{\numberline {3.8}Evaluation}{14}{section.3.8}%
-\contentsline {chapter}{\numberline {4}Results}{15}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Own chemistry is a strong predictor}{15}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Model selection}{15}{section.4.2}%
-\contentsline {section}{\numberline {4.3}The four neighbour encodings}{16}{section.4.3}%
-\contentsline {section}{\numberline {4.4}How many neighbours?}{16}{section.4.4}%
-\contentsline {section}{\numberline {4.5}A correction: how target selection manufactured an effect}{17}{section.4.5}%
-\contentsline {section}{\numberline {4.6}Where the gain lands}{18}{section.4.6}%
-\contentsline {section}{\numberline {4.7}The elements that benefit}{19}{section.4.7}%
-\contentsline {section}{\numberline {4.8}Where the spatial signal comes from}{20}{section.4.8}%
-\contentsline {paragraph}{\nonumberline Sampling geometry decides how much spatial information exists.}{20}{paragraph*.4}%
-\contentsline {paragraph}{\nonumberline But it does not decide how much that information adds.}{21}{paragraph*.5}%
-\contentsline {paragraph}{\nonumberline The three spatial sources are interchangeable.}{21}{paragraph*.6}%
-\contentsline {section}{\numberline {4.9}Does a learned aggregation do better?}{21}{section.4.9}%
-\contentsline {paragraph}{\nonumberline The hand-built encoding wins everywhere.}{21}{paragraph*.7}%
-\contentsline {paragraph}{\nonumberline Distance-aware attention does not pay, and eventually hurts.}{21}{paragraph*.8}%
-\contentsline {paragraph}{\nonumberline On the widened target set the network matches the baseline, not the encoding.}{22}{paragraph*.9}%
-\contentsline {section}{\numberline {4.10}Model independence}{22}{section.4.10}%
-\contentsline {chapter}{\numberline {5}Discussion}{24}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Spatial context is redundant, not absent}{24}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Why pooling beats enumeration}{24}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Why the graph network does not win}{25}{section.5.3}%
-\contentsline {section}{\numberline {5.4}The methodological result}{25}{section.5.4}%
-\contentsline {section}{\numberline {5.5}Limitations}{25}{section.5.5}%
-\contentsline {paragraph}{\nonumberline Random cross-validation.}{25}{paragraph*.10}%
-\contentsline {paragraph}{\nonumberline Two derived target columns.}{26}{paragraph*.11}%
-\contentsline {paragraph}{\nonumberline Confounded explanation of the pathfinder result.}{26}{paragraph*.12}%
-\contentsline {paragraph}{\nonumberline Scope of the model check.}{26}{paragraph*.13}%
-\contentsline {chapter}{\numberline {6}Conclusion and future work}{27}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Future work: RQ2}{27}{section.6.1}%
-\contentsline {chapter}{Declaration on the use of AI tools}{28}{Item.15}%
-\def \@chapapp {\appendixname }
-\contentsline {chapter}{\numberline {A}Additional Material}{31}{appendix.A}%
-\contentsline {section}{\numberline {A.1}Reproduction}{31}{section.A.1}%
-\contentsline {section}{\numberline {A.2}Fold noise floor}{31}{section.A.2}%
+\contentsline {section}{\numberline {1}Introduction}{3}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Research questions}{3}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Contributions}{3}{subsection.1.2}%
+\contentsline {section}{\numberline {2}Data and method}{4}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Two datasets}{4}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Preprocessing}{5}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Targets and evaluation}{5}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Encoding a neighbourhood}{5}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Geophysical grids}{6}{subsection.2.5}%
+\contentsline {subsection}{\numberline {2.6}Models}{6}{subsection.2.6}%
+\contentsline {subsection}{\numberline {2.7}Graph neural network}{6}{subsection.2.7}%
+\contentsline {section}{\numberline {3}Results}{7}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Own chemistry sets a high baseline}{7}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}A neighbourhood should be pooled, not enumerated}{7}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Where the gain lands}{8}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Which elements benefit}{9}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}Chemical isolation is the common cause}{10}{subsection.3.5}%
+\contentsline {subsection}{\numberline {3.6}Where the spatial information comes from}{11}{subsection.3.6}%
+\contentsline {paragraph}{\nonumberline Sampling geometry decides how much spatial information exists.}{11}{paragraph*.1}%
+\contentsline {paragraph}{\nonumberline It does not decide how much that information adds.}{11}{paragraph*.2}%
+\contentsline {paragraph}{\nonumberline The three spatial sources are interchangeable.}{11}{paragraph*.3}%
+\contentsline {subsection}{\numberline {3.7}A learned aggregation does not do better}{12}{subsection.3.7}%
+\contentsline {paragraph}{\nonumberline The hand-built encoding wins everywhere.}{12}{paragraph*.4}%
+\contentsline {paragraph}{\nonumberline Distance-aware attention does not pay, and eventually hurts.}{12}{paragraph*.5}%
+\contentsline {paragraph}{\nonumberline On the full target set the network matches the baseline, not the encoding.}{12}{paragraph*.6}%
+\contentsline {subsection}{\numberline {3.8}Robustness}{12}{subsection.3.8}%
+\contentsline {paragraph}{\nonumberline Model family.}{12}{paragraph*.7}%
+\contentsline {paragraph}{\nonumberline Target selection.}{13}{paragraph*.8}%
+\contentsline {section}{\numberline {4}Discussion}{13}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Spatial context is redundant, not absent}{13}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Why pooling beats enumeration}{13}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Why the graph network does not win}{14}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Limitations}{14}{subsection.4.4}%
+\contentsline {paragraph}{\nonumberline Random cross-validation.}{14}{paragraph*.9}%
+\contentsline {paragraph}{\nonumberline Two derived target columns.}{14}{paragraph*.10}%
+\contentsline {paragraph}{\nonumberline Confounded explanation of the pathfinder result.}{14}{paragraph*.11}%
+\contentsline {paragraph}{\nonumberline Scope.}{14}{paragraph*.12}%
+\contentsline {section}{\numberline {5}Conclusion and future work}{15}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Future work: RQ2}{15}{subsection.5.1}%
+\contentsline {subsection}{Reproduction}{15}{Item.10}%
+\contentsline {subsection}{Declaration on the use of AI tools}{16}{Item.10}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

@@ -8,15 +8,16 @@ Running log of the hand-built work in `Project/`. Appended as the project advanc
 
 > **Starting a new session? Read this first.**
 >
-> * **RQ1 experiments are complete. The write-up has started** — see *Report write-up* below.
->   Do not add RQ1 experiments without a reason; the remaining work is writing.
+> * **RQ1 is done — experiments and report both** — see *Report write-up* below.
+>   Do not add RQ1 experiments without a reason; the next work is RQ2.
 > * Everything in `Project/` is hand-built and is the work being assessed. The workspace
 >   *root* holds two vibe-coded predecessors (Bulat's `gui.py` GUI and a `greenland_ml/`
 >   package) — reference only, not part of this project, and their `report/report.pdf`
 >   answers a different question (see *Comparison to prior code*).
-> * Three notebooks, run in order: `1. Data Fetching` → `2. Random Forest` → `3. GNN`.
->   Switching dataset means changing three constants (`DATA_TYPE`, `MERGE_TYPE`,
->   `SOURCE_CSV`) and nothing else.
+> * Four notebooks, run in order: `1. Data Fetching` → `2. Random Forest` → `3. GNN` →
+>   `4. Results`. Switching dataset means changing three constants (`DATA_TYPE`,
+>   `MERGE_TYPE`, `SOURCE_CSV`) and nothing else — except in `4. Results`, which loads
+>   **both** datasets at once, trains nothing, and only reads the JSON cache.
 > * Results cache to `Results/<DATA_TYPE>/<MERGE_TYPE>/`. Every experiment checks the cache
 >   first, so a rerun is near-instant unless the file is missing.
 > * **Every number below is random 5-fold CV.** Spatial CV is RQ2 and is not built yet.
@@ -54,29 +55,61 @@ geophysical measurements."* The geophysical features below are that work, alread
 
 ## Report write-up
 
-**Started 2026-09-09.** RQ1's experimental work is finished; what remains is writing it up.
-`Report/Report.tex` is a `scrreprt` skeleton (biblatex/biber, booktabs, siunitx, cleveref,
-`\listoffigures`/`\listoftables` already declared) with empty chapters.
+**Drafted 2026-09-09.** RQ1's experimental work is finished and the report is written.
+`Report/Report.tex` is a `scrartcl` document (biblatex/biber, booktabs, siunitx, cleveref),
+**16 pages**: title page, abstract + contents, 13 of body, ~1.5 of references. It compiles with
+`pdflatex → biber → pdflatex ×2` (MiKTeX here has no perl, so `latexmk` does not run).
 
-| chapter | content | state |
-|---|---|---|
-| Introduction | the problem, RQ1/RQ2, contribution | to write |
-| Background | Greenland geochemistry, GEUS data, tree ensembles, GNNs | **needs citations** |
-| Methodology | pipeline, four encodings, models, graph construction | determined by code |
-| Results | the tables below, four figures | determined by results |
-| Discussion | redundancy thesis, the pathfinder exception, limitations | to write |
-| Conclusion | answer to RQ1, hand-off to RQ2 | to write |
+Layout choices made to hit that length, all reversible in the preamble: `geometry` at 2.5 cm
+margins (KOMA's default typearea was leaving ~6 cm of horizontal margin), classic indented
+paragraphs rather than `parskip=half`, and `maxnames=3` in biblatex so 14-author entries do not
+run three lines each. Together these were worth ~5 pages with no words cut.
 
-**Four figures carry the argument**, none of which exist as files yet — all live only as
-notebook output:
+Dropping the standalone title page for a title block would take it to 15; left in place as a
+submission-format call.
 
-1. A–D k-sweep, both datasets (aggregation vs dimensionality)
-2. Gain stratified by baseline difficulty, both datasets (**the central figure**)
-3. GNN vs hand-built across k (learned aggregation does not win)
-4. Feature-source comparison, both datasets (how much spatial signal exists)
+Four tables were folded into prose during the same pass (model comparison, difficulty bands,
+the isolation split, and the two-model check) — all four were small or duplicated a figure. The
+numbers survive inline; nothing was dropped.
 
-**`references.bib` has one entry.** Background is the only chapter that cannot be written
-from what is already on disk.
+| section | content |
+|---|---|
+| 1 Introduction | the archive, RQ0/RQ1/RQ2, four contributions |
+| 2 Data and method | two datasets, pipeline, targets, A–D encodings, geophysics, models, GNN |
+| 3 Results | baseline, pooling vs enumeration, difficulty stratification, pathfinders, feature sources, GNN, robustness |
+| 4 Discussion | redundancy thesis, why pooling wins, why the GNN does not, limitations |
+| 5 Conclusion | answer to RQ1, hand-off to RQ2 |
+
+Background was folded into the method section rather than kept as its own chapter — every
+citation now sits next to the choice it justifies. `references.bib` has 16 entries.
+
+**Six figures carry the argument**, all regenerated from `Results/` by
+`Report/make_figures.py` (run from the repo root):
+
+1. `samples.png` — sample locations on both datasets (the sampling-geometry contrast)
+2. `ksweep.png` — A–D k-sweep, both datasets (aggregation vs dimensionality)
+3. `difficulty.png` — gain stratified by baseline difficulty (**the central figure**)
+4. `isolation.png` — companion strength vs baseline vs neighbour gain (**the mechanism**)
+5. `featuresets.png` — feature-source ablation (spatial alone vs on top of chemistry)
+6. `gnn.png` — GNN vs hand-built across k (learned aggregation does not win)
+
+Figure 4 reads `Results/per-element-*.csv`, which `4. Results.ipynb` exports; the other five
+read the experiment JSONs directly.
+
+**Two entry points, one implementation.** `make_figures.py` exposes a `FIGURES` dict mapping
+name → builder; each builder saves its PNG and returns the figure. `python
+Report/make_figures.py` from the repo root iterates it, and so does the final *Report Figures*
+section of `4. Results.ipynb`, which imports the module and displays each figure inline. Adding
+a figure to that dict is the only wiring needed for it to appear in both.
+
+The module addresses paths through `make_figures.ROOT` (default: the working directory), which
+the notebook sets to `DRIVE_PATH` on Colab. Importing it applies the report's Matplotlib style
+globally, so plot anything of your own *before* that cell.
+
+Two things deliberately *not* in the report, having been judged process rather than result:
+the KNN vectorisation speedup, and the narrative of how the target-set correction was found.
+The correction itself survives as a *Target selection* paragraph inside §3.8 *Robustness*,
+stated as a sensitivity result.
 
 ---
 
@@ -351,6 +384,50 @@ Moho depth, n=3227), and the one element the predecessor report found neighbours
 
 Five of stream's top six were invisible under the old top-10 cutoff.
 
+### Chemical isolation — the mechanism (`4. Results.ipynb`)
+
+**Added 2026-09-10.** Measured directly from the chemistry, with no model involved: for each
+element, the strongest pairwise-complete Spearman it has with any *other* element in the same
+sample — its **companion strength**, i.e. how good a proxy the sample already carries.
+
+| | whole rock | stream |
+|---|---|---|
+| companion strength vs baseline R² | **+0.765** (ρ +0.756) | **+0.760** (ρ +0.628) |
+| companion strength vs neighbour gain | −0.633 (ρ −0.696) | −0.440 (ρ −0.629) |
+
+Split on whether any partner exceeds ρ=0.8:
+
+| | n | baseline | + neighbours |
+|---|---|---|---|
+| whole rock, has a partner >0.8 | 23 | 0.864 | +0.0047 |
+| whole rock, isolated | 25 | 0.738 | **+0.0242** |
+| stream, has a partner >0.8 | 44 | 0.920 | +0.0047 |
+| stream, isolated | 27 | 0.782 | **+0.0253** |
+
+The connected rows agree to four decimals across two datasets, which is luck, but the split
+itself reproduces cleanly. The identities do the explaining: the top of the baseline
+distribution is REEs tracking each other at ρ>0.98 (Ce–Pr 0.995, Ho–Er 0.993), the bottom is
+elements with no proxy at all — Au 0.31 (stream), As 0.47, U 0.60, none with a partner over 0.8.
+
+**This is the mechanism behind the difficulty stratification.** Spatial context substitutes for
+a missing chemical proxy; where the sample already contains one, the neighbourhood is redundant.
+It also collapses the pathfinder ambiguity: "mobile element" and "hard target" are one property
+seen from two sides, since an element set by mineralisation rather than bulk composition is for
+that reason one nothing else in the sample tracks. **Does not resolve the confound** — isolation
+explains both — but names the common cause. Report §3.5, `isolation.png`.
+
+### Geophysics as a position proxy (`4. Results.ipynb`)
+
+Independent of the model ablation: for each element, its strongest geophysical correlation
+against its strongest correlation with raw easting/northing.
+
+* Whole rock: geophysics wins for **27/64 (42%)**; median |ρ| for northing alone 0.106.
+* Stream: geophysics wins for **26/81 (32%)**; median |ρ| for northing alone 0.248.
+
+Moho depth is r=+0.75 with northing on **whole rock**, but only −0.23 on stream — so the
+proxy relation is a property of the sampling footprint, not of the grid. Worth remembering
+before reading too much into it under spatial CV.
+
 ### Feature sources (Cov1000)
 
 | set | whole rock | stream |
@@ -560,12 +637,10 @@ Deliberately not done, each for a stated reason: RF on stream Cov1000 (whole roc
 provides the two-model check; variant D under RF is prohibitive), a whole-rock GNN (no
 headroom), and dropping the caveat columns (conclusions are differences, so unaffected).
 
-### RQ1 — write-up (current work)
+### RQ1 — write-up complete
 
-1. **Figures to disk** — the four listed under *Report write-up*.
-2. **Background citations** — `references.bib` has one entry.
-3. **Draft chapters** — Methodology and Results are determined by what is on disk;
-   Discussion follows the redundancy thesis; Introduction and Background need framing.
+Figures, citations and all five sections are done; `Report/Report.pdf` builds clean. What is
+left is a proof-read pass, not new writing.
 
 ### RQ2 — build
 

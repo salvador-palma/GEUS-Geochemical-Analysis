@@ -194,6 +194,10 @@ def DFStats(df : pd.DataFrame, metaCols : list[str], n: int = 10, sampleCol: str
     stats.add("Columns lacking coordinates", int((df["Longitude"].isna() | df["Latitude"].isna()).sum()))
     stats.rest()
 
+    stats.title("Location span")
+    stats.add("Longitude", f"{df['Longitude'].min():.4f} to {df['Longitude'].max():.4f}")
+    stats.add("Latitude", f"{df['Latitude'].min():.4f} to {df['Latitude'].max():.4f}")
+
     stats.title("Co-location")
 
     #One physical spot sampled more than once. Clustered sampling makes a neighbour a near
