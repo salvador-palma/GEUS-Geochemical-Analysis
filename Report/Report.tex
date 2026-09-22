@@ -56,36 +56,12 @@
     {\large
     Salvador Wahnon Palma\\
     Supervisor: Bulat Ibragimov\\
-    \today
+    In progress
     \par}
 \end{titlepage}
 
 \begin{abstract}
-Greenland is among the world's most mineral-rich but least-explored regions, and the Geological
-Survey of Denmark and Greenland (GEUS) publishes decades of geochemical sampling as open data.
-This report asks whether a held-out element can be predicted from a sample's remaining elements,
-and whether knowing \emph{where} the sample came from helps. One pipeline is applied unchanged
-to two independent GEUS datasets with deliberately different sampling geometries: whole-rock
-geochemistry (\num{6957} samples, clustered along the West Greenland margin) and stream sediment
-(\num{17463} samples, spanning the whole ice-free coast).
-
-Own chemistry predicts a held-out element well, reaching a mean \Rsq{} of \num{0.868} on stream
-sediment and \num{0.798} on whole rock over 71 and 48 target elements. Spatial context adds
-little on top: neighbouring chemistry, three full-coverage geophysical grids and raw coordinates
-each contribute less than one fold standard deviation, and are largely interchangeable with one
-another. A graph neural network with learned, distance-weighted aggregation does not beat a
-hand-specified average over the same neighbourhood.
-
-The gain is not uniform, and its structure is the main result. Stratifying targets by how well
-own chemistry already predicts them gives a clean monotone decay --- roughly $+0.05$ \Rsq{}
-where chemistry fails, nothing where it already exceeds \num{0.95} --- and the curve reproduces
-across both datasets despite their different geometries and target sets. The elements that
-benefit form a coherent group: the hydrothermal pathfinder suite (As, Sb, Pb, Cs on both
-datasets) led by uranium on stream sediment, which rises from \num{0.594} to \num{0.814}.
-Measuring the chemistry directly identifies what those elements share --- they are the ones with
-no close companion element in the same sample, so nothing local substitutes for the target. All
-results use random $k$-fold cross-validation; spatially blocked evaluation, where these
-conclusions are most exposed, is set out as the next stage.
+TO DO
 \end{abstract}
 
 \tableofcontents
@@ -93,67 +69,46 @@ conclusions are most exposed, is set out as the next stage.
 \section{Introduction}
 \label{ch:introduction}
 
-Since the 1950s, government surveys and exploration companies have sampled rock outcrops and
-stream catchments along Greenland's ice-free margin. The resulting analyses --- \num{46226} rows
-of them in the two datasets used here --- are published by GEUS through the Greenland Mineral
-Resources Portal \parencite{greenland_portal}.
+Greenland is one of the world's most mineral-rich but least-explored regions. Over decades, the Geological Survey of Denmark and Greenland (GEUS) \parencite{greenland_portal}  has assembled an extensive public database of geochemistry samples, exploration reports, mineral occurrences, intrusions, geological maps, and license boundaries, all accessible through GEUS web services. This data is heterogeneous in coverage, quality, and completeness, which makes it an interesting and realistic setting for applying machine learning.
+The aim of this project is to use machine learning to analyse geochemical data from GEUS and explore what can be learned from it. For example, identifying patterns across elements, reconstructing missing measurements, mapping spatial trends, or relating geochemistry to known mineral occurrences. 
 
-The archive is attractive to machine learning for the same reasons it is awkward. Coverage is
-heterogeneous: some outcrops carry dozens of samples while entire regions carry none. Analytical
-suites differ by campaign, so the element matrix is sparse and its sparsity is not random.
-Concentrations are compositional and span six orders of magnitude, from weight percent to parts
-per billion. And everything is spatially autocorrelated, because neighbouring catchments drain
-the same lithologies \parencite{tobler1970} --- which is at once the motivation for spatial
-modelling and the main threat to evaluating it honestly.
 
 \subsection{Research questions}
 
-The project was organised around three questions agreed with the supervisor.
+The project was organized around two major problems:
 
 \begin{description}
-    \item[RQ0 --- report parsing.] Convert scanned exploration reports into structured records
-        with a public language model. \emph{Dropped by agreement:} the scans rarely contain the
-        assay tables that would make parsing useful, and the geochemical database is already
-        available in structured form.
-    \item[RQ1 --- missing geochemistry.] Given a sample with some elements measured, predict a
-        held-out element from (a) the sample's other elements and (b) its spatial neighbourhood.
-        \emph{This report.}
-    \item[RQ2 --- unexplored regions.] Predict concentrations in a geological area held out
-        \emph{spatially} rather than at random. This is regression under spatial hold-out, not
-        prospectivity classification. \emph{Scoped and prepared; see \Cref{ch:conclusion}.}
+    \item[RQ1 --- missing geochemistry.] Given a sample predict an held-out element from the sample's other elements and its spatial neighborhood.
+    
+    \item[RQ2 --- unexplored regions.] Predict concentrations in an held out geological area rather than at random, avoiding spatial leakage.
 \end{description}
+
+This report focuses on \bold{RQ1}, while setting some ground for the \bold{RQ2}.
 
 \subsection{Contributions}
 
-One pipeline is applied unchanged to two GEUS datasets with markedly different sampling
-geometries, so every claim below can be checked for dataset-specificity rather than asserted
-from one. On that footing the report contributes: a comparison of four ways of encoding a
-spatial neighbourhood as tabular features, across seven neighbourhood sizes and two model
-families, showing that a neighbourhood should be \emph{pooled} rather than \emph{enumerated};
-evidence that spatial context --- as neighbouring chemistry, geophysical grids, raw coordinates,
-or a learned graph aggregation --- is largely redundant with a sample's own chemistry, together
-with a direct measurement of why, and of which elements escape it; and a graph neural network
-evaluated against the hand-built encodings on identical folds, including whether edge distance
-carries information a fixed-radius average cannot express. It does not.
+This project applies one identical pipeline to two GEUS datasets with different sampling geometries. I contribute with the following: 
 
-\section{Data and method}
+\begin{description}
+    \item [Contrasting different KNN integrations.] Comparing distinct methods of encoding a spatial neighborhood as tabular data, across seven neighborhood sizes.
+    \item [Evidence that spatial context is largely redundant.] A strong baseline obtained only by a sample's own geochemistry doesn't gain much with geophysical or spatial information. Some elements are exceptions, however.
+    \item [Comparison between hand-built vs learned neighbor aggregation.] Two different graph neural networks (GNN), with distance-aware and unaware edges, are evaluated against the handbuilt KNN encodings.
+    
+\end{description}
+
+\section{Data and Methods}
 \label{ch:method}
 
-\subsection{Two datasets}
+\subsection{The datasets}
 \label{sec:datasets}
 
-Two public GEUS geochemistry datasets are used, both processed by the same code. They were
-chosen because they differ sharply in sampling geometry (\Cref{fig:samples,tab:datasets}). Whole
-rock is clustered exploration sampling within a narrow band of West Greenland; stream sediment
-covers the entire ice-free margin with a fifth of the co-location. If a conclusion depends on
-how a survey was laid out, these two should disagree.
+Two public geochemical datasets, that differ sharply in sampling geometry (\Cref{fig:samples,tab:datasets}), were picked and pre-processed by the exact same code. 
+Whole rock is an exploration sampling within a narrow band of South-West Greenland, whilst Stream Sediment covers the entire margin of Greenland.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.50\textwidth]{samples.png}
-\caption[Sample locations]{Sample locations after preprocessing. Whole rock is confined to one
-region of the west coast; stream sediment follows the whole ice-free margin, including the far
-north and east.}
+\caption[Sample locations]{Sampling locations post-pre-processing on both datasets}
 \label{fig:samples}
 \end{figure}
 
@@ -167,172 +122,116 @@ north and east.}
 \midrule
 Raw rows                       & \num{26068}   & \num{20158} \\
 Raw element columns            & 76            & 523 \\
-Merged physical samples        & \num{6957}    & \num{17463} \\
-Element columns after merging  & 76            & 93 \\
+Merged rows                    & \num{6957}    & \num{17463} \\
+Merged element columns         & 76            & 93 \\
 Target elements (coverage $\geq$ \num{1000}) & 48 & 71 \\
 \midrule
+\textit{(After pre-processing)} \\
 Unique coordinate pairs        & \num{4498}    & \num{16542} \\
-Samples sharing a coordinate   & \num{3458} (50\,\%) & \num{1759} (10\,\%) \\
-Maximum samples at one coordinate & 67         & 11 \\
+Co-located samples      & \num{3458} (49.7\,\%) & \num{1759} (10.1\,\%) \\
+Max. samples at one location & 67         & 11 \\
 Longitude span                 & \ang{11.7}    & \ang{59.5} \\
+Latitude span                 & \ang{10.3}    & \ang{23.8} \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Stream sediment's 523 raw element columns are 93 elements each measured by up to four
-laboratory and method combinations (for instance \texttt{ACTLABS FUS ICP Ni ppm} alongside
-\texttt{ACTLABS INAA Ni ppm}); whole rock already carries one column per element. Co-location is
-genuine sampling density rather than duplication --- 67 samples at one outcrop reflects a
-detailed campaign --- so it is retained in both datasets, and its effect is instead controlled
-for at feature-construction time (\Cref{sec:neighbours}).
 
-Each source file carries a schema in JSON naming the sample identifier, metadata, physical and
-location columns; element columns are whatever remains. Longitude and latitude are classified as
-metadata, so coordinates never enter the chemistry feature set by accident.
+Each source file is accompanied by a JSON meta file naming the sample number identifier, metadata, coordinates, and geophysical columns. The most important, geochemical columns, are whatever remains from this,
+
 
 \subsection{Preprocessing}
 \label{sec:pipeline}
 
-Six steps, whose order is load-bearing:
+The preprocessing of data consists on the following six steps:
 
 \begin{enumerate}
-    \item \textbf{Mask below-detection values.} Entries $\leq 0$ encode ``below detection limit''
-        and become missing --- an analysis that finds nothing reports a sentinel, not a zero.
-        Done \emph{first}, so a negative reading can never contaminate a median computed later.
-    \item \textbf{Merge analytical columns.} Per-laboratory, per-method columns of one element
-        collapse to one, by median across whichever methods measured that sample. Methods differ
-        in detection limit and bias, so the median is the neutral choice rather than an obvious
-        one. Stream sediment goes from 523 columns to 93; whole rock is untouched.
-    \item \textbf{Merge by sample number.} Median across duplicate rows describing one physical
-        sample.
-    \item \textbf{Log-transform.} Base-10, after both merges, so the result is a log of medians
-        rather than a median of logs. Concentrations spanning weight percent to parts per billion
-        are otherwise incomparable across elements \parencite{aitchison1982}.
-    \item \textbf{Coverage filter.} Element columns measured in fewer than 10 samples are
-        dropped. Last on purpose: filtering earlier would discard measurements the two merges
-        would have rescued.
-    \item \textbf{Splits.} An 80/10/10 holdout and a five-fold random cross-validation
-        assignment, both written to disk so every experiment sees identical folds.
+    \item \textbf{Mask below-detection values.} non-NaN entries that present negative values are usually interpreted as below-detection limit (BDL). Rather than keeping these values as is, or trying to perform educated approaches, BDL values are treated as NaN.
+    
+    \item \textbf{Merge analytical columns.} Some columns represent a measurement of the same element but across different laboratories and methods. 
+    These different methods differ in detection limits, biases, instruments, etc, even if measured on the same sample for the same element, so they are aggregated by the median as a neutral design choice. 
+    This is what makes the Stream Sediment dataset move from 523 columns to 93.
+    
+    \item \textbf{Merge by sample number.} Similarly to the step above, some rows are repeated across the same extracted sample, but measured by different methods. 
+    The aggregation is done in the exact same way: median across the rows depicting the same sample number.
+    
+    \item \textbf{Log-transform.} After merging both dimensions, the numerical data is $log_{10}$ transformed to follow the natural distribution of geochemistry. 
+    An added advantage is that this process diminishes the negative effect of outliers and sentinels.
+    
+    \item \textbf{Coverage filter.} Element columns measured in fewer than 10 samples are completely dropped from the dataset, as columns with mostly NaN wouldn't add meaningful information for inference. 
+
+    \item \textbf{Splits.} All experiments are done on the very same five-fold cross-validation. As we are still in the context of RQ1, there is no spatial holdout, and the samples are randomized, leading to a perfect 80/20 split in every fold (\Cref{fig:kfoldsplit}).
+    
 \end{enumerate}
+
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.35\textwidth]{figures/kfold split.png}
+\caption[KFold Split 1]{Example of sample distribution across splits in 5-Fold CV on Stream Sediment dataset.}
+\label{fig:kfoldsplit}
+\end{figure}
 
 \subsection{Targets and evaluation}
 \label{sec:evaluation}
 
-Every element measured in at least \num{1000} samples is a target: 48 on whole rock, 71 on
-stream sediment. A coverage threshold is preferred to the more usual ``$n$ best-covered
-elements'' because it does not depend on how many elements a dataset happens to contain;
-\Cref{sec:targetsensitivity} shows that this choice materially changes the headline number.
+Every element measured in at least \num{1000} samples is a target. Leading to 48 and 71 total targets on Whole Rock and Stream Sediment, respectively.
 
-Each target is predicted from the sample's remaining elements, scored by \Rsq{} on the
-log-transformed scale over five random folds, and only on samples where that target was actually
-measured. Tables report the mean over target elements.
+Each target is predicted from the sample's remaining elements and scored by \Rsq{} over the five random folds. Samples that did not measure the target element are naturally discarded.
 
-Because a mean over dozens of elements hides a great deal, the standard deviation across folds,
-averaged over elements, is used as a noise floor: \num{0.0180} on whole rock and \num{0.0137} on
-stream sediment. Differences smaller than this are not interpreted as real, and are quoted in
-units of it where the comparison matters.
+Once again, since we are in the context of RQ1, spatial leakage can be a problem due to lack of spatial CV. That is, a model trained on a certain sample can be guessing a sample just a few meters away, which can be considered duplicates in certain perspectives.
 
-\textbf{All folds are random.} Under random cross-validation a test sample frequently has
-training samples a few hundred metres away, so a model can appear to generalise spatially while
-in fact interpolating between near-duplicates \parencite{roberts2017}. Spatial blocking is RQ2
-and is deliberately not conflated with these results; \Cref{sec:limitations} states which
-conclusions are expected to be sensitive to it.
-
-\subsection{Encoding a neighbourhood}
+\subsection{KNN Encoding}
 \label{sec:neighbours}
 
-Neighbour features are built at training time, per fold. A $k$-d tree is fitted on
-\emph{training coordinates only} and queried with all rows, so a test sample can never see
-another test sample; self-matches are pushed to infinite distance. Distance-zero neighbours are
-additionally discarded throughout, which separates ``another sample from the same outcrop'' from
-``a genuinely different place'' --- without this control, half the whole-rock dataset would draw
-its neighbourhood from its own sampling site.
+Neighbor features are built at training time, per fold. This means that a $k$-d tree is fitted on the training samples only, so a test sample never recognizes another test sample as a neighbor, which is a very straightforward method to block data leaks. Additionally, self-matches and co-located neighbors are discarded, meaning that a neighbor is necessarily at a different geographical location, not just a different sample from the same exploration site.
 
-Four encodings of that neighbourhood are compared. With $k$ neighbours and $m$ elements they
-differ in how much they aggregate (\Cref{tab:encodings}), and the contrast between the pooled
-variants and the enumerated one is the point of the comparison.
+Four different types of encodings are compared. 
+With $k$ neighbours and $m$ elements they differ in how much they aggregate (\Cref{tab:encodings}).
 
 \begin{table}[htbp]
 \centering
 \caption[The four neighbour encodings]{The four neighbour encodings. Column counts are for
-$k=20$, $m=87$ (stream sediment). Only variant~C has a width independent of $k$.}
+$k=20$, $m=87$ (stream sediment).}
 \label{tab:encodings}
 \begin{tabular}{clr}
 \toprule
 Variant & Content & Added columns \\
 \midrule
-A & Mean of the \emph{target} element over $k$ neighbours & 1 \\
-B & The $k$ individual \emph{target} values               & 20 \\
-C & Mean of \emph{every} element over $k$ neighbours      & 87 \\
-D & \emph{Every} element of \emph{every} neighbour        & \num{1740} \\
+A & Mean of the target element over $k$ neighbours & 1 \\
+B & The $k$ individual target values               & 20 \\
+C & Mean of every element over $k$ neighbours      & 87 \\
+D & Every element of \emph{every} neighbour        & \num{1740} \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\subsection{Geophysical grids}
+\subsection{Geophysical features}
 \label{sec:geophysics}
+Geochemical neighbors only exist where somebody has already explored. Geophysical grids, on the other hand, are measured everywhere. Therefore, on unexplored ground, they are a motivated input.
 
-Geochemical neighbours only exist where somebody has already sampled; geophysical grids are
-measured everywhere. They are therefore the natural substitute for a neighbourhood on
-unexplored ground, and the geologically motivated input the project set out to add.
+Three geophysical attributes were added to each entry of both datasets: Magnetic anomaly, geothermal heat flow, and depth to Moho.
 
-Three grids qualified on the criterion of \emph{complete Greenland coverage}, assessed over the
-whole landmass rather than over the samples at hand: magnetic anomaly \parencite{geus_greenmag},
-which tracks how magnetite-rich the underlying rock is; geothermal heat flow
-\parencite{geus_heatflow}, which reflects tectonic setting and the decay of U, Th and K; and
-depth to Moho \parencite{geus_moho}, which is crustal thickness --- thin under rifted margins,
-thick under old craton. All three are valid at 100\,\% of samples in both datasets. They are
-attached before the splits, since they are static per coordinate and carry no train/test
-dependence.
-
-Candidate gravity products were rejected on a criterion worth stating, because it is invisible
-from the files: North Atlantic compilations contain no missing values over Greenland only
-because they contain no measurement \emph{points} over its west, at a median
-\SI{157}{\kilo\metre} from a sample to the nearest grid node. Absence of \texttt{NaN} is not
-evidence of coverage.
+Despite wanting to introduce more geophysical features, I wasn't able to find more grids that properly covered all points in our dataset on the GEUS platform.
 
 \subsection{Models}
 \label{sec:models}
 
-Gradient-boosted decision trees remain the strongest general-purpose learners on tabular data of
-this size and heterogeneity \parencite{grinsztajn2022}. The main model is the histogram-based
-gradient boosting implementation in scikit-learn \parencite{pedregosa2011}, which follows the
-binning strategy of LightGBM \parencite{ke2017lightgbm}: features are discretised before splits
-are searched, which makes training near-linear in sample count and handles missing values
-natively --- essential here, since the element matrix is sparse by construction. A random forest
-\parencite{breiman2001} and XGBoost \parencite{chen2016xgboost} are run as comparison points
-(\Cref{sec:baseline}), and the random forest is retained as an independent check that
-conclusions are not an artefact of one inductive bias (\Cref{sec:robustness}).
+Gradient-boosted decision trees remain one of the strongest machine learning methods on tabular data with this size and heterogeneity. The main model is the histogram-based gradient boosting (HGB) implementation in scikit-learn. As a comparison, a simple random forest (RF) is also run on the same pipeline, as to check that conclusions are not an artifact of model bias.
 
 \subsection{Graph neural network}
 \label{sec:gnnmethod}
 
-A graph model offers a different way to use a neighbourhood: rather than summarising it into
-fixed columns, it learns an aggregation over a graph. Here the graph has one node per sample and
-directed edges from each of a sample's $k$ nearest \emph{training} neighbours --- exactly the
-mapping the tabular encodings use, so the network sees the same neighbourhood the hand-built
-columns saw. Each edge carries $\log(1+d)$, with $d$ in kilometres, as its feature.
+A GNN offers a different way to use the sample neighborhood. Rather than aggregating by mean, or enumerating individual values into fixed columns, the relationships and their relevance is learned automatically. 
+The graph presents one node per sample, and directed edges to the respective $k$ nearest neighbors. 
+So each sample sees the exact same neighborhood in the GNN as it saw in the hand-built version. 
+Each edge carries $\log(1+d)$, with $d$ in kilometers. 
+The node features are the sample's own elements. 
+Since the network cannot consume NaN values, each element has two channels: A value channel where it is zero whenever the original value is NaN; And a presence/absence channel to serve as a flag.
 
-Node features are the sample's own elements with the target removed. Because a network cannot
-consume a missing value, each element contributes two channels: the standardised value, zeroed
-where absent, and a present/absent flag, so the model can distinguish ``average'' from ``not
-measured''. Standardisation statistics come from training rows only.
+Two different architectures are compared: A GraphSAGE, which is distance-blind by construction, and a graph attention network (GAT), that computes attention weights per edge from the distance, wich is something the previous KNN variants were missing. Other than this structural distinction, both use two message-passing layers of width 64, a skip connection from the node's features to a two layer head, dropout \num{0.1}, and Adam optimizer at learning rate $10^{-2}$ with $10^{-4}$ weight decay. 
 
-Two architectures are compared, and the contrast is the experiment.
-\textsc{GraphSAGE} \parencite{hamilton2017} aggregates neighbours with a permutation-invariant
-operator and is distance-blind by construction. A graph attention network
-\parencite{velickovic2018} with \texttt{edge\_dim=1} instead computes attention weights per edge
-\emph{from the distance}, which is the one thing variants A--D structurally cannot encode. Both
-use two message-passing layers of hidden width 64, a skip connection carrying the node's own
-features to a two-layer head, dropout \num{0.1}, and Adam at learning rate $10^{-2}$ with weight
-decay $10^{-4}$. Training is full-batch and transductive: the whole graph is passed forward each
-epoch, but the loss only ever sees training nodes, and the stopping epoch is chosen on a
-validation slice carved out of the \emph{training} nodes. Implementation uses PyTorch Geometric
-\parencite{fey2019}; runs took approximately \SI{9.1}{\second} per fit at $k=20$ on a Colab T4.
-
-Graph experiments were run on stream sediment, the dataset where standalone spatial signal is
-strong enough (\Cref{sec:featuresets}) for a learned aggregation to have something to compete
-over.
+GNN experiments were run only on Stream Sediment as it was the only dataset where standalone spatial signal was strong enough to justify a learnt aggregation.
 
 \section{Results}
 \label{ch:results}

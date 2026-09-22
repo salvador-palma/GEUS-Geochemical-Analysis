@@ -1,47 +1,31 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.9.9)  10 SEP 2026 14:34
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.7.13)  12 SEP 2026 18:19
 entering extended mode
  restricted \write18 enabled.
+ file:line:error style messages enabled.
  %&-line parsing enabled.
-**./Report.tex
-(Report.tex
+**"c:/Users/salva/Documents/UCPH/POS - Project Outside Scope/Project/Report/Report.tex"
+(c:/Users/salva/Documents/UCPH/POS - Project Outside Scope/Project/Report/Report.tex
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/koma-script\scrartcl.cl
-s
-Document Class: scrartcl 2026/02/02 v3.49.2 KOMA-Script document class (article
-)
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/koma-script\scrkbase.st
-y
-Package: scrkbase 2026/02/02 v3.49.2 KOMA-Script package (KOMA-Script-dependent
- basics and keyval usage)
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/koma-script\scrbase.sty
-Package: scrbase 2026/02/02 v3.49.2 KOMA-Script package (KOMA-Script-independen
-t basics and keyval usage)
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/koma-script\scrlfile.st
-y
+(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/koma-script\scrartcl.cls
+Document Class: scrartcl 2026/02/02 v3.49.2 KOMA-Script document class (article)
+(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/koma-script\scrkbase.sty
+Package: scrkbase 2026/02/02 v3.49.2 KOMA-Script package (KOMA-Script-dependent basics and keyval usage)
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/koma-script\scrbase.sty
+Package: scrbase 2026/02/02 v3.49.2 KOMA-Script package (KOMA-Script-independent basics and keyval usage)
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/koma-script\scrlfile.sty
 Package: scrlfile 2026/02/02 v3.49.2 KOMA-Script package (file load hooks)
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/koma-script\scrlfile-ho
-ok.sty
-Package: scrlfile-hook 2026/02/02 v3.49.2 KOMA-Script package (using LaTeX hook
-s)
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/koma-script\scrlogo.sty
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/koma-script\scrlfile-hook.sty
+Package: scrlfile-hook 2026/02/02 v3.49.2 KOMA-Script package (using LaTeX hooks)
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/koma-script\scrlogo.sty
 Package: scrlogo 2026/02/02 v3.49.2 KOMA-Script package (logo)
 ))) (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/graphics\keyval.sty
 Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
 \KV@toks@=\toks17
 )
 Applying: [2021/05/01] Usage of raw or classic option list on input line 254.
-Already applied: [0000/00/00] Usage of raw or classic option list on input line
- 370.
-))
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/koma-script\tocbasic.st
-y
+Already applied: [0000/00/00] Usage of raw or classic option list on input line 370.
+)) (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/koma-script\tocbasic.sty
 Package: tocbasic 2026/02/02 v3.49.2 KOMA-Script package (handling toc-files)
 \scr@dte@tocline@numberwidth=\skip49
 \scr@dte@tocline@numbox=\box53
@@ -61,16 +45,10 @@ Class scrartcl Info: You've used standard option `oneside'.
 (scrartcl)           If you'd like to set the option with \KOMAoptions,
 (scrartcl)           you'd have to use `twoside=false' there
 (scrartcl)           instead of `oneside', too.
-Class scrartcl Info: File `scrsize11pt.clo' used to setup font sizes on input l
-ine 2489.
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/koma-script\scrsize11pt
-.clo
-File: scrsize11pt.clo 2026/02/02 v3.49.2 KOMA-Script font size class option (11
-pt)
-)
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/koma-script\typearea.st
-y
+Class scrartcl Info: File `scrsize11pt.clo' used to setup font sizes on input line 2489.
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/koma-script\scrsize11pt.clo
+File: scrsize11pt.clo 2026/02/02 v3.49.2 KOMA-Script font size class option (11pt)
+) (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/koma-script\typearea.sty
 Package: typearea 2026/02/02 v3.49.2 KOMA-Script package (type area)
 \ta@bcor=\skip50
 \ta@div=\count275
@@ -157,14 +135,11 @@ Package tocbasic Info: omitting babel extension for `lot'
 \c@table=\count283
 Class scrartcl Info: Redefining `\numberline' on input line 6469.
 \bibindent=\dimen148
-)
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.sty
+) (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.sty
 Package: geometry 2026/03/07 v6.0 Page Geometry
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/generic/iftex\ifvtex.sty
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/generic/iftex\ifvtex.sty
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/generic/iftex\iftex.sty
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/generic/iftex\iftex.sty
 Package: iftex 2024/12/12 v1.0g TeX engine tests
 ))
 \Gm@cnth=\count284
@@ -179,12 +154,9 @@ Package: iftex 2024/12/12 v1.0g TeX engine tests
 \Gm@layouthoffset=\dimen155
 \Gm@layoutvoffset=\dimen156
 \Gm@dimlist=\toks18
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.cfg))
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/microtype\microtype.sty
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.cfg)) (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/microtype\microtype.sty
 Package: microtype 2026/03/01 v3.2d Micro-typographical refinements (RS)
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/etoolbox\etoolbox.sty
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/etoolbox\etoolbox.sty
 Package: etoolbox 2025/10/02 v2.5m e-TeX tools for LaTeX (JAW)
 \etb@tempcnta=\count287
 )
@@ -200,38 +172,28 @@ LaTeX Info: Redefining \textls on input line 1449.
 LaTeX Info: Redefining \microtypecontext on input line 2053.
 LaTeX Info: Redefining \textmicrotypecontext on input line 2070.
 \MT@listname@count=\count289
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/microtype\microtype-pdf
-tex.def
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/microtype\microtype-pdftex.def
 File: microtype-pdftex.def 2026/03/01 v3.2d Definitions specific to pdftex (RS)
-
 LaTeX Info: Redefining \lsstyle on input line 944.
 LaTeX Info: Redefining \lslig on input line 944.
 \MT@outer@space=\skip65
 )
 Package microtype Info: Loading configuration file microtype.cfg.
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/microtype\microtype.cfg
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/microtype\microtype.cfg
 File: microtype.cfg 2026/03/01 v3.2d microtype main configuration file (RS)
 )
 LaTeX Info: Redefining \microtypesetup on input line 3065.
-)
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphicx.sty
+) (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphicx.sty
 Package: graphicx 2024/12/31 v1.2e Enhanced LaTeX Graphics (DPC,SPQR)
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphics.sty
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphics.sty
 Package: graphics 2024/08/06 v1.4g Standard LaTeX Graphics (DPC,SPQR)
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/graphics\trig.sty
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/graphics\trig.sty
 Package: trig 2023/12/02 v1.11 sin cos tan (DPC)
-)
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\graphics.c
-fg
+) (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\graphics.cfg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: pdftex.def on input line 106.
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/graphics-def\pdftex.def
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/graphics-def\pdftex.def
 File: pdftex.def 2025/09/29 v1.2d Graphics/color driver for pdftex
 ))
 \Gin@req@height=\dimen158
@@ -239,20 +201,18 @@ File: pdftex.def 2025/09/29 v1.2d Graphics/color driver for pdftex
 ) (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsmath.sty
 Package: amsmath 2025/07/09 v2.17z AMS math features
 \@mathmargin=\skip66
+
 For additional information on amsmath, use the `?' option.
 (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amstext.sty
 Package: amstext 2024/11/17 v2.01 AMS text
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsgen.sty
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
 \@emptytoks=\toks21
 \ex@=\dimen160
-))
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsbsy.sty
+)) (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 \pmbraise@=\dimen161
-)
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsopn.sty
+) (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsopn.sty
 Package: amsopn 2022/04/08 v2.04 operator names
 )
 \inf@bad=\count290
@@ -302,19 +262,16 @@ LaTeX Info: Redefining \Relbar on input line 970.
 \mathdisplay@stack=\toks25
 LaTeX Info: Redefining \[ on input line 2950.
 LaTeX Info: Redefining \] on input line 2951.
-)
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amssymb.sty
+) (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amssymb.sty
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amsfonts.sty
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amsfonts.sty
 Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 \symAMSa=\mathgroup4
 \symAMSb=\mathgroup5
 LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
-)) (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/booktabs\booktabs.st
-y
+)) (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/booktabs\booktabs.sty
 Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \heavyrulewidth=\dimen169
 \lightrulewidth=\dimen170
@@ -334,7 +291,7 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \@lastruleclass=\count305
 \@thisrulewidth=\dimen181
 ) (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/siunitx\siunitx.sty
-Package: siunitx 2026-08-23 v3.5.6 A comprehensive (SI) units package
+Package: siunitx 2026-05-15 v3.5.5 A comprehensive (SI) units package
 \l__siunitx_number_uncert_offset_int=\count306
 \l__siunitx_number_exponent_fixed_int=\count307
 \l__siunitx_number_min_decimal_int=\count308
@@ -347,22 +304,13 @@ Package: siunitx 2026-08-23 v3.5.6 A comprehensive (SI) units package
 \l__siunitx_number_group_min_int=\count315
 \l__siunitx_number_group_minimum_int=\count316
 \l__siunitx_compound_count_int=\count317
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/translations\translatio
-ns.sty
-Package: translations 2022/02/05 v1.12 internationalization of LaTeX2e packages
- (CN)
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/generic/pdftexcmds\pdftexcmds
-.sty
-Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
-)
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/generic/infwarerr\infwarerr.s
-ty
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/translations\translations.sty
+Package: translations 2022/02/05 v1.12 internationalization of LaTeX2e packages (CN)
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/generic/pdftexcmds\pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO)
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/generic/infwarerr\infwarerr.sty
 Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
-)
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty
+) (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty
 Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
 )
 Package pdftexcmds Info: \pdf@primitive is available.
@@ -394,8 +342,7 @@ Package: array 2025/09/25 v2.6n Tabular extension package (FMi)
 \extratabsurround=\skip69
 \backup@length=\skip70
 \ar@cellbox=\box67
-))
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/csquotes\csquotes.sty
+)) (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/csquotes\csquotes.sty
 Package: csquotes 2026-05-19 v5.2p context-sensitive quotations (JAW)
 \csq@reset=\count321
 \csq@gtype=\count322
@@ -404,31 +351,23 @@ Package: csquotes 2026-05-19 v5.2p context-sensitive quotations (JAW)
 \csq@maxlvl=\count325
 \csq@tshold=\count326
 \csq@ltx@everypar=\toks27
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/csquotes\csquotes.def
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/csquotes\csquotes.def
 File: csquotes.def 2026-05-19 v5.2p csquotes generic definitions (JAW)
 )
 Package csquotes Info: Trying to load configuration file 'csquotes.cfg'...
 Package csquotes Info: ... configuration file loaded successfully.
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/csquotes\csquotes.cfg
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/csquotes\csquotes.cfg
 File: csquotes.cfg 
 )) (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/mhchem\mhchem.sty
 Package: mhchem 2024/01/29 v4.10 for typesetting chemical formulae
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/l3kernel\expl3.sty
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/l3kernel\expl3.sty
 Package: expl3 2025-12-24 L3 programming layer (loader) 
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdf
-tex.def
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
 File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count327
-))
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/l3packages/l3keys2e\l3k
-eys2e.sty
+)) (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/l3packages/l3keys2e\l3keys2e.sty
 Package: l3keys2e 2025-10-09 LaTeX2e option processing using LaTeX3 keys
-)
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/tools\calc.sty
+) (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/tools\calc.sty
 Package: calc 2025/03/01 v4.3b Infix arithmetic (KKT,FJ)
 \calc@Acount=\count328
 \calc@Bcount=\count329
@@ -440,15 +379,10 @@ LaTeX Info: Redefining \setlength on input line 86.
 LaTeX Info: Redefining \addtolength on input line 87.
 \calc@Ccount=\count330
 \calc@Cskip=\skip73
-)
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/chemgreek\chemgreek.sty
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/l3packages/xparse\xpars
-e.sty
+) (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/chemgreek\chemgreek.sty (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/l3packages/xparse\xparse.sty
 Package: xparse 2025-10-09 L3 Experimental document command parser
 )
-Package: chemgreek 2020/01/16 v1.1a interface for upright Greek letters for use
- in chemistry (CN)
+Package: chemgreek 2020/01/16 v1.1a interface for upright Greek letters for use in chemistry (CN)
 \l__chemgreek_tmpa_int=\count331
 \g__chemgreek_tmpa_int=\count332
 )
@@ -468,26 +402,20 @@ Package: chemgreek 2020/01/16 v1.1a interface for upright Greek letters for use
 \mhchem@option@minusmathsidebearingright=\dimen192
 \mhchem@option@minustextsidebearingleft=\dimen193
 \mhchem@option@minustextsidebearingright=\dimen194
-)
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/biblatex\biblatex.sty
+) (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/biblatex\biblatex.sty
 Package: biblatex 2025/07/10 v3.21 programmable bibliographies (PK/MW)
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/kvoptions\kvoptions.sty
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/kvoptions\kvoptions.sty
 Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/kvsetkeys\kvsetkeys.sty
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/kvsetkeys\kvsetkeys.sty
 Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
 )) (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/logreq\logreq.sty
 Package: logreq 2010/08/04 v1.0 xml request logger
 \lrq@indent=\count335
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/logreq\logreq.def
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/logreq\logreq.def
 File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
-))
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/base\ifthen.sty
+)) (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/base\ifthen.sty
 Package: ifthen 2024/03/16 v1.1e Standard LaTeX ifthen package (DPC)
-)
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/url\url.sty
+) (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/url\url.sty
 \Urlmuskip=\muskip18
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
@@ -550,8 +478,7 @@ Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 \c@mincompwidth=\count381
 Package biblatex Info: Trying to load biblatex default data model...
 Package biblatex Info: ... file 'blx-dm.def' found.
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/biblatex\blx-dm.def
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/biblatex\blx-dm.def
 File: blx-dm.def 2025/07/10 v3.21 biblatex datamodel (PK/MW)
 )
 Package biblatex Info: Trying to load biblatex style data model...
@@ -642,8 +569,7 @@ Package biblatex Info: ... file 'biblatex-dm.cfg' not found.
 \localshorteditorwidth=\skip105
 Package biblatex Info: Trying to load compatibility code...
 Package biblatex Info: ... file 'blx-compat.def' found.
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/biblatex\blx-compat.def
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/biblatex\blx-compat.def
 File: blx-compat.def 2025/07/10 v3.21 biblatex compatibility (PK/MW)
 )
 Package biblatex Info: Trying to load generic definitions...
@@ -666,24 +592,18 @@ File: biblatex.def 2025/07/10 v3.21 biblatex compatibility (PK/MW)
 )
 Package biblatex Info: Trying to load bibliography style 'numeric'...
 Package biblatex Info: ... file 'numeric.bbx' found.
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/biblatex/bbx\numeric.bb
-x
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/biblatex/bbx\numeric.bbx
 File: numeric.bbx 2025/07/10 v3.21 biblatex bibliography style (PK/MW)
 Package biblatex Info: Trying to load bibliography style 'standard'...
 Package biblatex Info: ... file 'standard.bbx' found.
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/biblatex/bbx\standard.b
-bx
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/biblatex/bbx\standard.bbx
 File: standard.bbx 2025/07/10 v3.21 biblatex bibliography style (PK/MW)
 \c@bbx:relatedcount=\count459
 \c@bbx:relatedtotal=\count460
 ))
 Package biblatex Info: Trying to load citation style 'numeric'...
 Package biblatex Info: ... file 'numeric.cbx' found.
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/biblatex/cbx\numeric.cb
-x
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/biblatex/cbx\numeric.cbx
 File: numeric.cbx 2025/07/10 v3.21 biblatex citation style (PK/MW)
 Package biblatex Info: Redefining '\cite'.
 Package biblatex Info: Redefining '\parencite'.
@@ -699,8 +619,7 @@ Package biblatex Info: Redefining '\smartcites'.
 )
 Package biblatex Info: Trying to load configuration file...
 Package biblatex Info: ... file 'biblatex.cfg' found.
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/biblatex\biblatex.cfg
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/biblatex\biblatex.cfg
 File: biblatex.cfg 
 )
 Package biblatex Info: Input encoding 'utf8' detected.
@@ -709,39 +628,26 @@ Package biblatex Info: ... and expl3
 (biblatex)             2025-12-24 L3 programming layer (loader) 
 (biblatex)             is new enough (at least 2020/04/06),
 (biblatex)             setting 'casechanger=expl3'.
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/biblatex\blx-case-expl3
-.sty
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/biblatex\blx-case-expl3.sty
 Package: blx-case-expl3 2025/07/10 v3.21 expl3 case changing code for biblatex
-))
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hyperref.sty
+)) (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hyperref.sty
 Package: hyperref 2025-07-12 v7.01o Hypertext links for LaTeX
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/generic/kvdefinekeys\kvdefine
-keys.sty
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/generic/kvdefinekeys\kvdefinekeys.sty
 Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
-)
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/generic/pdfescape\pdfescape.s
-ty
+) (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/generic/pdfescape\pdfescape.sty
 Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
 ) (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/hycolor\hycolor.sty
 Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
 ) (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\nameref.sty
 Package: nameref 2025-06-21 v2.57 Cross-referencing by name of section
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/refcount\refcount.sty
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/refcount\refcount.sty
 Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
-)
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/generic/gettitlestring\gettit
-lestring.sty
+) (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/generic/gettitlestring\gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count461
-)
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/generic/stringenc\stringenc.s
-ty
-Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO
-)
+) (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/generic/stringenc\stringenc.sty
+Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO)
 )
 \@linkdim=\dimen195
 \Hy@linkcounter=\count462
@@ -769,14 +675,10 @@ Package hyperref Info: Bookmarks ON on input line 4462.
 \c@Hy@tempcnt=\count465
 LaTeX Info: Redefining \url on input line 4801.
 \XeTeXLinkMargin=\dimen196
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/generic/bitset\bitset.sty
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/generic/bitset\bitset.sty
 Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/generic/bigintcalc\bigintcalc
-.sty
-Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
-)
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/generic/bigintcalc\bigintcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
 ))
 \Fld@menulength=\count466
 \Field@Width=\dimen197
@@ -793,26 +695,19 @@ Package hyperref Info: PDF/A mode OFF on input line 6108.
 \c@Hfootnote=\count469
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hpdftex.def
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hpdftex.def
 File: hpdftex.def 2025-07-12 v7.01o Hyperref driver for pdfTeX
 \Fld@listcount=\count470
 \c@bookmark@seq@number=\count471
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/rerunfilecheck\rerunfil
-echeck.sty
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/rerunfilecheck\rerunfilecheck.sty
 Package: rerunfilecheck 2025-06-21 v1.11 Rerun checks for auxiliary files (HO)
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/generic/uniquecounter\uniquec
-ounter.sty
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/generic/uniquecounter\uniquecounter.sty
 Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 )
-Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
-84.
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 284.
 )
 \Hy@SectionHShift=\skip106
-)
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/cleveref\cleveref.sty
+) (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/cleveref\cleveref.sty
 Package: cleveref 2018/03/27 v0.21.4 Intelligent cross-referencing
 Package cleveref Info: `hyperref' support loaded on input line 2370.
 LaTeX Info: Redefining \cref on input line 2370.
@@ -825,24 +720,19 @@ LaTeX Info: Redefining \cpagerefrange on input line 2370.
 LaTeX Info: Redefining \Cpagerefrange on input line 2370.
 LaTeX Info: Redefining \labelcref on input line 2370.
 LaTeX Info: Redefining \labelcpageref on input line 2370.
-Package cleveref Info: include cross-reference names in hyperlinks on input lin
-e 7836.
-Package cleveref Info: include cross-reference names in hyperlinks on input lin
-e 7852.
+Package cleveref Info: include cross-reference names in hyperlinks on input line 7836.
+Package cleveref Info: include cross-reference names in hyperlinks on input line 7852.
 Package cleveref Info: no abbreviation of names on input line 7852.
 )
 ==> First Aid for cleveref.sty applied!
-Package translations Info: No language package found. I am going to use `englis
-h' as default language. on input line 43.
+Package translations Info: No language package found. I am going to use `english' as default language. on input line 43.
 (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/graphics\color.sty
 Package: color 2025/01/14 v1.3e Standard LaTeX Color (DPC)
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\color.cfg
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\color.cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package color Info: Driver file: pdftex.def on input line 149.
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/graphics\mathcolor.ltx)
-)
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/graphics\mathcolor.ltx))
 Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... none found.
 Class scrartcl Info: loading recommended package `bookmark'.
@@ -855,8 +745,7 @@ Class scrartcl Info: loading recommended package `bookmark'.
 (scrartcl)           before \begin{document} on input line 43.
  (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/bookmark\bookmark.sty
 Package: bookmark 2026-05-21 v1.32 PDF bookmarks (HO)
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/bookmark\bkm-pdftex.def
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/bookmark\bkm-pdftex.def
 File: bkm-pdftex.def 2026-05-21 v1.32 bookmark driver for pdfTeX (HO)
 \BKM@id=\count472
 )) (Report.aux)
@@ -942,11 +831,8 @@ Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
 (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/microtype\mt-cmr.cfg
-File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
-(RS)
-)
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mk
-ii
+File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman (RS)
+) (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count473
 \scratchdimen=\dimen199
@@ -959,32 +845,21 @@ ii
 \MPnumerator=\count477
 \makeMPintoPDFobject=\count478
 \everyMPtoPDFconversion=\toks29
-)
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-b
-ase.sty
+) (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
-Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
-85.
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epstopdf-sys.c
-fg
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
-))
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/translations/dicts\tran
-slations-basic-dictionary-english.trsl
-File: translations-basic-dictionary-english.trsl (english translation file `tra
-nslations-basic-dictionary')
+)) (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/translations/dicts\translations-basic-dictionary-english.trsl
+File: translations-basic-dictionary-english.trsl (english translation file `translations-basic-dictionary')
 )
-Package translations Info: loading dictionary `translations-basic-dictionary' f
-or `english'. on input line 43.
+Package translations Info: loading dictionary `translations-basic-dictionary' for `english'. on input line 43.
 
 Package chemgreek Info: Activating mapping `default' on line 43.
 
 Package biblatex Info: Trying to load language 'english'...
 Package biblatex Info: ... file 'english.lbx' found.
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/biblatex/lbx\english.lb
-x
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/biblatex/lbx\english.lbx
 File: english.lbx 2025/07/10 v3.21 biblatex localization (PK/MW)
 )
 Package biblatex Info: Input encoding 'utf8' detected.
@@ -1005,66 +880,93 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `cmss' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 69.
-
+Package tocbasic Info: character protrusion at toc deactivated on input line 67.
+ (Report.toc
+LaTeX Font Info:    Trying to load font information for U+msa on input line 2.
  (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 ) (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/microtype\mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 69.
-
-
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
+LaTeX Font Info:    Trying to load font information for U+msb on input line 2.
+ (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
-(C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/microtype\mt-msb.cfg
+) (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/microtype\mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
-)
-Package tocbasic Info: character protrusion at toc deactivated on input line 91
-.
-
-(Report.toc [2])
+))
 \tf@toc=\write4
 \openout4 = `Report.toc'.
 
- [3]
-<figures/samples.png, id=87, 302.0886pt x 283.65974pt>
+ [2]
+
+Package amsfonts Warning: Obsolete command \bold; \mathbf should be used instead on input line 86.
+
+
+c:/Users/salva/Documents/UCPH/POS - Project Outside Scope/Project/Report/Report.tex:86: LaTeX Error: \mathbf allowed only in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.86 This report focuses on \bold{RQ1}
+                                      , while setting some ground for the \b...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+c:/Users/salva/Documents/UCPH/POS - Project Outside Scope/Project/Report/Report.tex:86: LaTeX Error: \mathbf allowed only in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.86 ...ile setting some ground for the \bold{RQ2}
+                                                  .
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+<figures/samples.png, id=77, 302.0886pt x 282.21436pt>
 File: figures/samples.png Graphic file (type png)
 <use figures/samples.png>
-Package pdftex.def Info: figures/samples.png  used on input line 153.
-(pdftex.def)             Requested size: 227.62206pt x 213.73978pt.
- [4 <./figures/samples.png>] [5] [6]
-<figures/ksweep.png, id=149, 456.7464pt x 218.2554pt>
+Package pdftex.def Info: figures/samples.png  used on input line 110.
+(pdftex.def)             Requested size: 227.62206pt x 212.65067pt.
+[3]
+<figures/kfold split.png, id=90, 327.3831pt x 573.1011pt>
+File: figures/kfold split.png Graphic file (type png)
+<use figures/kfold split.png>
+Package pdftex.def Info: figures/kfold split.png  used on input line 170.
+(pdftex.def)             Requested size: 159.33821pt x 278.93312pt.
+ [4 <./figures/samples.png>] [5 <./figures/kfold split.png>] [6]
+<figures/ksweep.png, id=118, 455.301pt x 219.33945pt>
 File: figures/ksweep.png Graphic file (type png)
 <use figures/ksweep.png>
-Package pdftex.def Info: figures/ksweep.png  used on input line 399.
-(pdftex.def)             Requested size: 418.82375pt x 200.14465pt.
- [7]
-<figures/difficulty.png, id=164, 448.43535pt x 234.8775pt>
+Package pdftex.def Info: figures/ksweep.png  used on input line 298.
+(pdftex.def)             Requested size: 418.82375pt x 201.77464pt.
+ [7 <./figures/ksweep.png>]
+<figures/difficulty.png, id=132, 449.15805pt x 233.4321pt>
 File: figures/difficulty.png Graphic file (type png)
 <use figures/difficulty.png>
-Package pdftex.def Info: figures/difficulty.png  used on input line 421.
-(pdftex.def)             Requested size: 418.82375pt x 219.37997pt.
- [8 <./figures/ksweep.png>] [9 <./figures/difficulty.png>]
-<figures/isolation.png, id=180, 442.65375pt x 235.6002pt>
+Package pdftex.def Info: figures/difficulty.png  used on input line 320.
+(pdftex.def)             Requested size: 418.82375pt x 217.66663pt.
+ [8 <./figures/difficulty.png>]
+<figures/isolation.png, id=143, 443.37645pt x 236.68425pt>
 File: figures/isolation.png Graphic file (type png)
 <use figures/isolation.png>
-Package pdftex.def Info: figures/isolation.png  used on input line 488.
-(pdftex.def)             Requested size: 418.82375pt x 222.92735pt.
-<figures/featuresets.png, id=184, 532.6299pt x 228.73454pt>
+Package pdftex.def Info: figures/isolation.png  used on input line 387.
+(pdftex.def)             Requested size: 418.82375pt x 223.5775pt.
+ [9 <./figures/isolation.png>]
+<figures/featuresets.png, id=153, 532.99126pt x 229.0959pt>
 File: figures/featuresets.png Graphic file (type png)
 <use figures/featuresets.png>
-Package pdftex.def Info: figures/featuresets.png  used on input line 529.
-(pdftex.def)             Requested size: 400.61703pt x 172.04259pt.
- [10 <./figures/isolation.png>]
-<figures/gnn.png, id=194, 347.6187pt x 215.72595pt>
+Package pdftex.def Info: figures/featuresets.png  used on input line 428.
+(pdftex.def)             Requested size: 400.61703pt x 172.20253pt.
+ [10 <./figures/featuresets.png>]
+<figures/gnn.png, id=166, 346.53465pt x 216.44865pt>
 File: figures/gnn.png Graphic file (type png)
 <use figures/gnn.png>
-Package pdftex.def Info: figures/gnn.png  used on input line 573.
-(pdftex.def)             Requested size: 282.24911pt x 175.16827pt.
- [11 <./figures/featuresets.png>] [12 <./figures/gnn.png>] [13] [14] [15] [16]
-(Report.aux)
+Package pdftex.def Info: figures/gnn.png  used on input line 472.
+(pdftex.def)             Requested size: 282.24911pt x 176.29344pt.
+ [11 <./figures/gnn.png>] [12] [13] [14] [15] (Report.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
@@ -1074,31 +976,17 @@ Package logreq Info: Writing requests to 'Report.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 30761 strings out of 467871
- 633342 string characters out of 5418377
- 1602780 words of memory out of 5000000
- 59059 multiletter control sequences out of 15000+600000
- 647132 words of font info for 196 fonts, out of 8000000 for 9000
+ 30650 strings out of 467871
+ 631156 string characters out of 5418376
+ 1600213 words of memory out of 5000000
+ 59004 multiletter control sequences out of 15000+600000
+ 643389 words of font info for 165 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 108i,11n,107p,11211b,1348s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<C:/Users/salva/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/
-cmbx10.pfb><C:/Users/salva/AppData/Local/Programs/MiKTeX/fonts/type1/public/ams
-fonts/cm/cmbx12.pfb><C:/Users/salva/AppData/Local/Programs/MiKTeX/fonts/type1/p
-ublic/amsfonts/cm/cmcsc10.pfb><C:/Users/salva/AppData/Local/Programs/MiKTeX/fon
-ts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/salva/AppData/Local/Programs/M
-iKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/salva/AppData/Local/Pr
-ograms/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/salva/AppData/
-Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/salva/A
-ppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/
-salva/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmssbx10.pfb
-><C:/Users/salva/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/c
-msy10.pfb><C:/Users/salva/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsf
-onts/cm/cmsy8.pfb><C:/Users/salva/AppData/Local/Programs/MiKTeX/fonts/type1/pub
-lic/amsfonts/cm/cmti10.pfb><C:/Users/salva/AppData/Local/Programs/MiKTeX/fonts/
-type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on Report.pdf (16 pages, 778710 bytes).
+ 108i,11n,107p,11284b,1345s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<C:/Users/salva/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/salva/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/salva/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/salva/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/salva/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/salva/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/salva/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/salva/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmssbx10.pfb><C:/Users/salva/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/salva/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/salva/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/salva/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on Report.pdf (15 pages, 814056 bytes).
 PDF statistics:
- 428 PDF objects out of 1000 (max. 8388607)
- 92 named destinations out of 1000 (max. 500000)
- 45831 words of extra memory for PDF output out of 51595 (max. 10000000)
+ 379 PDF objects out of 1000 (max. 8388607)
+ 80 named destinations out of 1000 (max. 500000)
+ 39692 words of extra memory for PDF output out of 42996 (max. 10000000)
 
