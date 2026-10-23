@@ -1,0 +1,17 @@
+{
+  "Cu ppm": "HGB Coordinates + Geophysics + KNN C",
+  "Pb ppm": "HGB Coordinates + Geophysics + Neighbours",
+  "Zn ppm": "HGB Coordinates + Geophysics + Neighbours",
+  "Mo ppm": "HGB Coordinates + Geophysics",
+  "W ppm": "HGB Coordinates + Geophysics + KNN C",
+  "Sb ppm": "HGB Coordinates + Geophysics",
+  "Ba ppm": "HGB Coordinates + Geophysics + KNN C",
+  "Sr ppm": "HGB Coordinates + Geophysics + Neighbours",
+  "Cu/Pb": "HGB Coordinates + Geophysics + KNN C",
+  "Cu/Zn": "HGB Coordinates + Geophysics + Neighbours",
+  "Mo/Pb": "HGB Coordinates + Geophysics + Neighbours",
+  "Mo/Sb": "HGB Coordinates + Geophysics + KNN C",
+  "W/Pb": "HGB Coordinates + Geophysics",
+  "W/Sb": "HGB Coordinates + Geophysics + KNN C",
+  "Ba/Sr": "HGB Coordinates + Geophysics + Neighbours"
+}

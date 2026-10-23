@@ -1,0 +1,459 @@
+\appendix
+
+\section{K-Sweep Results}
+\label{app:k-sweep}
+
+\begin{table}[H]
+  \centering
+  \caption{Whole Rock: change over baseline, top-10 targets.}
+  \label{tab:whole-rock-delta}
+  \begin{tabular}{rrrrr}
+    \toprule
+    $k$ & A & B & C & D \\
+    \midrule
+    1   & 0.0016 & 0.0016  & 0.0020 & 0.0020  \\
+    3   & 0.0027 & 0.0028  & 0.0048 & 0.0007  \\
+    5   & 0.0033 & 0.0033  & 0.0064 & $-$0.0002 \\
+    10  & 0.0035 & 0.0033  & 0.0082 & $-$0.0013 \\
+    20  & 0.0037 & 0.0027  & 0.0102 & $-$0.0035 \\
+    50  & 0.0041 & 0.0013  & 0.0112 & $-$0.0054 \\
+    100 & 0.0043 & $-$0.0012 & 0.0116 & $-$0.0079 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \caption{Stream Sediment: change over baseline, top-10 targets.}
+  \label{tab:stream-sediment-delta}
+  \begin{tabular}{rrrrr}
+    \toprule
+    $k$ & A & B & C & D \\
+    \midrule
+    1   & 0.0186 & 0.0186 & 0.0221 & 0.0221 \\
+    3   & 0.0248 & 0.0216 & 0.0279 & 0.0216 \\
+    5   & 0.0270 & 0.0224 & 0.0297 & 0.0199 \\
+    10  & 0.0276 & 0.0213 & 0.0327 & 0.0174 \\
+    20  & 0.0279 & 0.0192 & 0.0347 & 0.0158 \\
+    50  & 0.0282 & 0.0153 & 0.0355 & 0.0112 \\
+    100 & 0.0230 & 0.0132 & 0.0353 & 0.0087 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{Individual geophysics gain over location}
+\label{app:geophysics-vs-location-individual}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{l l r l r r}
+\hline
+\textbf{Element} & \textbf{Best geophysical field} & \textbf{ Correlation} & \textbf{Best location field} & \textbf{Correlation} & \textbf{Margin}  \\
+\hline
+Se ppm   & geo\_heat\_flow mW/m2   & 0.27976   & (easting)  & -0.069593 & 0.210168 \\
+Sn ppm   & geo\_depth\_to\_moho km & -0.602212 & (northing) & -0.441925 & 0.160287 \\
+Au ppb   & geo\_heat\_flow mW/m2   & 0.137533  & (northing) & 0.021406  & 0.116127 \\
+C wt\%   & geo\_heat\_flow mW/m2   & -0.688319 & (northing) & -0.582562 & 0.105757 \\
+Ga ppm   & geo\_depth\_to\_moho km & -0.334406 & (northing) & -0.230134 & 0.104272 \\
+Br ppm   & geo\_depth\_to\_moho km & 0.336817  & (northing) & 0.237108  & 0.099709 \\
+Sr ppm   & geo\_depth\_to\_moho km & -0.164298 & (easting)  & 0.072871  & 0.091421 \\
+Ag ppm   & geo\_heat\_flow mW/m2   & 0.123418  & (easting)  & 0.032776  & 0.090642 \\
+La ppm	& geo\_magnetic\_anomaly nT &	0.115933 &	(northing) &	-0.028659	& 0.087273 \\
+Ce ppm &	geo\_magnetic\_anomaly nT &	0.124151 &	(easting) &	0.041162 &	0.082989 \\
+\hline
+\end{tabular}
+\caption{Top 10 target elements with a wider margin between the best geophysical and location Spearman correlations on the Whole Rock dataset}
+\label{tab:geophysics-wholerock}
+\end{table}
+
+
+\begin{table}[H]
+\centering
+\begin{tabular}{l l r l r r}
+\hline
+\textbf{Element} & \textbf{Best geophysical field} & \textbf{ Correlation} & \textbf{Best location field} & \textbf{Correlation} & \textbf{Margin} \\
+\hline
+Gd ppm    & geo\_heat\_flow mW/m2   & 0.474911  & (easting)  & 0.198662  & 0.276249 \\
+Al \%     & geo\_depth\_to\_moho km & 0.49066   & (easting)  & -0.263459 & 0.227201 \\
+SiO2 wt\% & geo\_depth\_to\_moho km & 0.199027  & (northing) & 0.008254  & 0.190773 \\
+Na \%     & geo\_depth\_to\_moho km & 0.617319  & (easting)  & -0.50808  & 0.109239 \\
+Ca \%     & geo\_depth\_to\_moho km & 0.290458  & (easting)  & -0.193345 & 0.097112 \\
+Sm ppm    & geo\_depth\_to\_moho km & -0.339555 & (northing) & -0.245418 & 0.094137 \\
+Dy ppm    & geo\_heat\_flow mW/m2   & 0.5265    & (easting)  & 0.439484  & 0.087016 \\
+Yb ppm    & geo\_depth\_to\_moho km & -0.446582 & (easting)  & 0.368103  & 0.07848 \\
+S ppm	&geo\_depth\_to\_moho km&	0.575251 &	(northing)	&-0.499589 &	0.075662 \\
+Ce ppm	&geo\_depth\_to\_moho km&	-0.22337 &	(northing) &	-0.147771 &	0.075599 \\
+\hline
+\end{tabular}
+\caption{Top 10 target elements with a wider margin between the best geophysical and location Spearman correlations on the Stream Sediment dataset.}
+\label{tab:geophysics-streamsediment}
+\end{table}
+
+
+\section{Information gain by baseline}
+\label{app:baseline-binning}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{l r r r r r}
+\hline
+\textbf{Band} & \textbf{n} & \textbf{Baseline} & \textbf{+ Neighbours} & \textbf{+ Geophysics} & \textbf{+ Coordinates} \\
+\hline
+under 0.70 & 8  & 0.5920 & 0.0517 & 0.0238 & 0.0219 \\
+0.70--0.85 & 23 & 0.7927 & 0.0102 & 0.0058 & 0.0070 \\
+0.85--0.95 & 14 & 0.8909 & 0.0044 & 0.0026 & 0.0034 \\
+over 0.95  & 3  & 0.9597 & 0.0008 & 0.0007 & 0.0003 \\
+\hline
+\end{tabular}
+\caption{Model performance by baseline for whole rock samples.}
+\label{tab:whole-rock-bands}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{l r r r r r}
+\hline
+\textbf{Band} & \textbf{n} & \textbf{Baseline} & \textbf{+ Neighbours} & \textbf{+ Geophysics} & \textbf{+ Coordinates} \\
+\hline
+under 0.70 & 8  & 0.5846 & 0.0484 & 0.0291 & 0.0421 \\
+0.70--0.85 & 13 & 0.7896 & 0.0211 & 0.0084 & 0.0150 \\
+0.85--0.95 & 30 & 0.9076 & 0.0075 & 0.0032 & 0.0051 \\
+over 0.95  & 20 & 0.9714 & 0.0001 & 0.0004 & 0.0009 \\
+\hline
+\end{tabular}
+\caption{Model performance by baseline for stream sediment samples.}
+\label{tab:stream-sediment-bands}
+\end{table}
+
+
+\section{Geophysical Correlation}
+
+% Requires: \usepackage{booktabs}
+% Negative values use $-$ for a proper minus sign.
+
+% ======================================================================
+% WHOLE ROCK
+% ======================================================================
+
+\begin{table}[H]
+  \centering
+  \caption{Whole Rock: top-10 elements by absolute Spearman correlation with magnetic anomaly (nT).}
+  \label{tab:wr-magnetic}
+  \begin{tabular}{lrrr}
+    \toprule
+    Element & $n$ & Pearson & Spearman \\
+    \midrule
+    C wt\%   & 101  & 0.596      & 0.481 \\
+    U ppm    & 3227 & 0.283      & 0.284 \\
+    Zr ppm   & 3502 & 0.204      & 0.207 \\
+    Nb ppm   & 1978 & 0.204      & 0.206 \\
+    Co ppm   & 4378 & $-$0.193   & $-$0.197 \\
+    Se ppm   & 305  & $-$0.197   & $-$0.193 \\
+    Tm ppm   & 412  & 0.178      & 0.181 \\
+    Ho ppm   & 433  & 0.132      & 0.177 \\
+    FeO wt\% & 2490 & $-$0.134   & $-$0.169 \\
+    Er ppm   & 444  & 0.120      & 0.166 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \caption{Whole Rock: top-10 elements by absolute Spearman correlation with heat flow (mW/m\textsuperscript{2}).}
+  \label{tab:wr-heatflow}
+  \begin{tabular}{lrrr}
+    \toprule
+    Element & $n$ & Pearson & Spearman \\
+    \midrule
+    C wt\%  & 101  & $-$0.780 & $-$0.688 \\
+    Sn ppm  & 443  & 0.497    & 0.503 \\
+    Se ppm  & 305  & 0.264    & 0.280 \\
+    Br ppm  & 715  & $-$0.272 & $-$0.268 \\
+    Ge ppm  & 288  & $-$0.184 & $-$0.268 \\
+    Er ppm  & 444  & $-$0.252 & $-$0.233 \\
+    Tm ppm  & 412  & $-$0.242 & $-$0.222 \\
+    W ppm   & 1815 & 0.166    & 0.208 \\
+    Ho ppm  & 433  & $-$0.233 & $-$0.204 \\
+    Dy ppm  & 447  & $-$0.227 & $-$0.177 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \caption{Whole Rock: top-10 elements by absolute Spearman correlation with depth to Moho (km).}
+  \label{tab:wr-moho}
+  \begin{tabular}{lrrr}
+    \toprule
+    Element & $n$ & Pearson & Spearman \\
+    \midrule
+    Sn ppm & 443  & $-$0.678 & $-$0.602 \\
+    C wt\% & 101  & 0.707    & 0.490 \\
+    Br ppm & 715  & 0.331    & 0.337 \\
+    U ppm  & 3227 & $-$0.268 & $-$0.335 \\
+    Ga ppm & 2085 & $-$0.323 & $-$0.334 \\
+    Cs ppm & 1750 & $-$0.263 & $-$0.271 \\
+    Nb ppm & 1978 & $-$0.223 & $-$0.271 \\
+    Rb ppm & 4484 & $-$0.218 & $-$0.227 \\
+    Lu ppm & 3228 & $-$0.219 & $-$0.221 \\
+    Se ppm & 305  & $-$0.184 & $-$0.220 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \caption{Whole Rock: top-10 elements by absolute Spearman correlation with easting.}
+  \label{tab:wr-easting}
+  \begin{tabular}{lrrr}
+    \toprule
+    Element & $n$ & Pearson & Spearman \\
+    \midrule
+    C wt\%   & 101  & 0.753    & 0.475 \\
+    U ppm    & 3227 & 0.356    & 0.420 \\
+    Co ppm   & 4378 & $-$0.329 & $-$0.312 \\
+    Ni ppm   & 5526 & $-$0.278 & $-$0.298 \\
+    W ppm    & 1815 & $-$0.297 & $-$0.291 \\
+    As ppm   & 2355 & 0.182    & 0.267 \\
+    Cs ppm   & 1750 & 0.261    & 0.256 \\
+    Sb ppm   & 2102 & 0.171    & 0.245 \\
+    Be ppm   & 972  & 0.222    & 0.244 \\
+    MgO wt\% & 5545 & $-$0.242 & $-$0.241 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \caption{Whole Rock: top-10 elements by absolute Spearman correlation with northing.}
+  \label{tab:wr-northing}
+  \begin{tabular}{lrrr}
+    \toprule
+    Element & $n$ & Pearson & Spearman \\
+    \midrule
+    C wt\% & 101  & $-$0.590 & $-$0.583 \\
+    Sn ppm & 443  & $-$0.437 & $-$0.442 \\
+    Nb ppm & 1978 & $-$0.441 & $-$0.422 \\
+    Ge ppm & 288  & $-$0.343 & $-$0.381 \\
+    U ppm  & 3227 & $-$0.337 & $-$0.380 \\
+    Er ppm & 444  & $-$0.378 & $-$0.336 \\
+    Tl ppm & 263  & 0.276    & 0.305 \\
+    W ppm  & 1815 & 0.225    & 0.303 \\
+    Tm ppm & 412  & $-$0.355 & $-$0.296 \\
+    Ho ppm & 433  & $-$0.332 & $-$0.282 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% ======================================================================
+% STREAM SEDIMENT
+% ======================================================================
+
+\begin{table}[H]
+  \centering
+  \caption{Stream Sediment: top-10 elements by absolute Spearman correlation with magnetic anomaly (nT).}
+  \label{tab:ss-magnetic}
+  \begin{tabular}{lrrr}
+    \toprule
+    Element & $n$ & Pearson & Spearman \\
+    \midrule
+    S ppm   & 128   & 0.046    & 0.183 \\
+    Fe ppm  & 130   & $-$0.126 & $-$0.177 \\
+    Pr ppm  & 1402  & 0.156    & 0.171 \\
+    Mn \%   & 2118  & $-$0.179 & $-$0.170 \\
+    Sn ppm  & 1739  & 0.154    & 0.158 \\
+    Mg \%   & 4041  & 0.121    & 0.147 \\
+    Bi ppm  & 943   & 0.233    & 0.143 \\
+    Sc ppm  & 13282 & $-$0.080 & $-$0.131 \\
+    S \%    & 3502  & $-$0.091 & $-$0.122 \\
+    Cr ppm  & 14566 & $-$0.093 & $-$0.121 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \caption{Stream Sediment: top-10 elements by absolute Spearman correlation with heat flow (mW/m\textsuperscript{2}).}
+  \label{tab:ss-heatflow}
+  \begin{tabular}{lrrr}
+    \toprule
+    Element & $n$ & Pearson & Spearman \\
+    \midrule
+    Ho ppm      & 1394 & 0.391 & 0.532 \\
+    Dy ppm      & 1401 & 0.379 & 0.526 \\
+    Er ppm      & 1400 & 0.380 & 0.523 \\
+    Tm ppm      & 1396 & 0.372 & 0.505 \\
+    Gd ppm      & 1401 & 0.356 & 0.475 \\
+    S ppm       & 128  & 0.290 & 0.469 \\
+    Fe$_2$O$_3$t wt\% & 1330 & 0.406 & 0.418 \\
+    Bi ppm      & 943  & 0.303 & 0.332 \\
+    Au ppm      & 700  & 0.231 & 0.315 \\
+    Ge ppm      & 1372 & 0.365 & 0.306 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \caption{Stream Sediment: top-10 elements by absolute Spearman correlation with depth to Moho (km).}
+  \label{tab:ss-moho}
+  \begin{tabular}{lrrr}
+    \toprule
+    Element & $n$ & Pearson & Spearman \\
+    \midrule
+    Be ppm & 1722  & 0.681 & 0.699 \\
+    Cd ppm & 1750  & 0.659 & 0.663 \\
+    Bi ppm & 943   & 0.736 & 0.640 \\
+    Ag ppm & 2401  & 0.630 & 0.639 \\
+    Ge ppm & 1372  & 0.674 & 0.629 \\
+    Na \%  & 11692 & 0.495 & 0.617 \\
+    S ppm  & 128   & 0.267 & 0.575 \\
+    Al \%  & 4041  & 0.494 & 0.491 \\
+    Cl \%  & 1125  & 0.418 & 0.488 \\
+    W ppm  & 2492  & 0.361 & 0.448 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \caption{Stream Sediment: top-10 elements by absolute Spearman correlation with easting.}
+  \label{tab:ss-easting}
+  \begin{tabular}{lrrr}
+    \toprule
+    Element & $n$ & Pearson & Spearman \\
+    \midrule
+    Ge ppm & 1372  & 0.820    & 0.759 \\
+    Sn ppm & 1739  & 0.646    & 0.719 \\
+    Na \%  & 11692 & $-$0.378 & $-$0.508 \\
+    Tm ppm & 1396  & 0.516    & 0.508 \\
+    Se ppm & 923   & 0.689    & 0.505 \\
+    Er ppm & 1400  & 0.479    & 0.486 \\
+    Ho ppm & 1394  & 0.474    & 0.469 \\
+    S ppm  & 128   & $-$0.282 & $-$0.450 \\
+    Dy ppm & 1401  & 0.425    & 0.439 \\
+    K \%   & 10393 & 0.399    & 0.431 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \caption{Stream Sediment: top-10 elements by absolute Spearman correlation with northing.}
+  \label{tab:ss-northing}
+  \begin{tabular}{lrrr}
+    \toprule
+    Element & $n$ & Pearson & Spearman \\
+    \midrule
+    Ge ppm        & 1372  & 0.675    & 0.785 \\
+    W ppm         & 2492  & 0.823    & 0.783 \\
+    Bi ppm        & 943   & 0.807    & 0.781 \\
+    Sn ppm        & 1739  & 0.558    & 0.772 \\
+    Cd ppm        & 1750  & 0.708    & 0.752 \\
+    Be ppm        & 1722  & 0.674    & 0.745 \\
+    Se ppm        & 923   & 0.860    & 0.701 \\
+    Ag ppm        & 2401  & 0.630    & 0.689 \\
+    Na$_2$O wt\%  & 10403 & $-$0.750 & $-$0.673 \\
+    Au ppm        & 700   & 0.532    & 0.558 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+
+\section{Companion Strength}
+\label{app:companion-strength}
+
+% Requires: \usepackage{booktabs}
+% Negative values use $-$; missing baselines are shown as --.
+
+% ======================================================================
+% WHOLE ROCK
+% ======================================================================
+
+\begin{table}[H]
+  \centering
+  \caption{Whole Rock: strongest companion elements by Spearman correlation.}
+  \label{tab:wr-strongest-companions}
+  \begin{tabular}{lrlrrr}
+    \toprule
+    Element & Coverage & Companion & Spearman & $\#$ partners $>0.8$ & Baseline \\
+    \midrule
+    Ce ppm & 3693 & Pr ppm & 0.995 & 5  & 0.977 \\
+    Pr ppm & 448  & Ce ppm & 0.995 & 10 & --    \\
+    Nd ppm & 2936 & Pr ppm & 0.994 & 5  & 0.951 \\
+    Y ppm  & 4109 & Ho ppm & 0.988 & 4  & 0.868 \\
+    Ho ppm & 433  & Y ppm  & 0.988 & 7  & --    \\
+    La ppm & 4188 & Pr ppm & 0.986 & 5  & 0.951 \\
+    Er ppm & 444  & Ho ppm & 0.985 & 7  & --    \\
+    Dy ppm & 447  & Ho ppm & 0.968 & 7  & --    \\
+    Sm ppm & 3764 & Pr ppm & 0.965 & 7  & 0.949 \\
+    Tm ppm & 412  & Er ppm & 0.964 & 6  & --    \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \caption{Whole Rock: weakest companion elements by Spearman correlation.}
+  \label{tab:wr-weakest-companions}
+  \begin{tabular}{lrlrrr}
+    \toprule
+    Element & Coverage & Companion & Spearman & $\#$ partners $>0.8$ & Baseline \\
+    \midrule
+    Pb ppm & 3429 & Rb ppm & 0.445    & 0 & 0.679 \\
+    Bi ppm & 719  & Pr ppm & $-$0.470 & 0 & --    \\
+    Be ppm & 972  & Gd ppm & 0.474    & 0 & --    \\
+    Au ppb & 2389 & Pr ppm & $-$0.495 & 0 & 0.489 \\
+    Sb ppm & 2102 & As ppm & 0.507    & 0 & 0.548 \\
+    As ppm & 2355 & Sb ppm & 0.507    & 0 & 0.530 \\
+    Cd ppm & 1008 & Pr ppm & $-$0.509 & 0 & 0.773 \\
+    Se ppm & 305  & Ag ppm & 0.558    & 0 & --    \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% ======================================================================
+% STREAM SEDIMENT
+% ======================================================================
+
+\begin{table}[H]
+  \centering
+  \caption{Stream Sediment: strongest companion elements by Spearman correlation.}
+  \label{tab:ss-strongest-companions}
+  \begin{tabular}{lrlrrr}
+    \toprule
+    Element & Coverage & Companion & Spearman & $\#$ partners $>0.8$ & Baseline \\
+    \midrule
+    Ho ppm & 1394  & Er ppm & 0.993 & 8 & 0.973 \\
+    Er ppm & 1400  & Ho ppm & 0.993 & 8 & 0.979 \\
+    Dy ppm & 1401  & Ho ppm & 0.992 & 8 & 0.975 \\
+    Nd ppm & 12345 & Pr ppm & 0.990 & 5 & 0.965 \\
+    Pr ppm & 1402  & Nd ppm & 0.990 & 5 & 0.945 \\
+    Y ppm  & 11857 & Er ppm & 0.990 & 5 & 0.893 \\
+    Yb ppm & 12469 & Er ppm & 0.987 & 5 & 0.955 \\
+    Ce ppm & 13213 & Pr ppm & 0.987 & 5 & 0.969 \\
+    Tm ppm & 1396  & Yb ppm & 0.986 & 8 & 0.973 \\
+    La ppm & 13300 & Pr ppm & 0.986 & 4 & 0.970 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \caption{Stream Sediment: weakest companion elements by Spearman correlation.}
+  \label{tab:ss-weakest-companions}
+  \begin{tabular}{lrlrrr}
+    \toprule
+    Element & Coverage & Companion & Spearman & $\#$ partners $>0.8$ & Baseline \\
+    \midrule
+    Au ppb & 2551  & Fe ppm & 0.307 & 0 & 0.128 \\
+    Te ppm & 227   & Al \%  & 0.348 & 0 & --    \\
+    Pd ppm & 102   & Ni ppm & 0.399 & 0 & --    \\
+    As ppm & 6873  & Li ppm & 0.469 & 0 & 0.607 \\
+    S \%   & 3502  & Hg ppm & 0.517 & 0 & 0.672 \\
+    Hg ppm & 758   & Se ppm & 0.520 & 0 & --    \\
+    U ppm  & 14831 & Tm ppm & 0.603 & 0 & 0.594 \\
+    Au ppm & 700   & W ppm  & 0.613 & 0 & --    \\
+    \bottomrule
+  \end{tabular}
+\end{table}

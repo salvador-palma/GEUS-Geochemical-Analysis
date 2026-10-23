@@ -15,7 +15,7 @@
 \usepackage{siunitx}
 \usepackage{csquotes}
 \usepackage[version=4]{mhchem}
-
+\usepackage{amssymb}
 \usepackage[
     backend=biber,
     style=numeric,
@@ -27,7 +27,7 @@
 
 \usepackage{hyperref}
 \usepackage[nameinlink,noabbrev]{cleveref}
-
+\usepackage{float}
 \graphicspath{{figures/}}
 
 \sisetup{group-minimum-digits=4, group-digits=integer}
@@ -56,7 +56,7 @@
     {\large
     Salvador Wahnon Palma\\
     Supervisor: Bulat Ibragimov\\
-    In progress
+    \today
     \par}
 \end{titlepage}
 
@@ -83,11 +83,11 @@ The project was organized around two major problems:
     \item[RQ2 --- unexplored regions.] Predict concentrations in an held out geological area rather than at random, avoiding spatial leakage.
 \end{description}
 
-This report focuses on \bold{RQ1}, while setting some ground for the \bold{RQ2}.
+This report focuses on \textbf{RQ1}, while setting some ground for the \textbf{RQ2}.
 
 \subsection{Contributions}
 
-This project applies one identical pipeline to two GEUS datasets with different sampling geometries. I contribute with the following: 
+This project applies one identical pipeline to two GEUS datasets with different sampling geometries. In this first part, I contribute with the following: 
 
 \begin{description}
     \item [Contrasting different KNN integrations.] Comparing distinct methods of encoding a spatial neighborhood as tabular data, across seven neighborhood sizes.
@@ -166,10 +166,12 @@ The preprocessing of data consists on the following six steps:
 
 
 \begin{figure}[htbp]
-\centering
-\includegraphics[width=0.35\textwidth]{figures/kfold split.png}
-\caption[KFold Split 1]{Example of sample distribution across splits in 5-Fold CV on Stream Sediment dataset.}
-\label{fig:kfoldsplit}
+    \centering
+    
+    \includegraphics[width=0.40\textwidth]{figures/kfold split.png}
+        
+    \caption[5-Fold CV Splits]{Example of sample distribution across splits in 5-Fold CV on the Stream Sediment dataset.}
+    \label{fig:kfoldsplit}
 \end{figure}
 
 \subsection{Targets and evaluation}
@@ -217,7 +219,7 @@ Despite wanting to introduce more geophysical features, I wasn't able to find mo
 \subsection{Models}
 \label{sec:models}
 
-Gradient-boosted decision trees remain one of the strongest machine learning methods on tabular data with this size and heterogeneity. The main model is the histogram-based gradient boosting (HGB) implementation in scikit-learn. As a comparison, a simple random forest (RF) is also run on the same pipeline, as to check that conclusions are not an artifact of model bias.
+Gradient-boosted decision trees remain one of the strongest machine learning methods on tabular data with this size and heterogeneity. The main model is the histogram-based gradient boosting (HGB) implementation in scikit-learn. As a comparison, a simple random forest (RF) and an XGBoost (XGB) model are also run on the same pipeline for the initial experiments, as to check that conclusions are not an artifact of model bias.
 
 \subsection{Graph neural network}
 \label{sec:gnnmethod}
@@ -236,39 +238,38 @@ GNN experiments were run only on Stream Sediment as it was the only dataset wher
 \section{Results}
 \label{ch:results}
 
-\subsection{Own chemistry sets a high baseline}
+\subsection{The geochemistry baseline is strong}
 \label{sec:baseline}
 
-Predicting a held-out element from a sample's remaining elements reaches a mean \Rsq{} of
-\num{0.7983} on whole rock (48 targets) and \num{0.8676} on stream sediment (71 targets). This
-is the number every spatial method below must improve upon, and it is high because elements are
-strongly co-determined: a sample rich in \ce{SiO2} is necessarily poor in something else.
-
-The two figures are not directly comparable to one another, since the target sets differ ---
-whole rock's 48 elements are proportionally more trace metals, stream sediment's 71 include a
-large suite of near-collinear rare earths that are easy to predict. Every comparison in this
-chapter is therefore made \emph{within} a dataset.
-
-Among the three tabular learners, gradient boosting was both the most accurate --- on every one
-of the ten whole-rock elements tested --- and the fastest, at mean \Rsq{}~\num{0.8388} in
-\SI{155}{\second} against \num{0.8207} in \SI{388}{\second} for a 200-tree random forest and
-\num{0.8215} in \SI{199}{\second} for XGBoost. It is used throughout. XGBoost's tie with the
-random forest is consistent with its competitive reputation resting on extensive tuning that its
-defaults (\texttt{max\_depth}~$=6$, \texttt{learning\_rate}~$=0.3$) do not supply for a dataset
-of this size and correlation structure.
-
-\subsection{A neighbourhood should be pooled, not enumerated}
-\label{sec:variants}
-
-\Cref{tab:variants} gives the four encodings at $k=20$. The shape is the same on both datasets:
-variant~C is best, variant~D lands at or below the baseline, and every gain is smaller than one
-fold standard deviation --- $0.82\sigma$ on whole rock, $0.91\sigma$ on stream sediment.
+Predicting a held-out element only from a sample's remaining elements reaches a mean \Rsq{} of \num{0.7983} on whole rock (48 targets) and \num{0.8676} on stream sediment (71 targets). This is the baseline number every method from now on must improve upon. However, observing the results only by the mean \Rsq{} can be misleading, as elements with more samples end up skewing it towards them. To cover that, in \Cref{tab:tabularRes}, the median and pooled variants are also presented. The first two metrics are pretty straightforward to understand and are computed over the several \Rsq{} scores for each element. On the other hand, the latter one is the application of the \Rsq{} formula over all samples for all elements.
 
 \begin{table}[htbp]
 \centering
-\caption[Neighbour encodings on both datasets]{The four neighbour encodings, $k=20$, co-located
-neighbours excluded. Fold standard deviation is \num{0.0180} (whole rock) and \num{0.0137}
-(stream sediment).}
+\caption[\Rsq{} metrics across both datasets]{\Rsq{} metrics in predicting an element through geochemistry alone, for both datasets, via RF, XGB, and HGB models}
+\label{tab:tabularRes}
+\begin{tabular}{lrrr rrr}
+\toprule
+ & \multicolumn{3}{c}{Whole rock (48)} & \multicolumn{3}{c}{Stream sediment (71)} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+\Rsq{} Metric & RF & XGB & HGB & RF & XGB & HGB \\
+\midrule
+Mean   & \num{0.7856} & \num{0.7954} & \textbf{0.7983} & \num{0.8587} & \num{0.8664} & \textbf{0.8676} \\
+Median & \num{0.8076} & \num{0.8240} & \textbf{0.8284} & \num{0.8908} & \textbf{0.9022} & \num{0.9012} \\
+Pooled & \num{0.7536} & \num{0.7642} & \textbf{0.7678} & \num{0.8135} & \textbf{0.8259} & \num{0.8244} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Neighbor information should be pooled rather than enumerated}
+\label{sec:variants}
+
+
+
+\Cref{tab:variants} gives the four encodings (\Cref{sec:neighbours}) at $k=20$ with HGB. In both datasets, the variant C has a much bigger relative gain when compared to the other methods, although it is not a significant difference by any means. 
+
+\begin{table}[htbp]
+\centering
+\caption[Neighbour encodings on both datasets]{The four KNN encodings on $k=20$ and their respective mean \Rsq{} and the respective difference to the baseline}
 \label{tab:variants}
 \begin{tabular}{lrrrr}
 \toprule
@@ -277,425 +278,195 @@ neighbours excluded. Fold standard deviation is \num{0.0180} (whole rock) and \n
 Variant & Mean \Rsq{} & $\Delta$ & Mean \Rsq{} & $\Delta$ \\
 \midrule
 Baseline (no neighbours) & \num{0.7983} & ---            & \num{0.8676} & --- \\
-A                        & \num{0.8043} & $+0.0059$      & \num{0.8757} & $+0.0081$ \\
-B                        & \num{0.8050} & $+0.0066$      & \num{0.8724} & $+0.0048$ \\
+A                        & \num{0.8043} & $+0.0060$      & \num{0.8757} & $+0.0081$ \\
+B                        & \num{0.8050} & $+0.0067$      & \num{0.8724} & $+0.0048$ \\
 \textbf{C}               & \textbf{\num{0.8132}} & $\mathbf{+0.0149}$ & \textbf{\num{0.8801}} & $\mathbf{+0.0125}$ \\
 D                        & \num{0.7982} & $-0.0001$      & \num{0.8659} & $-0.0017$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Sweeping $k$ from 1 to 100 (\Cref{fig:ksweep}) separates aggregation from dimensionality, and
-two trends run in opposite directions on both datasets. Variant~C improves with $k$ and plateaus
-around $k \approx 20$--$50$: because it averages over the neighbourhood, its width stays at $m$
-columns whatever $k$ is, so more neighbours only smooth sampling noise and cost nothing.
-Variant~D degrades monotonically, and the decline tracks its column count exactly --- \num{1740}
-columns at $k=20$, \num{8700} at $k=100$. D contains strictly more information than C and uses
-it strictly worse.
 
-\begin{figure}[htbp]
+Sweeping $k$ from 1 to 100 (\Cref{fig:ksweep,app:k-sweep}) reveals a pattern: On both datasets, variants A and C mostly plateau at $k \approx 20$, with the exception of the latter one having a steady decrease on Stream Sediment at $k=100$; While variants B and D are consistently negatively affected as $k$ rises. This constant decrease in performance is due to the fact that the dimensionality of the dataset in these variants is directly proportional to $k$. Variant D, the heavier one, has \num{1740} columns at $k=20$, while at $k=100$, it already contains \num{8700}, with the possibility of many of these columns being NaN values. Essentially, even though variants B and D are more detailed about the neighborhood, the models are not capable of using it correctly and end up drowning in information. 
+
+If the reader is wondering about the mismatch between the values of the $k$-sweep and \Cref{tab:variants}, it is because the former is conducted on only the ten most commonly measured elements on each dataset, meaning the measurements can be slightly affected, especially in Stream Sediment, since certain elements can benefit more from neighbor information such as uranium, which is discussed again in \Cref{sec:pathfinders}. What is relevant in this section is the aforementioned pattern that exists regardless of target set and dataset.
+
+
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.92\textwidth]{ksweep.png}
-\caption[Neighbour encodings across $k$]{Change in mean \Rsq{} over the no-neighbour baseline as
-neighbourhood size $k$ varies, on the ten best-covered elements of each dataset. The grey band
-is one fold standard deviation. Variant~C (pooled) rises and plateaus; variant~D (enumerated)
-falls in step with its column count. Absolute levels reflect the ten-element target sets
-(\Cref{sec:targetsensitivity}); the shape is what this figure establishes.}
+\caption[Neighbour encodings across $k$]{Mean \Rsq{} as neighborhood $k$ size varies on the ten best-covered elements of each dataset. Transparent bands represent the fold standard deviation.}
 \label{fig:ksweep}
 \end{figure}
 
-This is the most robust result in the report --- it holds across two datasets, two model
-families and seven values of $k$ --- and it fixes $k=20$ for everything that follows: the onset
-of the plateau, and effectively free for variant~C, whose column count does not depend on $k$.
+\subsection{Relevance of each spatial information feature}
+\label{sec:featuresets}
 
-\subsection{Where the gain lands}
+By scoring each feature source on its own and in combination (\Cref{fig:featuresets}) allows us to understand what spatial information is more beneficial. 
+
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{featuresets.png}
+\caption[Feature-source ablation]{
+Mean \Rsq{} by feature type over the respective target sets for both datasets.}
+\label{fig:featuresets}
+\end{figure}
+
+\paragraph{Sampling geometry affects standalone spatial information}
+Every standalone feature type is roughly twice as informative on stream sediment as on whole rock. This is a large difference that could be expected given the different sampling geometries of both datasets (\Cref{fig:samples}).
+
+\paragraph{Sampling geometry does not affect the gain by spatial information.} 
+Even with such a different strength in standalone spatial signal, what that information adds to the current baseline is approximately the same: $+0.015$ versus $+0.012$ for neighbors, $+0.008$ versus $+0.009$ for coordinates, $+0.008$ versus $+0.006$ for geophysics. This means that the information ends up being redundant when faced with the strong geochemistry baseline, as a sample's own chemistry is a much stronger predictor than anything else.
+
+\paragraph{Geophysics does not beat location.}
+Coordinates mostly outscore geophysics on both datasets, and a combination of the two barely surpasses coordinates by itself ($0.6017$ versus $0.5994$ on stream sediment). Essentially, the geophysics are serving as a proxy of location, encoding \textit{where} a sample is rather than \textit{what} is underneath. A model-independent correlation test also agrees to this result: by comparing the strongest correlation with a geophysical feature to the strongest in easting or northing, geophysics only wins on 27 of 64 ($42\%$) elements of whole rock, and 26 of 81 ($32\%$) on stream sediment. Some of the elements that more strongly resonate with geophysics rather than location can be seen in (\Cref{app:geophysics-vs-location-individual}).
+
+
+
+\subsection{Elements with weaker baselines benefit from spatial information more}
 \label{sec:difficulty}
 
-A pooled mean over dozens of elements averages together very different behaviours. Binning
-targets by \emph{their own baseline score} separates the elements own chemistry already predicts
-from those it cannot (\Cref{fig:difficulty}).
+All \Rsq{} metrics reported in the results above still make it hard to understand the improvement (or lack of) in different elements. By binning the targets based on their initial baseline score, we can properly verify that the elements with weaker initial scores do benefit more from additional data, especially regarding the surrounding neighborhood (\Cref{fig:difficulty}).
+
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.92\textwidth]{difficulty.png}
-\caption[Gain stratified by baseline difficulty]{Mean improvement over own chemistry, with
-targets grouped by how well own chemistry already predicts them. Two datasets with different
-sampling geometries, different target sets and different element counts produce almost the same
-curve.}
+\caption[Gain stratified by baseline difficulty]{
+Mean improvement over own chemistry, with target elements binned by their baseline \Rsq{} score (\Cref{app:baseline-binning})}
 \label{fig:difficulty}
 \end{figure}
 
-The decay is monotone on both datasets and the two curves are nearly identical, despite the
-datasets differing in sample count, spatial extent, co-location rate and target composition.
-Neighbours are worth $+0.0517$ to the eight whole-rock targets below \num{0.70} (mean baseline
-\num{0.5920}) and $+0.0484$ to the eight stream-sediment ones (\num{0.5846}); above \num{0.95}
-they are worth $+0.0008$ across three whole-rock targets and $+0.0001$ across twenty stream ones
---- unsurprisingly, since there is no headroom left to fill. \textbf{This, rather than any
-pooled mean, is the central result of RQ1}, and it explains mechanically why a pooled mean is
-fragile: changing the target set changes the mixture of difficulty bands, and therefore the
-average, without anything about the underlying behaviour changing at all.
+Despite all the differences in these datasets, such as sample count, spatial extent, co-location rate, or targets, the decay is monotone, and the curves are nearly identical on both. 
 
-\subsection{Which elements benefit}
+Neighbors are worth, on average $+0.0517$ to the eight whole-rock targets with a baseline $< 0.70$ and $0.0484$ on stream sediment, with mean baseline of \num{0.5920} and \num{0.5846}, respectively. However, with a baseline $> 0.95$, the increase in information only contributes $0.0008$ for the three whole-rock targets and $+0.0001$ for stream sediment. 
+
+This result explains why any \Rsq{} metric over such an extended target set can be misleading: Gain from neighbor information under $0.01$ occurs in $40$ out of $48$ ($83\%$) and $50$ out of $71$ ($70\%$) target elements for both datasets, respectively, essentially omitting large gains for the few elements that end up benefiting.
+
+\subsection{Elements that benefit from spatial information are shared amongst datasets}
 \label{sec:pathfinders}
 
-The elements gaining most are not an arbitrary assortment, and they recur across the two
-datasets (\Cref{tab:pathfinders}). Arsenic, antimony, lead and caesium appear in both top-six
-lists, computed on different samples, different target sets and different sampling geometries.
+The elements that benefit the most from the integration of neighbors and geophysics are not an arbitrary assortment, and are actually a similar recurrence in both datasets (\Cref{tab:pathfinders1, tab:pathfinders2}). 
 
-\begin{table}[htbp]
+
+\begin{table}[H]
 \centering
-\caption[Elements with the largest neighbour gain]{The six elements with the largest gain from
-neighbour features on each dataset, $k=20$. Four elements (As, Sb, Pb, Cs) appear on both lists.}
-\label{tab:pathfinders}
+\caption[Elements with the largest neighbour gain]{The ten elements with the largest gain from
+neighbor features on each dataset, $k=20$.}
+\label{tab:pathfinders1}
 \begin{tabular}{lrlr}
 \toprule
 \multicolumn{2}{c}{Whole rock} & \multicolumn{2}{c}{Stream sediment} \\
 \cmidrule(lr){1-2}\cmidrule(lr){3-4}
 Element & $\Delta$ \Rsq{} & Element & $\Delta$ \Rsq{} \\
 \midrule
-As & $+0.096$ & U  & $\mathbf{+0.220}$ \\
-Au & $+0.092$ & As & $+0.060$ \\
-Sb & $+0.070$ & Br & $+0.043$ \\
-Cs & $+0.048$ & Sb & $+0.041$ \\
-S  & $+0.040$ & Pb & $+0.034$ \\
-Pb & $+0.027$ & Cs & $+0.031$ \\
+As  & $+0.096$ & U   & $\mathbf{+0.221}$ \\
+  Au  & $+0.092$ & As  & $+0.060$ \\
+  Sb  & $+0.070$ & Br  & $+0.043$ \\
+  Cs  & $+0.048$ & Sb  & $+0.041$ \\
+  S   & $+0.041$ & Pb  & $+0.034$ \\
+  Pb  & $+0.027$ & Cs  & $+0.031$ \\
+  Cu  & $+0.026$ & Ca  & $+0.031$ \\
+  Rb  & $+0.023$ & Zn  & $+0.030$ \\
+  Sr  & $+0.018$ & Sr  & $+0.028$ \\
+  Ba  & $+0.017$ & Nb  & $+0.024$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-These are, bromine aside, the classical hydrothermal pathfinder suite together with mobile
-alkalis: elements whose distribution is governed by regional-scale processes such as
-mineralisation and alteration rather than by bulk rock composition, and which therefore have
-something for a neighbourhood to say that the host rock's major elements do not. Uranium is the
-extreme case, rising on stream sediment from \num{0.594} on own chemistry alone to \num{0.814}
-with neighbours. It is also the only element with a reliable geophysical correlation in this
-data ($+0.28$ with magnetic anomaly, $-0.34$ with Moho depth, $n=\num{3227}$), which is coherent
---- uranium concentrates in evolved felsic crust, which is thick and weakly magnetic.
+\begin{table}[htbp]
+\centering
+\caption[Elements with the largest geophysics gain]{The ten elements with the largest gain from
+geophysical features on each dataset}
+\label{tab:pathfinders2}
+\begin{tabular}{lrlr}
+\toprule
+\multicolumn{2}{c}{Whole rock} & \multicolumn{2}{c}{Stream sediment} \\
+\cmidrule(lr){1-2}\cmidrule(lr){3-4}
+Element & $\Delta$ \Rsq{} & Element & $\Delta$ \Rsq{} \\
+\midrule
+  Au  & $+0.046$ & U   & $\mathbf{+0.187}$ \\
+  As  & $+0.037$ & Br  & $+0.024$ \\
+  Cs  & $+0.027$ & Ca  & $+0.014$ \\
+  S   & $+0.027$ & Zn  & $+0.013$ \\
+  Sb  & $+0.019$ & As  & $+0.013$ \\
+  U   & $+0.017$ & S   & $+0.011$ \\
+  Cu  & $+0.015$ & Sr  & $+0.011$ \\
+  Fe2O3 & $+0.013$ & Ba  & $+0.011$ \\
+  Th  & $+0.012$ & Sb  & $+0.011$ \\
+  Ag  & $+0.011$ & Nb  & $+0.010$ \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-\subsection{Chemical isolation is the common cause}
+
+Arsenic, antimony, caesium, lead, and strontium are present in the top ten elements that benefit more from neighboring information on both datasets. The same can be said in the case of geophysical information for the elements arsenic, sulphur, antimony, and uranium. 
+It is also worth noting that the latter element has a massive increase, both in relative and absolute terms, for the two feature sets on stream sediment data.
+
+These results were obtained via different target sets, with different dimensions, on datasets with distinct geometry and characteristics. It should be, therefore, no coincidence that the same elements benefit from the same added features; however, the lack of proper geological knowledge prevents me from making any further comments or hypotheses regarding this.
+
+\subsection{Chemical isolation worsens the baseline}
 \label{sec:isolation}
 
-\Cref{sec:difficulty,sec:pathfinders} give two descriptions of the same set of elements --- ones
-own chemistry predicts poorly, and ones that are geochemically mobile --- which invites the
-question of what the two have in common. Measuring the chemistry directly answers it. For each
-element, take the single strongest Spearman correlation it has with any other element in the same
-sample, computed pairwise-complete over the raw log concentrations and independently of any model.
-Call that its \emph{companion strength}: how good a proxy the sample already carries.
+In \Cref{sec:difficulty}, I reported on how elements with a weaker baseline tended to benefit more from additional features. However, what exactly leads to a lower baseline still needs to be discussed. As we are dealing with tabular algorithms, by nature, the closest correlations are used as leverage to find the correct approximated values. Likewise, a lack of such close correlation could mean the inability to perform. 
+For each element, take the strongest (Spearman) correlation $|\rho|$ it has out of all the elements and call it \emph{companion strength}. Essentially, how good of a proxy the sample already carries for a specific element.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.92\textwidth]{isolation.png}
-\caption[Chemical isolation]{Baseline \Rsq{} against companion strength, one point per target
-element; marker area is the gain from neighbour features. Elements with a near-perfect companion
-sit top right and gain nothing; chemically isolated elements sit lower left and are where the
-neighbourhood pays. Uranium is the extreme case on stream sediment.}
+\caption[Chemical isolation]{Baseline \Rsq{} against companion strength. Area size defines the gain from neighbor integration.}
 \label{fig:isolation}
 \end{figure}
 
-Companion strength predicts the baseline on both datasets ($r=+0.77$ and $+0.76$), and predicts
-the neighbour gain with the opposite sign (Spearman $-0.70$ and $-0.63$). Splitting targets on
-whether they have any partner above $\rho=0.8$ separates them cleanly, and the two datasets
-agree despite sharing neither target set nor sampling geometry: elements with such a partner
-average a baseline of \num{0.864} on whole rock and \num{0.920} on stream sediment and gain
-$+0.0047$ from neighbours on both, while chemically isolated elements average \num{0.738} and
-\num{0.782} and gain $+0.0242$ and $+0.0253$ --- five times as much, on roughly half the targets
-in each dataset.
+This so-called companion strength fairly predicts the baseline on both datasets ($r= 0.77$ and $0.76$, respectively)(\Cref{fig:isolation}). 
+Splitting the target elements by whether they have any partner above $\rho=0.8$ into \emph{isolated} and \emph{accompanied} elements creates an interesting result shared among both datasets: Accompanied elements have a baseline of $0.8639$ on whole-rock and $0.9200$ on stream sediment, with a neighbor gain of $0.0047$ on both, while isolated elements average $0.7380$ and $0.7822$ with a neighbor gain of $0.0242$ and $0.0253$, respectively. This increase in neighbor gain is between \num{5.2} to \num{5.4} times higher for accompanied than for isolated elements in both datasets, even though the split dimension is different ($25 \text{ out of  }48$ $(52\%)$ and $27 \text{ out of } 71 $ $(38\%)$ isolated), and the target elements differ.
 
-The mechanism this exposes is a substitution. The elements at the top right are the rare earths,
-which track one another almost perfectly (Ce--Pr $\rho = \num{0.995}$, Ho--Er $\rho = \num{0.993}$)
-and are therefore predictable from a single companion in the same sample; a neighbourhood tells
-such an element nothing it does not already know. The elements at the lower left have no proxy at
-all: gold's best companion is $\rho = \num{0.31}$ on stream sediment, uranium's $\num{0.60}$,
-arsenic's $\num{0.47}$, and none of the three has a single partner above $\num{0.8}$.
-\textbf{Spatial context is worth something precisely where the sample's own chemistry contains no
-substitute for the target.}
+What this exposes is a substitution. The elements at the top-right track each other almost perfectly (Ce--Pr $\rho = 0.995$, Ho--Er $\rho = 0.993$), and have several strong companions that are also accompanied elements. These elements are therefore largely predictable in the absence of the target element, making the neighborhood information unneeded. The elements at the lower-left have no such proxy: On stream sediment, for instance, gold's best companion is iron with $\rho=0.307$, arsenic's is lithium at $\rho = 0.469$, sulfur's is mercury at $\rho=0.517$, and none of these have a partner above $p\ge0.80$ (\Cref{app:companion-strength}). 
 
-This also unifies the two readings of \Cref{sec:pathfinders}. ``Mobile element'' and ``hard
-target'' are not competing explanations but the same one seen from either side: an element whose
-concentration is set by mineralisation or alteration rather than by bulk composition is, for that
-reason, one that nothing else in the sample tracks --- which makes it both hard to predict and
-responsive to where it was found. The confound noted in \Cref{sec:limitations} is not removed by
-this, since isolation still explains both, but it is named.
-
-\subsection{Where the spatial information comes from}
-\label{sec:featuresets}
-
-Scoring each feature source alone and in combination (\Cref{fig:featuresets}) splits the
-question in two, and the two halves answer differently.
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=0.88\textwidth]{featuresets.png}
-\caption[Feature-source ablation]{Mean \Rsq{} by feature source, coverage-threshold target sets.
-Colour identifies the feature source, opacity the dataset. The upper block (spatial information
-alone) roughly doubles from whole rock to stream sediment; the lower block (the same information
-on top of own chemistry) barely moves.}
-\label{fig:featuresets}
-\end{figure}
-
-\paragraph{Sampling geometry decides how much spatial information exists.} Every standalone
-spatial source is roughly twice as informative on stream sediment as on whole rock: neighbours
-\num{0.325} against \num{0.609}, coordinates \num{0.348} against \num{0.599}, geophysics
-\num{0.323} against \num{0.525}. This is a large and robust difference, and exactly what the
-dispersed-versus-clustered contrast of \Cref{fig:samples} would predict.
-
-\paragraph{It does not decide how much that information adds.} Five times the standalone spatial
-signal buys the same sub-$\sigma$ improvement on top of own chemistry: $+0.0149$ against
-$+0.0125$ for neighbours, $+0.0080$ against $+0.0099$ for coordinates, $+0.0076$ against
-$+0.0063$ for geophysics. The reason is redundancy --- a sample's own chemistry already encodes
-most of what its location would tell you, because chemistry is what location predicts.
-
-\paragraph{The three spatial sources are interchangeable.} Geophysics, coordinates and
-neighbours land in one narrow band on each dataset, and each adds between $+0.006$ and $+0.015$
-on top of chemistry. In particular \textbf{the geophysical grids do not beat plain coordinates}:
-coordinates outscore geophysics on both datasets, and combining the two barely exceeds
-coordinates alone (\num{0.6017} against \num{0.5994} on stream sediment). On this evidence the
-grids encode \emph{where} a sample is rather than independently \emph{what} lies underneath it.
-
-A correlation test outside the models agrees. Comparing, for each element, its strongest
-correlation with a geophysical field against its strongest correlation with raw easting or
-northing, geophysics wins for only 27 of 64 elements (42\,\%) on whole rock and 26 of 81 (32\,\%)
-on stream sediment. How far a grid is a position proxy depends on the sampling footprint rather
-than on the grid: depth to Moho correlates $r = \num{0.75}$ with northing across whole rock's
-narrow longitude band, but only $-\num{0.23}$ across stream sediment's full-island coverage.
-\Cref{sec:limitations} explains why this is the reading most likely to invert under spatial
-cross-validation.
+Tying together the previous sections, spatial context is worth something where the sample's own chemistry does not have a good proxy for the target.
 
 \subsection{A learned aggregation does not do better}
 \label{sec:gnnresults}
 
-\Cref{fig:gnn} compares both graph architectures against variant~C across the same seven values
-of $k$, on identical folds.
+\Cref{fig:gnn} compares both graph architectures against KNN-C across the same seven values of $k$, on identical folds. Note that contrary to \Cref{fig:ksweep}, this time the sweep is done over the full target set rather than the ten most measured elements.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.62\textwidth]{gnn.png}
-\caption[Graph networks against hand-built neighbour features]{Mean \Rsq{} on stream sediment for
-the two graph architectures and the hand-built pooled encoding, across neighbourhood size.
-Variant~C dominates both networks at every $k$. Distance-aware attention (GAT) beats the
-distance-blind control (SAGE) only below $k \approx 5$, and degrades above $k=20$.}
+\includegraphics[width=0.74\textwidth]{gnn.png}
+\caption[Graph networks against hand-built neighbor features]{Mean \Rsq{} on stream sediment for
+the two graph architectures and the hand-built KNN variant C encoding, across neighborhood size.}
 \label{fig:gnn}
 \end{figure}
 
-\paragraph{The hand-built encoding wins everywhere.} Variant~C is above both networks at all
-seven values of $k$, with no crossover. The best network is \textsc{GraphSAGE} at $k=20$
-(\num{0.8260}); the best hand-built result is variant~C at $k=50$ (\num{0.8342}).
+\paragraph{The hand-built encoding wins everywhere.} 
+Variant C of the KNN integration is above both networks at all
+seven values of $k$, with no crossover at any point. The difference is not significant, however, especially when accounting for the standard deviation bands. Therefore, calling it a win is a big exaggeration. The plateau region that was reported in \Cref{sec:variants} is also similar to the region where the GNNs plateau.
 
-\paragraph{Distance-aware attention does not pay, and eventually hurts.} The two architectures
-cross at $k \approx 5$. Below it the attention model is better, as designed --- with few
-neighbours, distance discriminates usefully. Above it the distance-blind control wins by a
-margin widening monotonically to $+0.0140$ at $k=100$, well outside the $\approx\num{0.002}$
-run-to-run variation between repeats of one configuration. The attention model also degrades
-past $k=20$ (\num{0.8205} to \num{0.8091}), tracking edge count exactly as variant~D tracks
-column count. The same aggregation-versus-dimensionality effect appears in the learned model.
+\paragraph{Distance-aware attention does not make a difference} 
 
-\paragraph{On the full target set the network matches the baseline, not the encoding.} Running
-the settled configuration (\textsc{GraphSAGE}, $k=20$) on all 71 stream-sediment targets gives
-\num{0.8676} --- identical to the no-neighbour baseline, against variant~C's \num{0.8801}. Since
-the graph is always on, that baseline is the wrong comparison and \num{0.8801} is the number to
-beat. One target distorts the mean: \texttt{Sum wt\%} is a $-0.253$ outlier for the network
-where nothing else is worse than $-0.061$ (\Cref{sec:limitations}). Excluding it, the network is
-worth $+0.0037$ against variant~C's $+0.0128$, recovering roughly 29\,\% of the available gain
-rather than none. On uranium it exactly ties the hand-built columns (\num{0.814} against
-\num{0.814}): it captures the one large spatial signal and misses the many small ones. Adding
-geophysical or coordinate channels to the node features moves the mean by $+0.0004$ and
-$+0.0008$ --- inside noise, and a further instance of the redundancy of \Cref{sec:featuresets}.
+The two GNN architectures both follow similar results, with the best configuration being \textsc{SAGE} at $k=20$ (\num{0.8271}). At a low $k$, the two methods discriminate the distance-weighted edges usefully, but as the neighborhood size increases, the difference in performance diminishes almost monotonically. After $k=20$, the same effect that caused variant KNN-D to yield a lower performance seems to be taking action on the GNNs as well, albeit not to the same extent. This is because, just like variants B and D were drowning in information from tracking multiple columns, \textsc{SAGE} and \textsc{GAT} need to keep track of edges in the same manner.
 
-\subsection{Robustness}
-\label{sec:robustness}
 
-\paragraph{Model family.} The central claim is a null result, so it was checked under a second
-inductive bias. On whole rock all four encodings were run under both a random forest and
-gradient boosting, with the same conclusion under each: every gain inside one fold standard
-deviation, and variant~D worst of the four. Under the random forest at $k=20$ the four
-encodings are worth $+0.0016$, $-0.0004$, $-0.0003$ and $-0.0101$ over the no-neighbour
-baseline; under gradient boosting, $+0.0033$, $+0.0033$, $+0.0064$ and $-0.0002$.
-Stream-sediment results use gradient boosting only; variant~D at $k=20$ is \num{1740} columns
-and \texttt{RandomForestRegressor} evaluates all features at every split, which makes the repeat
-prohibitive for a confirmation whole rock already provides.
-
-\paragraph{Target selection.}
-\label{sec:targetsensitivity}
-The pooled mean is far more sensitive to which elements are scored than to anything about the
-model, and the size of that sensitivity is worth quantifying. Scored on each dataset's ten
-best-covered elements --- the usual convenience choice --- variant~C is worth $0.81\sigma$ on
-whole rock but $2.93\sigma$ on stream sediment, a sharp contrast inviting the reading that
-sampling geometry decides whether spatial context helps. Under the coverage threshold whole rock
-is unchanged at $0.82\sigma$ while stream sediment falls to $0.91\sigma$, leaving the two
-statistically indistinguishable.
-
-The collapse is one element. Uranium's gain on stream sediment is $+0.2205$, an order of
-magnitude above any other element's, and stream sediment's top ten happens to contain it: it
-supplies $+0.0220$ of that set's $+0.0347$ total, or 63\,\%, against $+0.0031$ of $+0.0125$
-(25\,\%) in the 71-element mean. Excluding uranium entirely, stream sediment's gain is
-$+0.0096$. Whole rock's top ten, by contrast, is dominated by major oxides that own chemistry
-predicts easily, which exaggerated the contrast from the other end.
-
-Nothing here is a numerical error --- the folds are honest and the means are correct --- but the
-apparent dataset-level effect is an artefact of a selection made before any modelling, and it
-survives model comparison, a $k$-sweep and a co-location control, because none of those checks
-touch target selection. This is the direct justification for reporting the stratified table of
-\Cref{sec:difficulty} rather than a pooled mean, and for choosing targets by a coverage
-threshold.
 
 \section{Discussion}
 \label{ch:discussion}
 
-\subsection{Spatial context is redundant, not absent}
+TO DO
 
-RQ1 reduces to one sentence: \emph{a sample's own chemistry already contains most of what its
-location could tell you.} Every route into the spatial signal --- averaging neighbouring
-samples, three independent geophysical fields, raw projected coordinates, and a learned graph
-aggregation --- lands in the same narrow band of improvement, all of it under one fold standard
-deviation. That several very different encodings converge on the same small number is itself the
-argument: if the limit were an encoding problem, one of them should have done materially better,
-where a consistent ceiling suggests the limit is informational.
 
-This is not the same as saying spatial structure is absent. \Cref{sec:featuresets} shows a great
-deal of it: neighbours alone reach \Rsq{}~\num{0.609} on stream sediment with no access to the
-sample's own chemistry whatsoever. The signal is real, substantial, and almost entirely
-redundant with information the analyst already has.
-
-\Cref{sec:isolation} sharpens ``redundant'' into something measurable. What makes an element
-predictable from its companions is having a companion: the correlation between an element's
-strongest within-sample partner and its baseline score is $+0.77$, and the correlation with its
-neighbour gain is the same relation with the sign flipped. Spatial context is not competing with
-own chemistry in general --- it is competing with whichever element in the same sample happens to
-be the target's best proxy, and it wins only where there is not one. That framing predicts the
-whole shape of \Cref{fig:difficulty} without reference to space at all.
-
-\subsection{Why pooling beats enumeration}
-
-Variants C and D contain the same measurements --- C averaged into $m$ columns, D enumerated into
-$mk$ --- and C improves with $k$ where D degrades in step with its column count, on both datasets
-and in the graph network's edge count. The interpretation is that a neighbourhood carries a small
-amount of signal spread thinly across many correlated measurements. Averaging concentrates it and
-suppresses per-sample noise at fixed model capacity; enumerating preserves the same signal but
-dilutes it across a feature space the learner must now search, at a cost exceeding the
-informational gain. The neighbour ordering that D preserves --- which sample was nearest --- turns
-out not to be worth its dimensionality, consistent with the graph network's finding that edge
-distance stops helping once the neighbourhood is reasonably large.
-
-\subsection{Why the graph network does not win}
-
-The network was given every structural advantage --- the same folds, the same neighbourhood, a
-skip connection so the graph only had to add what it knew, and an architecture able to read edge
-distance --- and still does not beat an average. Three explanations, not mutually exclusive.
-With only element concentrations as node features,
-the messages passed between neighbours carry little that a per-element neighbour mean does not
-already summarise, and gradient boosting is simply the stronger tabular learner at this data
-scale \parencite{grinsztajn2022}. The graph is also purely geometric: a $k$-nearest-neighbour
-graph in metres encodes proximity, whereas the geologically meaningful adjacency is shared
-catchment, shared lithology or shared intrusive suite, none of which it can see. And the network
-was tuned only lightly, so some margin remains --- though not, on this evidence, the $+0.0125$
-needed to overtake an 87-column average.
-
-\subsection{Limitations}
-\label{sec:limitations}
-
-\paragraph{Random cross-validation.} All results use random folds, and position is unusually
-informative when train and test interleave in space. The reading most exposed is
-\Cref{sec:featuresets}'s conclusion that geophysics does not beat coordinates: under spatial
-blocking, coordinates should degrade sharply --- a model that has learned ``this northing implies
-this uranium level'' is useless when that whole band is held out --- while the geophysical grids
-remain real measurements available at every point. That comparison could invert, and testing it
-is the first task of RQ2.
-
-\paragraph{Two derived target columns.} \texttt{Sum wt\%} in the stream-sediment dataset is
-exactly the sum of the major oxides plus loss on ignition (median absolute difference
-\SI{0.0000}{\percent} over \num{8482} samples, 98.9\,\% within \SI{0.5}{\percent}), and the
-relation runs both ways, so the major oxides are inflated by subtraction as well. Separately,
-about ten elements appear twice under different unit conventions (\ce{Fe} as \texttt{Fe \%} and
-\texttt{Fe2O3 wt\%}, $r=0.93$; \ce{Mn} likewise, $r=0.97$) --- redundancy rather than leakage,
-since the pairs come from different digestions. Both raise absolute baselines and dilute measured
-gains. Neither affects any conclusion here, because every claim is a \emph{difference} between
-two arms that see identical features; but the $>0.95$ band of \Cref{fig:difficulty} is partly
-populated by these columns and should not be over-interpreted. The $<0.70$ band, which carries
-the finding, is unaffected.
-
-\paragraph{Confounded explanation of the pathfinder result.} The elements that gain most are
-mobile and hydrothermally mobilised, they are the elements own chemistry predicts worst, and by
-\Cref{sec:isolation} they are the elements with no close companion in the same sample. Isolation
-is a plausible common cause of the other two, but it is a description rather than a test:
-separating ``spatial context helps mobile elements'' from ``spatial context helps elements
-without a chemical proxy'' would require a set of elements matched on companion strength but
-differing in mobility, which this data does not obviously contain.
-
-\paragraph{Scope.} The two-model check covers whole rock only, and graph experiments stream
-sediment only. Five stream-sediment targets have fold standard deviations above \num{0.03}
-(\ce{Ta}, \ce{Au}, \ce{U}, \ce{Pr}, \ce{Cl}), and gold is effectively unpredictable from
-chemistry (\Rsq{}~\num{0.128}).
-
-\section{Conclusion and future work}
+\section{Future work}
 \label{ch:conclusion}
 
-One pipeline, applied unchanged to two independent GEUS geochemistry datasets, answers RQ1: a
-held-out element can be predicted well from a sample's other elements, and spatial context adds
-little on top. Neighbouring chemistry, geophysical grids and raw coordinates each add less than
-one fold standard deviation, they are interchangeable with one another, and a graph neural
-network with learned distance-weighted aggregation does not beat a plain average over the same
-neighbourhood. Where the residual gain lands is systematic --- roughly $+0.05$ for elements own
-chemistry predicts poorly, nothing for those it already predicts well, on both datasets --- and
-measuring the chemistry directly says why: those elements are the ones with no close companion
-in the same sample, so spatial context pays exactly where own chemistry carries no substitute
-for the target. Separately, the choice of which elements to score moves the headline number more
-than any modelling decision examined here.
+The continuation into \textbf{RQ2} will be to hold out regions rather than samples. Essentially, instead of creating the train/test split randomly, it will be done through spatial block folds, isolating entire regions. For this, I plan to only work with Stream Sediment, as the Whole Rock dataset does not have as much coverage.
 
-\subsection{Future work: RQ2}
 
-The natural continuation is to hold out \emph{regions} rather than samples:
 
-\begin{enumerate}
-    \item \textbf{Spatial block folds.} Hash projected coordinates into squares of side
-        \texttt{blockKm} and assign whole blocks to folds, written in the existing fold-file
-        format so no downstream code changes. Blocks are preferable to clustering, because block
-        size in kilometres is interpretable whereas clusters follow sampling density
-        \parencite{roberts2017}.
-    \item \textbf{Re-run the core comparison.} Baseline, variant~C and the full feature-source
-        ablation. This is the step that can change a conclusion: if geophysics overtakes
-        coordinates under spatial hold-out, that is a substantive result and precisely the
-        geologically motivated angle the project set out to add.
-    \item \textbf{A block-size sweep.} \Rsq{} against block size gives a degradation curve ---
-        the distance over which the model generalises --- which is a more useful deliverable to
-        a geologist than any single number.
-    \item \textbf{Geological province hold-out.} The stricter test: a coherent terrane rather
-        than an arbitrary square, using the published subglacial province polygons.
-\end{enumerate}
 
-RQ2 will use stream sediment only. Whole rock spans \ang{11.7} of longitude within a single
-region of West Greenland, so there is no meaningful ``outside'' to hold out, and block
-cross-validation would either produce blocks too small to be spatially independent or fragment
-the dataset. Its role here was as the control that made the sampling-geometry comparison
-possible, and that role is complete.
+%\printbibliography
 
-Beyond RQ2, the direction suggested by \Cref{sec:gnnresults} is not a better network but a
-better graph. The present adjacency is purely geometric; encoding shared catchment, mapped
-lithology or intrusive suite would give message passing something a distance matrix cannot
-express, which is the condition under which a graph model could be expected to overtake a
-well-chosen average.
 
-\subsection*{Reproduction}
-\addcontentsline{toc}{subsection}{Reproduction}
-
-Four notebooks are run in order: \texttt{1. Data Fetching} (preprocessing, geophysical
-attachment, splits), \texttt{2. Random Forest} (tabular models, neighbour encodings, $k$-sweep,
-feature-source ablation), \texttt{3. GNN} (graph construction, both architectures, $k$-sweep,
-settled configuration) and \texttt{4. Results} (cross-dataset aggregation, the correlation
-analyses of \Cref{sec:isolation}, the per-element exports, and every figure here). The first
-three take one dataset at a time; switching requires changing three constants. Every experiment
-caches to JSON under \texttt{Results/}; each figure is built from that cache by
-\texttt{Report/make\_figures.py}, which the last section of \texttt{4. Results} imports and
-renders inline. Seeds are fixed at 42; only the graph experiments need a GPU.
-
-\subsection*{Declaration on the use of AI tools}
-\addcontentsline{toc}{subsection}{Declaration on the use of AI tools}
-
-This project used Claude (Anthropic) via the Claude Code environment
-\parencite{anthropic_claude} as a programming assistant for the pipeline, experiments and
-figures, and in drafting this report from the experimental outputs. All reported numbers are
-produced by running the included notebooks against the committed data. I have reviewed and
-verified the content and take full responsibility for it.
-
-\printbibliography
+\appendix
+\input{appendix} 
 
 \end{document}
