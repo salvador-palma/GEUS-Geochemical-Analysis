@@ -1,0 +1,19 @@
+{
+    "sampleCol": "Sampleno",
+    "metaCols": [
+        "Id",
+        "Sample type group",
+        "Rgb",
+        "Sampleno",
+        "Batch",
+        "Longitude",
+        "Latitude",
+        "Year",
+        "Fullname"
+    ],
+    "physicalCols": [],
+    "locationCols": [
+        "Latitude",
+        "Longitude"
+    ]
+}

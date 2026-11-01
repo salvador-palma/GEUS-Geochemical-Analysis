@@ -87,14 +87,17 @@ def MeanFoldStd(result):
 def FigureSamples():
     """The sampling-geometry contrast that motivates using two datasets."""
 
-    fig, axes = plt.subplots(1, 2, figsize=(5.4, 4.4))
+    #East Greenland is not part of DATASETS: it only enters the model-transfer experiment
+    maps = [(LABELS[d], DataDir(d) / "Data.csv", c) for d, c in zip(DATASETS, [GEO, NEIGH])]
+    maps.append(("East Whole Rock", ROOT / "Data" / "Pierpaolo" / "Data.csv", LOC))
+
+    fig, axes = plt.subplots(1, len(maps), figsize=(8.1, 4.4))
     fig.subplots_adjust(wspace=0.02)
     basemap = plt.imread(BASEMAP_PATH)
     minx, miny, maxx, maxy = BASEMAP_BBOX
 
-    for ax, dataset, colour in zip(axes, DATASETS, [GEO, NEIGH]):
-        df = pd.read_csv(DataDir(dataset) / "Data.csv", sep=";",
-                         usecols=["Longitude", "Latitude"]).dropna()
+    for ax, (label, path, colour) in zip(axes, maps):
+        df = pd.read_csv(path, sep=";", usecols=["Longitude", "Latitude"]).dropna()
         x, y = lonlatToUTM24N(df["Longitude"].to_numpy(), df["Latitude"].to_numpy())
 
         ax.imshow(basemap, extent=(minx, maxx, miny, maxy), origin="upper",
@@ -104,7 +107,7 @@ def FigureSamples():
         ax.set_xlim(minx, maxx)
         ax.set_ylim(miny, maxy)
         ax.set_aspect("equal")
-        ax.set_title(f"{LABELS[dataset]}\n{len(df):,} samples", loc="center", fontsize=9)
+        ax.set_title(f"{label}\n{len(df):,} samples", loc="center", fontsize=9)
         ax.grid(False)
         ax.set_xticks([])
         ax.set_yticks([])
@@ -122,14 +125,15 @@ def FigureKSweep():
     fig, axes = plt.subplots(1, 2, figsize=(7.0, 2.9), sharey=True)
 
     for ax, dataset, panel in zip(axes, DATASETS, ["(a)", "(b)"]):
-        baseline = LoadResults(dataset, "HistGradientBoosting_KFold")
+        baseline = LoadResults(dataset, "HistGradientBoosting_KFold_Cov1000")
         base, noise = MeanR2(baseline), MeanFoldStd(baseline)
 
         ax.axhspan(-noise, noise, color=GRID, alpha=0.55, lw=0, zorder=0)
         ax.axhline(0, color="#8d8c85", lw=0.7, zorder=1)
 
         for variant, colour, style in [("A", LOC, "--"), ("C", NEIGH, "-"), ("D", GEO, "-")]:
-            deltas = [MeanR2(LoadResults(dataset, f"K-Sweep_{k}_{variant}")) - base for k in KS]
+            deltas = [MeanR2(LoadResults(dataset, f"K-Sweep_{k}_{variant}_HistGradientBoosting_ExcludingColocation_Cov1000")) - base
+                      for k in KS]
             ax.plot(range(len(KS)), deltas, style, color=colour, marker="o", ms=3.4,
                     lw=1.4, label=f"Variant {variant}", zorder=3)
 

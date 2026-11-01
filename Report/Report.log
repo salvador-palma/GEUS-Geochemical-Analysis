@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.9.9)  12 OCT 2026 12:08
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.7.13)  31 OCT 2026 14:53
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**d:/Documentos/Projetos/GEUS-Geochemical-Analysis/Report/Report.tex
-(d:/Documentos/Projetos/GEUS-Geochemical-Analysis/Report/Report.tex
+**"c:/Users/salva/Documents/UCPH/POS - Project Outside Scope/Project/Report/Report.tex"
+(c:/Users/salva/Documents/UCPH/POS - Project Outside Scope/Project/Report/Report.tex
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
 (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/koma-script\scrartcl.cls
@@ -291,7 +291,7 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \@lastruleclass=\count305
 \@thisrulewidth=\dimen181
 ) (C:\Users\salva\AppData\Local\Programs\MiKTeX\tex/latex/siunitx\siunitx.sty
-Package: siunitx 2026-08-23 v3.5.6 A comprehensive (SI) units package
+Package: siunitx 2026-05-15 v3.5.5 A comprehensive (SI) units package
 \l__siunitx_number_uncert_offset_int=\count306
 \l__siunitx_number_exponent_fixed_int=\count307
 \l__siunitx_number_min_decimal_int=\count308
@@ -906,28 +906,28 @@ File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 \openout4 = `Report.toc'.
 
  [2]
-<figures/samples.png, id=72, 302.0886pt x 282.21436pt>
+<figures/samples.png, id=72, 453.8556pt x 282.21436pt>
 File: figures/samples.png Graphic file (type png)
 <use figures/samples.png>
 Package pdftex.def Info: figures/samples.png  used on input line 110.
-(pdftex.def)             Requested size: 227.62206pt x 212.65067pt.
+(pdftex.def)             Requested size: 227.62206pt x 141.54175pt.
  [3
-pdfTeX warning (ext4): destination with the same identifier (name{table.1}) has been already used, duplicate ignored
+pdfTeX warning (ext4): destination with the same identifier (name{figure.1}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
 l.149     \item \textbf
-                       {Mask below-detection values.} non-NaN entries that p...]
-<figures/kfold split.png, id=86, 327.3831pt x 573.1011pt>
+                       {Mask below-detection values.} non-NaN entries that p... <./figures/samples.png>]
+<figures/kfold split.png, id=83, 327.3831pt x 573.1011pt>
 File: figures/kfold split.png Graphic file (type png)
 <use figures/kfold split.png>
 Package pdftex.def Info: figures/kfold split.png  used on input line 171.
 (pdftex.def)             Requested size: 182.09486pt x 318.76572pt.
  [4
-pdfTeX warning (ext4): destination with the same identifier (name{figure.1}) has been already used, duplicate ignored
+pdfTeX warning (ext4): destination with the same identifier (name{table.1}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.185 
-       <./figures/samples.png>] [5
+l.186 \subsection
+                 {KNN Encoding}] [5
 pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
@@ -938,79 +938,75 @@ pdfTeX warning (ext4): destination with the same identifier (name{table.2}) has 
                                                   \__shipout_drop_firstpage_...
 l.214 
        <./figures/kfold split.png>] [6]
-<figures/ksweep.png, id=119, 455.301pt x 219.33945pt>
+<figures/ksweep.png, id=117, 461.0826pt x 219.33945pt>
 File: figures/ksweep.png Graphic file (type png)
 <use figures/ksweep.png>
-Package pdftex.def Info: figures/ksweep.png  used on input line 297.
-(pdftex.def)             Requested size: 418.82375pt x 201.77464pt.
+Package pdftex.def Info: figures/ksweep.png  used on input line 294.
+(pdftex.def)             Requested size: 418.82375pt x 199.24443pt.
  [7
 pdfTeX warning (ext4): destination with the same identifier (name{table.3}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.301 
+l.298 
       
 pdfTeX warning (ext4): destination with the same identifier (name{table.4}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.301 
+l.298 
       ]
-<figures/featuresets.png, id=128, 532.99126pt x 229.0959pt>
+<figures/featuresets.png, id=126, 532.99126pt x 229.0959pt>
 File: figures/featuresets.png Graphic file (type png)
 <use figures/featuresets.png>
-Package pdftex.def Info: figures/featuresets.png  used on input line 310.
+Package pdftex.def Info: figures/featuresets.png  used on input line 307.
 (pdftex.def)             Requested size: 400.61703pt x 172.20253pt.
  [8
 pdfTeX warning (ext4): destination with the same identifier (name{figure.3}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.324 
+l.321 
       
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.324 
+l.321 
        <./figures/ksweep.png> <./figures/featuresets.png>]
-<figures/difficulty.png, id=141, 449.15805pt x 233.4321pt>
+<figures/difficulty.png, id=139, 449.15805pt x 233.4321pt>
 File: figures/difficulty.png Graphic file (type png)
 <use figures/difficulty.png>
-Package pdftex.def Info: figures/difficulty.png  used on input line 335.
+Package pdftex.def Info: figures/difficulty.png  used on input line 332.
 (pdftex.def)             Requested size: 418.82375pt x 217.66663pt.
-
-
-LaTeX Warning: Reference ` tab:pathfinders2' on page 1 undefined on input line 350.
-
-[9
+ [9
 pdfTeX warning (ext4): destination with the same identifier (name{figure.5}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.377 
+l.374 
        <./figures/difficulty.png>]
 <figures/isolation.png, id=154, 443.37645pt x 236.68425pt>
 File: figures/isolation.png Graphic file (type png)
 <use figures/isolation.png>
-Package pdftex.def Info: figures/isolation.png  used on input line 417.
+Package pdftex.def Info: figures/isolation.png  used on input line 414.
 (pdftex.def)             Requested size: 418.82375pt x 223.5775pt.
  [10
 pdfTeX warning (ext4): destination with the same identifier (name{table.5}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.424 
+l.421 
       
 pdfTeX warning (ext4): destination with the same identifier (name{table.6}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.424 
+l.421 
       ]
-<figures/gnn.png, id=164, 346.53465pt x 216.44865pt>
+<figures/gnn.png, id=163, 346.53465pt x 216.44865pt>
 File: figures/gnn.png Graphic file (type png)
 <use figures/gnn.png>
-Package pdftex.def Info: figures/gnn.png  used on input line 436.
+Package pdftex.def Info: figures/gnn.png  used on input line 433.
 (pdftex.def)             Requested size: 336.88313pt x 210.42062pt.
  [11
 pdfTeX warning (ext4): destination with the same identifier (name{figure.6}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.449 
+l.446 
        <./figures/isolation.png>] (appendix.tex [12
 pdfTeX warning (ext4): destination with the same identifier (name{figure.7}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
@@ -1120,40 +1116,36 @@ l.440
 pdfTeX warning (ext4): destination with the same identifier (name{table.25}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.472 \end{document}
+l.469 \end{document}
                     
 pdfTeX warning (ext4): destination with the same identifier (name{table.26}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.472 \end{document}
+l.469 \end{document}
                     ] (Report.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
  ***********
-
-
-LaTeX Warning: There were undefined references.
-
 Package logreq Info: Writing requests to 'Report.run.xml'.
 \openout1 = `Report.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 30732 strings out of 467871
- 632136 string characters out of 5418377
- 1611418 words of memory out of 5000000
- 59082 multiletter control sequences out of 15000+600000
- 642801 words of font info for 158 fonts, out of 8000000 for 9000
+ 30725 strings out of 467871
+ 632291 string characters out of 5418376
+ 1611494 words of memory out of 5000000
+ 59081 multiletter control sequences out of 15000+600000
+ 642648 words of font info for 155 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 108i,11n,107p,11265b,1172s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 108i,11n,107p,11284b,1172s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
 pdfTeX warning (dest): name{cite.0@greenland_portal} has been referenced but does not exist, replaced by a fixed one
 
 <C:/Users/salva/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/salva/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/salva/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/salva/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/salva/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/salva/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/salva/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/salva/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmssbx10.pfb><C:/Users/salva/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/salva/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/salva/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on Report.pdf (19 pages, 783285 bytes).
+Output written on Report.pdf (19 pages, 810289 bytes).
 PDF statistics:
- 377 PDF objects out of 1000 (max. 8388607)
+ 376 PDF objects out of 1000 (max. 8388607)
  91 named destinations out of 1000 (max. 500000)
  39156 words of extra memory for PDF output out of 42996 (max. 10000000)
 

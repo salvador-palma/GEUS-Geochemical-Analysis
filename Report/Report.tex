@@ -278,24 +278,21 @@ Pooled & \num{0.7536} & \num{0.7642} & \textbf{0.7678} & \num{0.8135} & \textbf{
 Variant & Mean \Rsq{} & $\Delta$ & Mean \Rsq{} & $\Delta$ \\
 \midrule
 Baseline (no neighbours) & \num{0.7983} & ---            & \num{0.8676} & --- \\
-A                        & \num{0.8043} & $+0.0060$      & \num{0.8757} & $+0.0081$ \\
-B                        & \num{0.8050} & $+0.0067$      & \num{0.8724} & $+0.0048$ \\
-\textbf{C}               & \textbf{\num{0.8132}} & $\mathbf{+0.0149}$ & \textbf{\num{0.8801}} & $\mathbf{+0.0125}$ \\
-D                        & \num{0.7982} & $-0.0001$      & \num{0.8659} & $-0.0017$ \\
+A                        & \num{0.8045} & $+0.0062$      & \num{0.8757} & $+0.0081$ \\
+B                        & \num{0.8046} & $+0.0063$      & \num{0.8724} & $+0.0048$ \\
+\textbf{C}               & \textbf{\num{0.8125}} & $\mathbf{+0.0142}$ & \textbf{\num{0.8801}} & $\mathbf{+0.0125}$ \\
+D                        & \num{0.7980} & $-0.0003$      & \num{0.8659} & $-0.0017$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 
-Sweeping $k$ from 1 to 100 (\Cref{fig:ksweep,app:k-sweep}) reveals a pattern: On both datasets, variants A and C mostly plateau at $k \approx 20$, with the exception of the latter one having a steady decrease on Stream Sediment at $k=100$; While variants B and D are consistently negatively affected as $k$ rises. This constant decrease in performance is due to the fact that the dimensionality of the dataset in these variants is directly proportional to $k$. Variant D, the heavier one, has \num{1740} columns at $k=20$, while at $k=100$, it already contains \num{8700}, with the possibility of many of these columns being NaN values. Essentially, even though variants B and D are more detailed about the neighborhood, the models are not capable of using it correctly and end up drowning in information. 
-
-If the reader is wondering about the mismatch between the values of the $k$-sweep and \Cref{tab:variants}, it is because the former is conducted on only the ten most commonly measured elements on each dataset, meaning the measurements can be slightly affected, especially in Stream Sediment, since certain elements can benefit more from neighbor information such as uranium, which is discussed again in \Cref{sec:pathfinders}. What is relevant in this section is the aforementioned pattern that exists regardless of target set and dataset.
-
+Sweeping $k$ from 1 to 100 (\Cref{fig:ksweep,app:k-sweep}) reveals a pattern: On both datasets, variant A plateaus from $k \approx 5$ and variant C keeps improving until it flattens around $k = 50$; While variants B and D are consistently negatively affected as $k$ rises. This constant decrease in performance is due to the fact that the dimensionality of the dataset in these variants is directly proportional to $k$. Variant D, the heavier one, has \num{1740} columns at $k=20$, while at $k=100$, it already contains \num{8700}, with the possibility of many of these columns being NaN values. Essentially, even though variants B and D are more detailed about the neighborhood, the models are not capable of using it correctly and end up drowning in information. 
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.92\textwidth]{ksweep.png}
-\caption[Neighbour encodings across $k$]{Mean \Rsq{} as neighborhood $k$ size varies on the ten best-covered elements of each dataset. Transparent bands represent the fold standard deviation.}
+\caption[Neighbour encodings across $k$]{Mean \Rsq{} as neighborhood $k$ size varies on the full target set of each dataset. Transparent bands represent the fold standard deviation.}
 \label{fig:ksweep}
 \end{figure}
 
@@ -347,7 +344,7 @@ This result explains why any \Rsq{} metric over such an extended target set can 
 \subsection{Elements that benefit from spatial information are shared amongst datasets}
 \label{sec:pathfinders}
 
-The elements that benefit the most from the integration of neighbors and geophysics are not an arbitrary assortment, and are actually a similar recurrence in both datasets (\Cref{tab:pathfinders1, tab:pathfinders2}). 
+The elements that benefit the most from the integration of neighbors and geophysics are not an arbitrary assortment, and are actually a similar recurrence in both datasets (\Cref{tab:pathfinders1,tab:pathfinders2}). 
 
 
 \begin{table}[H]
@@ -401,7 +398,7 @@ Element & $\Delta$ \Rsq{} & Element & $\Delta$ \Rsq{} \\
 \end{table}
 
 
-Arsenic, antimony, caesium, lead, and strontium are present in the top ten elements that benefit more from neighboring information on both datasets. The same can be said in the case of geophysical information for the elements arsenic, sulphur, antimony, and uranium. 
+Arsenic, antimony, caesium, lead, zinc, and uranium are present in the top ten elements that benefit more from neighboring information on both datasets. The same can be said in the case of geophysical information for the elements arsenic, sulphur, antimony, and uranium. 
 It is also worth noting that the latter element has a massive increase, both in relative and absolute terms, for the two feature sets on stream sediment data.
 
 These results were obtained via different target sets, with different dimensions, on datasets with distinct geometry and characteristics. It should be, therefore, no coincidence that the same elements benefit from the same added features; however, the lack of proper geological knowledge prevents me from making any further comments or hypotheses regarding this.
